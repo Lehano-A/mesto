@@ -1,0 +1,15 @@
+.popup__input {
+    margin: 0 36px 30px 36px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid;
+}
+
+.popup__input:last-of-type {
+    margin-bottom: 48px;
+}
+
+.popup__input:focus {
+   outline: none;
+}

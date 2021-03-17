@@ -19,6 +19,14 @@
 @import url(../blocks/profile/__name-button-box/profile__name-button-box.css);
 @import url(../blocks/profile/__left-column/profile__left-column.css);
 
-/*h1 {
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__image/element__image.css);
+@import url(../blocks/element/__button-like/element__button-like.css);
+@import url(../blocks/element/__title/element__title.css);
+@import url(../blocks/element/__title-icon-box/element__title-icon-box.css);
+
+
+/*div {
     outline: 1px red solid;
 }

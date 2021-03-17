@@ -1,4 +1,9 @@
 .profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     max-width: 880px;
     height: 120px;
+    padding-top: 45px;
+    padding-bottom: 45px;
 }

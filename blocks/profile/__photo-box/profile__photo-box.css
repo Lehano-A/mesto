@@ -1,3 +1,20 @@
 .profile__photo-box {
-
+    width: 120px;
+    height: 120px;
+    margin-right: 30px;
 }
+
+@media screen and (max-width: 935px) {
+    .profile__photo-box {
+        margin-left: 19px;
+    }
+}
+
+@media screen and (max-width: 742px) {
+    .profile__photo-box {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+

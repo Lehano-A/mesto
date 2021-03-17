@@ -7,7 +7,6 @@
     background-repeat: no-repeat;
     background-position: center center;
     padding: 0;
-
 }
 
 .profile__edit-button:hover {
@@ -17,4 +16,11 @@
 
 .profile__edit-button:focus {
     outline: none;
+}
+
+@media screen and (max-width: 742px) {
+    .profile__edit-button {
+        width: 18px;
+        height: 18px;
+    }
 }

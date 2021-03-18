@@ -39,6 +39,7 @@
 @import url(../blocks/popup/__button-save/popup__button-save.css);
 @import url(../blocks/popup/__button-close/popup__button-close.css);
 @import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/_close/popup_close.css);
 
 /*div, p {
     outline: 1px red solid;

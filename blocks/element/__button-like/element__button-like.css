@@ -1,10 +1,10 @@
 .element__button-like {
     width: 22px;
     height: 19px;
+    border: none;
     background-image: url(/images/button-like-inactive.svg);
     background-repeat: no-repeat;
     background-color: transparent;
-    border: none;
 }
 
 .element__button-like:hover {
@@ -17,4 +17,3 @@
     cursor: pointer;
     outline: none;
 }
-

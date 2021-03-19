@@ -2,7 +2,7 @@
     width: 22px;
     height: 19px;
     border: none;
-    background-image: url(/images/button-like-inactive.svg);
+    background-image: url(./../../../images/button-like-inactive.svg);
     background-repeat: no-repeat;
     background-color: transparent;
 }

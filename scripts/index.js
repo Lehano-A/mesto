@@ -1,12 +1,11 @@
 //Кнопка "Редактировать профиль"
 
-
 //Popup открывается
 let editButton = document.querySelector('.profile__edit-button');
 let popup = document.querySelector('.popup');
 
 function popupOpen() {
-    popup.classList.remove('popup_close');
+    popup.classList.add('popup_opened');
 }
 
 editButton.addEventListener('click', popupOpen);
@@ -17,11 +16,10 @@ editButton.addEventListener('click', popupOpen);
 let popupButtonClose = document.querySelector('.popup__button-close');
 
 function popupClose() {
-    popup.classList.add('popup_close');
+    popup.classList.remove('popup_opened');
 }
 
 popupButtonClose.addEventListener('click', popupClose);
-
 
 
 //Popup закрывается по клику на overlay
@@ -44,13 +42,11 @@ let buttonsLike = document.querySelectorAll('.element__button-like');
 for (i = 0; i < buttonsLike.length; i++) {
     let actualInactive = buttonsLike[i];
 
-        function removeClass() {
-            actualInactive.classList.toggle('element__button-like_inactive');
-          }
-        actualInactive.addEventListener('click', removeClass);
-        
+    function removeClass() {
+        actualInactive.classList.toggle('element__button-like_active');
+    }
+    actualInactive.addEventListener('click', removeClass);
 }
-
 
 
 
@@ -64,6 +60,7 @@ let statusInput = formElement.querySelector('.popup__input[name="status"]')
 let profileName = document.querySelector('.profile__name'); //Жак-Ив Кусто
 let profileStatus = document.querySelector('.profile__status'); //Исследователь океана
 
+
 //Функция изменения значений элементов name и status на значение из inputs
 function formSubmitHandler(evt) {
     evt.preventDefault();
@@ -71,11 +68,10 @@ function formSubmitHandler(evt) {
     profileName.textContent = nameInput.value;
     profileStatus.textContent = statusInput.value;
 
-
-console.log(profileName);
-console.log(profileStatus);
+    console.log(profileName);
+    console.log(profileStatus);
 }
 
-formElement.addEventListener('submit', formSubmitHandler); 
+formElement.addEventListener('submit', formSubmitHandler);
 
 

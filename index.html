@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Андрияшкин Алексей">
+    <meta name="description" content="Mesto - мини-соцсеть для путешествинников">
     <title>Mesto</title>
     <link rel="stylesheet" href="./pages/index.css">
 </head>
@@ -44,8 +46,7 @@
                 <img src="/images/milky-way-planet-earth.jpg" class="element__image" alt="Фото Млечного Пути">
                 <div class="element__title-icon-box">
                     <h2 class="element__title">Планета Земля</h2>
-                    <button
-                        class="element__button-like element__button-like_active element__button-like_inactive"></button>
+                    <button class="element__button-like"></button>
                 </div>
             </div>
 
@@ -54,7 +55,7 @@
                 <img src="/images/sudak-crimea.jpg" class="element__image" alt="Фото моря и гор - Судак, Крым">
                 <div class="element__title-icon-box">
                     <h2 class="element__title">Судак, Крым</h2>
-                    <button class="element__button-like element__button-like_active element__button-like_inactive"></button>
+                    <button class="element__button-like"></button>
                 </div>
             </div>
 
@@ -63,7 +64,7 @@
                 <img src="/images/moab-usa.jpg" class="element__image" alt="Фото скал - Моаб, США">
                 <div class="element__title-icon-box">
                     <h2 class="element__title">Моаб, США</h2>
-                    <button class="element__button-like element__button-like_active element__button-like_inactive"></button>
+                    <button class="element__button-like"></button>
                 </div>
             </div>
 
@@ -72,7 +73,7 @@
                 <img src="/images/zhangye-china.jpg" class="element__image" alt="Фото простора и гор - Чжанъе, Китай">
                 <div class="element__title-icon-box">
                     <h2 class="element__title">Чжанъе, Китай</h2>
-                    <button class="element__button-like element__button-like_active element__button-like_inactive"></button>
+                    <button class="element__button-like"></button>
                 </div>
             </div>
 
@@ -82,7 +83,7 @@
                     alt="Фото моря, обрывистого берега и безграничного леса - Онтарио, Канада'">
                 <div class="element__title-icon-box">
                     <h2 class="element__title">Онтарио, Канада</h2>
-                    <button class="element__button-like element__button-like_active element__button-like_inactive"></button>
+                    <button class="element__button-like"></button>
                 </div>
             </div>
 
@@ -92,7 +93,7 @@
                     alt="Фото крепости Мон-Сен-Мишель, Франция">
                 <div class="element__title-icon-box">
                     <h2 class="element__title">Мон-Сен-Мишель, Франция</h2>
-                    <button class="element__button-like element__button-like_active element__button-like_inactive"></button>
+                    <button class="element__button-like"></button>
                 </div>
             </div>
 
@@ -106,7 +107,7 @@
         <!--КОНЕЦ FOOTER-->
 
         <!--НАЧАЛО POPUP-->
-        <div class="popup popup_close">
+        <div class="popup">
             <div class="popup__overlay">
             </div>
             <div class="popup__box">
@@ -115,13 +116,14 @@
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <form class="popup__form">
                         <input type="text" class="popup__input" placeholder="Ваше имя" value="Жак-Ив Кусто" name="name">
-                        <input type="text" class="popup__input" placeholder="Какова ваша профессия?" value="Исследователь океана" name="status">
-                        <button type="submit" class="popup__button-save">Сохранить</button> 
+                        <input type="text" class="popup__input" placeholder="Какова ваша профессия?"
+                            value="Исследователь океана" name="status">
+                        <button type="submit" class="popup__button-save">Сохранить</button>
                     </form>
                 </div>
             </div>
         </div>
-
+        <!--КОНЕЦ POPUP-->
     </div>
     <script src="./scripts/index.js"></script>
 </body>

@@ -67,7 +67,7 @@ function formSubmitHandler(evt) {
 
     profileName.textContent = nameInput.value;
     profileStatus.textContent = statusInput.value;
-
+    popup.classList.remove('popup_opened');
     console.log(profileName);
     console.log(profileStatus);
 }

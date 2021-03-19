@@ -52,3 +52,30 @@ for (i = 0; i < buttonsLike.length; i++) {
 }
 
 
+
+
+///////////////////////////////////////////////////
+
+//Popup сохраняет информацию из inputs
+let buttonSave = document.querySelector('.popup__button-save');
+let formElement = document.querySelector('.popup__form');
+let nameInput = formElement.querySelector('.popup__input[name="name"]')
+let statusInput = formElement.querySelector('.popup__input[name="status"]')
+let profileName = document.querySelector('.profile__name'); //Жак-Ив Кусто
+let profileStatus = document.querySelector('.profile__status'); //Исследователь океана
+
+//Функция изменения значений элементов name и status на значение из inputs
+function formSubmitHandler(evt) {
+    evt.preventDefault();
+
+    profileName.textContent = nameInput.value;
+    profileStatus.textContent = statusInput.value;
+
+
+console.log(profileName);
+console.log(profileStatus);
+}
+
+formElement.addEventListener('submit', formSubmitHandler); 
+
+

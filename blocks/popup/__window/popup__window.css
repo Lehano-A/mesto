@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: space-between;
     width: 430px;
-    height: 330px;
     background-color: #fff;
     border-radius: 10px;
     position: relative;
@@ -12,6 +11,5 @@
 @media screen and (max-width: 742px) {
     .popup__window {
         width: 282px;
-        height: 322px;
     }
 }

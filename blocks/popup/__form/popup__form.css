@@ -1,21 +1,21 @@
 .popup__form {
-    width: 358px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 48px 36px 0;
+  width: 358px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 48px 36px 0;
 }
 
 @media screen and (max-width: 742px) {
-    .popup__form {
-     margin-top: 75px;  
-    }
+  .popup__form {
+    margin-top: 75px;
+  }
 }
 
 @media screen and (max-width: 742px) {
-    .popup__form {
-        margin-left: 22px;
-        margin-right: 22px;
-        width: 238px; 
-    }
+  .popup__form {
+    margin-left: 22px;
+    margin-right: 22px;
+    width: 238px;
+  }
 }

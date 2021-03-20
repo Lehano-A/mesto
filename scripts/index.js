@@ -18,26 +18,26 @@ let profileStatus = document.querySelector('.profile__status'); //Исследо
 
 //Popup открывается
 function popupOpen() {
-    nameInput.textContent = profileName.value;
-    statusInput.textContent = profileStatus.value;
-    popup.classList.add('popup_opened');
+  nameInput.textContent = profileName.value;
+  statusInput.textContent = profileStatus.value;
+  popup.classList.add('popup_opened');
 }
 
 
 //Popup закрывается по клику на кнопку закрытия
 function popupClose() {
-    popup.classList.remove('popup_opened');
+  popup.classList.remove('popup_opened');
 }
 
 
 //Popup сохраняет информацию из inputs
 //Функция изменения значений элементов name и status на значение из inputs
 function formSubmitHandler(evt) {
-    evt.preventDefault();
+  evt.preventDefault();
 
-    profileName.textContent = nameInput.value;
-    profileStatus.textContent = statusInput.value;
-    popupClose();
+  profileName.textContent = nameInput.value;
+  profileStatus.textContent = statusInput.value;
+  popupClose();
 }
 
 

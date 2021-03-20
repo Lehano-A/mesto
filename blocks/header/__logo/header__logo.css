@@ -1,11 +1,11 @@
 @media screen and (max-width: 935px) {
-    .header__logo {
-        margin-left: 27px;
-    }
+  .header__logo {
+    margin-left: 27px;
+  }
 }
 
 @media screen and (max-width: 742px) {
-    .header__logo {
-        width: 103.74px;
-    }
+  .header__logo {
+    width: 103.74px;
+  }
 }

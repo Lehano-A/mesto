@@ -12,6 +12,7 @@
     background-color: transparent;
     border: none;
     transform: rotate(45deg);
+    transition: 0.3s;
 }
 
 .popup__button-close:hover {

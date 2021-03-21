@@ -1,5 +1,5 @@
 .element {
-  margin: 0;
+  margin: 0 auto;
   max-width: 282px;
   color: #000;
   display: flex;

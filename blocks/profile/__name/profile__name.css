@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 1.23;
-  margin: 0 25px 0 0;
+  margin: 0 19px 0 30px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -15,7 +15,7 @@
   .profile__name {
     font-size: 27px;
     line-height: 1.21;
-    margin-right: 10px;
+    margin-right: 11px;
     margin-left: 27px;
   }
 }

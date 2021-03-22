@@ -3,19 +3,21 @@
   font-style: normal;
   font-weight: 500;
   line-height: 1.23;
-  margin: 0 19px 0 30px;
+  padding: 0 19px 0 30px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   max-width: 305px;
   -o-text-overflow: ellipsis;
+  margin: 0;
 }
 
 @media screen and (max-width: 742px) {
   .profile__name {
     font-size: 27px;
     line-height: 1.21;
-    margin-right: 11px;
-    margin-left: 27px;
+    padding-right: 11px;
+    padding-left: 0;
+    max-width: 230px;
   }
 }

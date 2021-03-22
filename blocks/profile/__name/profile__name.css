@@ -16,7 +16,7 @@
   .profile__name {
     font-size: 27px;
     line-height: 1.21;
-    padding-right: 11px;
-    max-width: 200px;
+    padding-right: 0px;
+    max-width: 194px;
   }
 }

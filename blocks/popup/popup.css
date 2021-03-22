@@ -7,5 +7,6 @@
   display: none;
   justify-content: center;
   align-items: center;
+  background-color: rgba(00, 00, 00, 0.5); /*Это делается элементарно. Видимо я заклинил и решил пойти трудным путём. Благодарю! ;-)*/
 }
 

@@ -4,6 +4,29 @@ const templateElement = document.querySelector('.template-element').content;
 const cloneElement = templateElement.querySelector('.element').cloneNode(true);
 const titleBoxElement = cloneElement.querySelector('.element__title-icon-box');
 
+//Popup открывается
+const editButton = document.querySelector('.profile__edit-button');
+const popup = document.querySelector('.popup');
+
+//Popup закрывается по клику на кнопку закрытия
+const popupButtonClose = document.querySelector('.popup__button-close');
+
+//Popup сохраняет информацию из inputs
+const buttonSave = document.querySelector('.popup__button-save');
+const formElement = document.querySelector('.popup__form');
+const nameInput = formElement.querySelector('#popup_name')
+const statusInput = formElement.querySelector('#popup_status')
+const profileName = document.querySelector('.profile__name'); //Жак-Ив Кусто
+const profileStatus = document.querySelector('.profile__status'); //Исследователь океана
+
+//Button Add New Card [ + ]
+const profile = document.querySelector('.profile');
+const addNewCardButton = profile.querySelector('.profile__add-button');
+const popupAddNewCard = document.querySelector('#popupAddNewCard');
+const popupAddNewCardButtonClose = document.querySelector('#addNewCardButtonClose')
+const popupAddNewCardButtonSave = document.querySelector('#addNewCardButtonSave')
+
+
 const initialCards = [
   {
     name: 'Планета Земля',
@@ -40,26 +63,25 @@ const addCard = initialCards.forEach(function (element) {
 });
 
 
+//Кнопка AddNewCard [ + ] в блоке "Profile"
+//popupAddNewCard - открывается
+function popupAddNewCardOpen() {
+  popupAddNewCard.classList.add('popup_opened');
+}
+
+//popupAddNewCard - закрывается
+function popupAddNewCardClose() {
+  popupAddNewCard.classList.remove('popup_opened');
+}
+
+//popupAddNewCard - отправка формы
+function formSubmitAddNewCard(evt) {
+  evt.preventDefault();
+  popupAddNewCardClose();
+}
 
 
 //Кнопка "Редактировать профиль" в блоке "Profile"
-
-//Popup открывается
-let editButton = document.querySelector('.profile__edit-button');
-let popup = document.querySelector('.popup');
-
-//Popup закрывается по клику на кнопку закрытия
-let popupButtonClose = document.querySelector('.popup__button-close');
-
-//Popup сохраняет информацию из inputs
-let buttonSave = document.querySelector('.popup__button-save');
-let formElement = document.querySelector('.popup__form');
-let nameInput = formElement.querySelector('#popup_name')
-let statusInput = formElement.querySelector('#popup_status')
-let profileName = document.querySelector('.profile__name'); //Жак-Ив Кусто
-let profileStatus = document.querySelector('.profile__status'); //Исследователь океана
-
-
 //Popup открывается
 function popupOpen() {
   nameInput.value = profileName.textContent;
@@ -94,4 +116,11 @@ popupButtonClose.addEventListener('click', popupClose);
 //Popup сохраняет информацию из inputs
 formElement.addEventListener('submit', formSubmitHandler);
 
+//popupAddNewCard - открывается
+addNewCardButton.addEventListener('click', popupAddNewCardOpen);
 
+//popupAddNewCard - закрывается
+popupAddNewCardButtonClose.addEventListener('click', popupAddNewCardClose);
+
+//popupAddNewCard - отправка формы
+popupAddNewCardButtonSave.addEventListener('click', formSubmitAddNewCard);

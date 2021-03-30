@@ -30,6 +30,7 @@ const addNewCardTitle = document.querySelector('#addNewCardTitle');
 const addNewCardLink = document.querySelector('#addNewCardLink');
 
 
+
 const initialCards = [
   {
     name: 'Планета Земля',
@@ -58,14 +59,22 @@ const initialCards = [
 ];
 
 
-
-
 //Функция первоначальной загрузки всех элементов массива на страницу
 const addCard = initialCards.forEach(function (element) {
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
   cloneElement.querySelector('.element__image').src = element.link;
   cloneElement.querySelector('.element__title').textContent = element.name;
   elements.append(cloneElement);
+});
+
+
+//Кнопка 'Like' меняет цвет
+const buttonsLike = document.querySelectorAll('.element__button-like');
+
+buttonsLike.forEach((item, i) => {
+  buttonsLike[i].addEventListener('click', () => {
+    buttonsLike[i].classList.toggle('element__button-like_active');
+});
 });
 
 
@@ -81,7 +90,6 @@ function submitAddNewCard(evt) {
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
   cloneElement.querySelector('.element__image').src = addNewCardLink.value;
   cloneElement.querySelector('.element__title').textContent = addNewCardTitle.value;
-  console.log(cloneElement);
   elements.prepend(cloneElement);
   popupAddNewCardClose();
 }
@@ -134,3 +142,6 @@ popupAddNewCardButtonClose.addEventListener('click', popupAddNewCardClose);
 
 //Form Add New Card [ + ]
 formAddNewCard.addEventListener('submit', submitAddNewCard);
+
+
+

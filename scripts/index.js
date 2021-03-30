@@ -63,6 +63,7 @@ const initialCards = [
 const addCard = initialCards.forEach(function (element) {
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
   cloneElement.querySelector('.element__image').src = element.link;
+  cloneElement.querySelector('.element__image').alt = element.name;
   cloneElement.querySelector('.element__title').textContent = element.name;
   elements.append(cloneElement);
 });
@@ -79,7 +80,7 @@ buttonsLike.forEach((item, i) => {
 });
 
 
-//Кнопка 'Delete' на карточке
+//Кнопка 'Delete' на карточке удаляющая карточку
 const buttonsDeleteCards = document.querySelectorAll('.element__button-delete');
 
 buttonsDeleteCards.forEach((item, i) => {
@@ -88,7 +89,6 @@ buttonsDeleteCards.forEach((item, i) => {
     btn.parentNode.removeChild(btn);
   });
 });
-
 
 
 //Кнопка AddNewCard [ + ] в блоке "Profile"
@@ -102,6 +102,7 @@ function submitAddNewCard(evt) {
   evt.preventDefault();
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
   cloneElement.querySelector('.element__image').src = addNewCardLink.value;
+  cloneElement.querySelector('.element__image').alt = addNewCardTitle.value;
   cloneElement.querySelector('.element__title').textContent = addNewCardTitle.value;
   elements.prepend(cloneElement);
   popupAddNewCardClose();
@@ -155,4 +156,5 @@ popupAddNewCardButtonClose.addEventListener('click', popupAddNewCardClose);
 
 //Form Add New Card [ + ]
 formAddNewCard.addEventListener('submit', submitAddNewCard);
+
 

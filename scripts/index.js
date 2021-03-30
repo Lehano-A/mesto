@@ -1,4 +1,48 @@
-//Кнопка "Редактировать профиль"
+// Поиск шаблона и его элементов
+const elements = document.querySelector('.elements');
+const templateElement = document.querySelector('.template-element').content;
+const cloneElement = templateElement.querySelector('.element').cloneNode(true);
+const titleBoxElement = cloneElement.querySelector('.element__title-icon-box');
+
+const initialCards = [
+  {
+    name: 'Планета Земля',
+    link: './images/milky-way-planet-earth.jpg'
+  },
+  {
+    name: 'Судак, Крым',
+    link: './images/sudak-crimea.jpg'
+  },
+  {
+    name: 'Моаб, США',
+    link: './images/moab-usa.jpg'
+  },
+  {
+    name: 'Чжанъе, Китай',
+    link: './images/zhangye-china.jpg'
+  },
+  {
+    name: 'Онтарио, Канада',
+    link: './images/ontario-canada.jpg'
+  },
+  {
+    name: 'Мон-Сен-Мишель, Франция',
+    link: './images/mont-saint-michel-france.jpg'
+  }
+];
+
+//Функция первоначальной загрузки всех элементов массива на страницу
+const addCard = initialCards.forEach(function (element) {
+  const cloneElement = templateElement.querySelector('.element').cloneNode(true);
+  cloneElement.querySelector('.element__image').src = element.link;
+  cloneElement.querySelector('.element__title').textContent = element.name;
+  elements.append(cloneElement);
+});
+
+
+
+
+//Кнопка "Редактировать профиль" в блоке "Profile"
 
 //Popup открывается
 let editButton = document.querySelector('.profile__edit-button');

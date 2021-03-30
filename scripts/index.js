@@ -1,8 +1,10 @@
 // Поиск шаблона и его элементов
 const elements = document.querySelector('.elements');
+const element = elements.querySelector('.element');
 const templateElement = document.querySelector('.template-element').content;
 const cloneElement = templateElement.querySelector('.element').cloneNode(true);
 const titleBoxElement = cloneElement.querySelector('.element__title-icon-box');
+
 
 //Popup открывается
 const editButton = document.querySelector('.profile__edit-button');
@@ -19,7 +21,7 @@ const statusInput = formElement.querySelector('#popup_status')
 const profileName = document.querySelector('.profile__name'); //Жак-Ив Кусто
 const profileStatus = document.querySelector('.profile__status'); //Исследователь океана
 
-//Button Add New Card [ + ]
+//Кнопка Add New Card [ + ]
 const profile = document.querySelector('.profile');
 const addNewCardButton = profile.querySelector('.profile__add-button');
 const popupAddNewCard = document.querySelector('#popupAddNewCard');
@@ -28,8 +30,6 @@ const formAddNewCard = windowAddNewCard.querySelector('#formAddNewCard');
 const popupAddNewCardButtonClose = windowAddNewCard.querySelector('#addNewCardButtonClose')
 const addNewCardTitle = document.querySelector('#addNewCardTitle');
 const addNewCardLink = document.querySelector('#addNewCardLink');
-
-
 
 const initialCards = [
   {
@@ -72,10 +72,23 @@ const addCard = initialCards.forEach(function (element) {
 const buttonsLike = document.querySelectorAll('.element__button-like');
 
 buttonsLike.forEach((item, i) => {
-  buttonsLike[i].addEventListener('click', () => {
-    buttonsLike[i].classList.toggle('element__button-like_active');
+  buttonsLike[i].addEventListener('click', (e) => {
+    const btn = e.target;
+    btn.classList.toggle('element__button-like_active');
+  });
 });
+
+
+//Кнопка 'Delete' на карточке
+const buttonsDeleteCards = document.querySelectorAll('.element__button-delete');
+
+buttonsDeleteCards.forEach((item, i) => {
+  buttonsDeleteCards[i].addEventListener('click', (e) => {
+    const btn = e.target.parentNode;
+    btn.parentNode.removeChild(btn);
+  });
 });
+
 
 
 //Кнопка AddNewCard [ + ] в блоке "Profile"
@@ -142,6 +155,4 @@ popupAddNewCardButtonClose.addEventListener('click', popupAddNewCardClose);
 
 //Form Add New Card [ + ]
 formAddNewCard.addEventListener('submit', submitAddNewCard);
-
-
 

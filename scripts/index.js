@@ -23,8 +23,11 @@ const profileStatus = document.querySelector('.profile__status'); //Исслед
 const profile = document.querySelector('.profile');
 const addNewCardButton = profile.querySelector('.profile__add-button');
 const popupAddNewCard = document.querySelector('#popupAddNewCard');
-const popupAddNewCardButtonClose = document.querySelector('#addNewCardButtonClose')
-const popupAddNewCardButtonSave = document.querySelector('#addNewCardButtonSave')
+const windowAddNewCard = document.querySelector('#windowAddNewCard');
+const formAddNewCard = windowAddNewCard.querySelector('#formAddNewCard');
+const popupAddNewCardButtonClose = windowAddNewCard.querySelector('#addNewCardButtonClose')
+const addNewCardTitle = document.querySelector('#addNewCardTitle');
+const addNewCardLink = document.querySelector('#addNewCardLink');
 
 
 const initialCards = [
@@ -54,6 +57,9 @@ const initialCards = [
   }
 ];
 
+
+
+
 //Функция первоначальной загрузки всех элементов массива на страницу
 const addCard = initialCards.forEach(function (element) {
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
@@ -69,15 +75,20 @@ function popupAddNewCardOpen() {
   popupAddNewCard.classList.add('popup_opened');
 }
 
+//Form Add New Card [ + ]
+function submitAddNewCard(evt) {
+  evt.preventDefault();
+  const cloneElement = templateElement.querySelector('.element').cloneNode(true);
+  cloneElement.querySelector('.element__image').src = addNewCardLink.value;
+  cloneElement.querySelector('.element__title').textContent = addNewCardTitle.value;
+  console.log(cloneElement);
+  elements.prepend(cloneElement);
+  popupAddNewCardClose();
+}
+
 //popupAddNewCard - закрывается
 function popupAddNewCardClose() {
   popupAddNewCard.classList.remove('popup_opened');
-}
-
-//popupAddNewCard - отправка формы
-function formSubmitAddNewCard(evt) {
-  evt.preventDefault();
-  popupAddNewCardClose();
 }
 
 
@@ -100,7 +111,6 @@ function popupClose() {
 //Функция изменения значений элементов name и status на значение из inputs
 function formSubmitHandler(evt) {
   evt.preventDefault();
-
   profileName.textContent = nameInput.value;
   profileStatus.textContent = statusInput.value;
   popupClose();
@@ -122,5 +132,5 @@ addNewCardButton.addEventListener('click', popupAddNewCardOpen);
 //popupAddNewCard - закрывается
 popupAddNewCardButtonClose.addEventListener('click', popupAddNewCardClose);
 
-//popupAddNewCard - отправка формы
-popupAddNewCardButtonSave.addEventListener('click', formSubmitAddNewCard);
+//Form Add New Card [ + ]
+formAddNewCard.addEventListener('submit', submitAddNewCard);

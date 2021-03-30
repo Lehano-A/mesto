@@ -69,19 +69,17 @@
 
 
   <!--НАЧАЛО POPUP-ADD-NEW-CARD-->
-
   <div id="popupAddNewCard" class="popup">
-    <div class="popup__window">
+    <div id="windowAddNewCard" class="popup__window">
       <button id="addNewCardButtonClose" type="reset" class="popup__button-close"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" method="POST" name="formPopupAddNewCard">
-        <input id="popup_name" type="text" class="popup__input" placeholder="Название" name="name">
-        <input id="popup_status" type="text" class="popup__input" placeholder="Ссылка на картинку" name="status">
+      <form id="formAddNewCard" class="popup__form" method="POST" name="formPopupAddNewCard">
+        <input id="addNewCardTitle" type="text" class="popup__input" placeholder="Название" name="title">
+        <input id="addNewCardLink" type="text" class="popup__input" placeholder="Ссылка на картинку" name="link">
         <button id="addNewCardButtonSave" type="submit" class="popup__button-save">Сохранить</button>
       </form>
     </div>
   </div>
-
   <!--КОНЕЦ PPOPUP-ADD-NEW-CARD-->
 
 

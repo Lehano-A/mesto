@@ -24,12 +24,12 @@ const profileStatus = document.querySelector('.profile__status'); //Исслед
 //Кнопка Add New Card [ + ]
 const profile = document.querySelector('.profile');
 const addNewCardButton = profile.querySelector('.profile__add-button');
-const popupAddNewCard = document.querySelector('#popupAddNewCard');
-const windowAddNewCard = document.querySelector('#windowAddNewCard');
-const formAddNewCard = windowAddNewCard.querySelector('#formAddNewCard');
-const popupAddNewCardButtonClose = windowAddNewCard.querySelector('#addNewCardButtonClose')
-const addNewCardTitle = document.querySelector('#addNewCardTitle');
-const addNewCardLink = document.querySelector('#addNewCardLink');
+const popupAddNewCard = document.querySelector('#popup-add-new-card');
+const windowAddNewCard = document.querySelector('#window-add-new-card');
+const formAddNewCard = windowAddNewCard.querySelector('#form-add-new-card');
+const popupAddNewCardButtonClose = windowAddNewCard.querySelector('#add-new-card-button-close')
+const addNewCardTitle = document.querySelector('#add-new-card-title');
+const addNewCardLink = document.querySelector('#add-new-card-link');
 
 const initialCards = [
   {
@@ -62,32 +62,16 @@ const initialCards = [
 //Функция первоначальной загрузки всех элементов массива на страницу
 const addCard = initialCards.forEach(function (element) {
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
+  const buttonsDeleteCards = cloneElement.querySelector('.element__button-delete');
+  const buttonsLike = cloneElement.querySelector('.element__button-like');
+
   cloneElement.querySelector('.element__image').src = element.link;
   cloneElement.querySelector('.element__image').alt = element.name;
   cloneElement.querySelector('.element__title').textContent = element.name;
+
+  buttonsDeleteCards.addEventListener('click', () => { cloneElement.remove(); });
+  buttonsLike.addEventListener('click', () => { buttonsLike.classList.toggle('element__button-like_active') });
   elements.append(cloneElement);
-});
-
-
-//Кнопка 'Like' меняет цвет
-const buttonsLike = document.querySelectorAll('.element__button-like');
-
-buttonsLike.forEach((item, i) => {
-  buttonsLike[i].addEventListener('click', (e) => {
-    const btn = e.target;
-    btn.classList.toggle('element__button-like_active');
-  });
-});
-
-
-//Кнопка 'Delete' на карточке удаляющая карточку
-const buttonsDeleteCards = document.querySelectorAll('.element__button-delete');
-
-buttonsDeleteCards.forEach((item, i) => {
-  buttonsDeleteCards[i].addEventListener('click', (e) => {
-    const btn = e.target.parentNode;
-    btn.parentNode.removeChild(btn);
-  });
 });
 
 
@@ -101,11 +85,21 @@ function popupAddNewCardOpen() {
 function submitAddNewCard(evt) {
   evt.preventDefault();
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
+  const buttonsDeleteCards = cloneElement.querySelector('.element__button-delete');
+  const buttonsLike = cloneElement.querySelector('.element__button-like');
+
   cloneElement.querySelector('.element__image').src = addNewCardLink.value;
   cloneElement.querySelector('.element__image').alt = addNewCardTitle.value;
   cloneElement.querySelector('.element__title').textContent = addNewCardTitle.value;
+
+  buttonsDeleteCards.addEventListener('click', () => { cloneElement.remove(); });
+  buttonsLike.addEventListener('click', () => { buttonsLike.classList.toggle('element__button-like_active') });
   elements.prepend(cloneElement);
+
   popupAddNewCardClose();
+
+  addNewCardLink.value = '';
+  addNewCardTitle.value = '';
 }
 
 //popupAddNewCard - закрывается

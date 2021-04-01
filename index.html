@@ -64,22 +64,34 @@
       </div>
 
     </div>
-    <!--КОНЕЦ POPUP-->
+    <!--КОНЕЦ POPUP-PROFILE-->
   </div>
 
-  <!--НАЧАЛО POPUP-ADD-NEW-CARD-->
+  <!--НАЧАЛО POPUP ФОТО КАРТОЧКИ В МАСШТАБЕ-->
+  <div id="popup-open-card-image" class="popup">
+    <div class="popup__box-image-button">
+      <img src="" id="popup-image" class="popup__image">
+      <button id="button-close-card-image" type="reset" class="popup__button-close"></button>
+      <h3 id="popup-title-card-image" class="popup__title-image"></h3>
+    </div>
+  </div>
+
+  <!--КОНЕЦ POPUP ФОТО КАРТОЧКИ В МАСШТАБЕ-->
+
+
+  <!--НАЧАЛО POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ-->
   <div id="popup-add-new-card" class="popup">
     <div id="window-add-new-card" class="popup__window">
       <button id="add-new-card-button-close" type="reset" class="popup__button-close"></button>
       <h3 class="popup__title">Новое место</h3>
       <form id="form-add-new-card" class="popup__form" method="POST" name="formPopupAddNewCard">
-        <input id="add-new-card-title" type="text" class="popup__input" placeholder="Название" name="title">
-        <input id="add-new-card-link" type="text" class="popup__input" placeholder="Ссылка на картинку" name="link">
-        <button type="submit" class="popup__button-save">Сохранить</button>
+        <input id="add-new-card-title" type="text" class="popup__input" placeholder="Название" name="title" required>
+        <input id="add-new-card-link" type="text" class="popup__input" placeholder="Ссылка на картинку" name="link" required>
+        <button type="submit" class="popup__button-save">Создать</button>
       </form>
     </div>
   </div>
-  <!--КОНЕЦ PPOPUP-ADD-NEW-CARD-->
+  <!--КОНЕЦ POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ-->
 
   <!--НАЧАЛО TEMPLATE-ELEMENTS-->
   <template class="template-element">

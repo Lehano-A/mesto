@@ -8,8 +8,14 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(00, 00, 00, 0.5);
-  transition: 0.5s;
+  transition: 0.3s;
   opacity: 0;
   height: 0;
   overflow: hidden;
+}
+
+@media screen and (max-width: 742px) {
+  .popup {
+    background-color: rgba(00, 00, 00, 0.9);
+  }
 }

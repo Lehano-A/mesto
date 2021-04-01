@@ -1,12 +1,13 @@
 .profile__name-button-box {
   display: flex;
   align-items: baseline;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-top: 19px;
 }
 
 @media screen and (max-width: 742px) {
   .profile__name-button-box {
+    justify-content: flex-end;
     margin-top: 26px;
     width: 282px;
   }

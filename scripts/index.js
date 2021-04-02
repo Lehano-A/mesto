@@ -2,31 +2,38 @@
 //БЛОК ПЕРЕМЕННЫХ
 /////////////////////////////////////////////////
 
-
 // Поиск шаблона
 const elements = document.querySelector('.elements');
 const templateElement = document.querySelector('.template-element').content;
+const cloneElement = templateElement.querySelector('.element').cloneNode(true);
+const buttonsDeleteCards = cloneElement.querySelector('.element__button-delete');
+const cloneElementImage = cloneElement.querySelector('.element__image');
+const buttonsLike = cloneElement.querySelector('.element__button-like');
+const textCloneElement = cloneElement.querySelector('.element__title');
 
 
 // Popup открывается
 const editButton = document.querySelector('.profile__edit-button');
-const popup = document.querySelector('.popup');
+const popupProfile = document.querySelector('.popup');
 
 
-// Popup закрывается по клику на кнопку закрытия
-const popupButtonClose = document.querySelector('.popup__button-close');
+// Popups закрываются по клику на кнопку закрытия
+const popupsButtonsClose = document.querySelector('.popup__button-close');
 
 
 // Popup сохраняет информацию из inputs
-const formElement = document.querySelector('.popup__form');
-const nameInput = formElement.querySelector('#popup_name');
-const statusInput = formElement.querySelector('#popup_status');
+const profileFormElement = document.querySelector('.popup__form');
+const nameInput = profileFormElement.querySelector('#popup_name');
+const statusInput = profileFormElement.querySelector('#popup_status');
 const profileName = document.querySelector('.profile__name'); // Жак-Ив Кусто
 const profileStatus = document.querySelector('.profile__status'); // Исследователь океана
 
 
 // Popup масштабного открытия карточки
 const popupOpenCardImage = document.querySelector('#popup-open-card-image');
+const srcOpenCardImage = popupOpenCardImage.querySelector('#popup-image');
+const altOpenCardImage = popupOpenCardImage.querySelector('#popup-image');
+const textOpenCardImage = popupOpenCardImage.querySelector('#popup-title-card-image');
 const buttonCloseCardImage = popupOpenCardImage.querySelector('#button-close-card-image');
 
 
@@ -41,68 +48,17 @@ const addNewCardTitle = document.querySelector('#add-new-card-title');
 const addNewCardLink = document.querySelector('#add-new-card-link');
 
 
-const initialCards = [
-  {
-    name: 'Планета Земля',
-    link: './images/milky-way-planet-earth.jpg'
-  },
-  {
-    name: 'Судак, Крым',
-    link: './images/sudak-crimea.jpg'
-  },
-  {
-    name: 'Моаб, США',
-    link: './images/moab-usa.jpg'
-  },
-  {
-    name: 'Чжанъе, Китай',
-    link: './images/zhangye-china.jpg'
-  },
-  {
-    name: 'Онтарио, Канада',
-    link: './images/ontario-canada.jpg'
-  },
-  {
-    name: 'Мон-Сен-Мишель, Франция',
-    link: './images/mont-saint-michel-france.jpg'
-  }
-];
-
-
 /////////////////////////////////////////////////
 // БЛОК ФУНКЦИЙ
 /////////////////////////////////////////////////
 
-
 // Функция первоначальной загрузки всех элементов массива на страницу
-const addCard = initialCards.forEach(function (element) {
-  const cloneElement = templateElement.querySelector('.element').cloneNode(true);
-  const buttonsDeleteCards = cloneElement.querySelector('.element__button-delete');
-  const buttonsLike = cloneElement.querySelector('.element__button-like');
-  const cloneElementImage = cloneElement.querySelector('.element__image');
-
-  cloneElement.querySelector('.element__image').src = element.link;
-  cloneElement.querySelector('.element__image').alt = element.name;
-  cloneElement.querySelector('.element__title').textContent = element.name;
-
-  buttonsDeleteCards.addEventListener('click', () => { cloneElement.remove(); });
-  buttonsLike.addEventListener('click', () => { buttonsLike.classList.toggle('element__button-like_active'); });
-
-  cloneElementImage.addEventListener('click', () => {
-    popupOpenCardImage.querySelector('#popup-image').src = element.link;
-    popupOpenCardImage.classList.add('popup_opened');
-    popupOpenCardImage.querySelector('#popup-title-card-image').textContent = element.name;
-  });
-
-  elements.append(cloneElement);
-});
-
 
 
 // Кнопка AddNewCard [ + ] в блоке "Profile"
 // Popup добавления новой карточки => ОТКРЫВАЕТСЯ
 function popupAddNewCardOpen() {
-  popupAddNewCard.classList.add('popup_opened');
+  openPopup(popupAddNewCard);
 }
 
 
@@ -110,60 +66,85 @@ function popupAddNewCardOpen() {
 function submitAddNewCard(evt) {
   evt.preventDefault();
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
-  const buttonsDeleteCards = cloneElement.querySelector('.element__button-delete');
-  const buttonsLike = cloneElement.querySelector('.element__button-like');
   const cloneElementImage = cloneElement.querySelector('.element__image');
-  const popupOpenCardImage = document.querySelector('#popup-open-card-image');
+  const buttonsLike = cloneElement.querySelector('.element__button-like');
+  const textCloneElement = cloneElement.querySelector('.element__title');
+  const buttonsDeleteCards = cloneElement.querySelector('.element__button-delete');
 
-  cloneElement.querySelector('.element__image').src = addNewCardLink.value;
-  cloneElement.querySelector('.element__image').alt = addNewCardTitle.value;
-  cloneElement.querySelector('.element__title').textContent = addNewCardTitle.value;
+  cloneElementImage.src = addNewCardLink.value;
+  cloneElementImage.alt = addNewCardTitle.value;
+  textCloneElement.textContent = addNewCardTitle.value;
 
   buttonsDeleteCards.addEventListener('click', () => { cloneElement.remove(); });
   buttonsLike.addEventListener('click', () => { buttonsLike.classList.toggle('element__button-like_active'); });
 
   cloneElementImage.addEventListener('click', () => {
-    popupOpenCardImage.querySelector('#popup-title-card-image').textContent = cloneElement.querySelector('.element__title').textContent;
-    popupOpenCardImage.querySelector('#popup-image').src = cloneElement.querySelector('.element__image').src;
-    popupOpenCardImage.querySelector('#popup-image').alt =  cloneElement.querySelector('.element__image').alt;
-    popupOpenCardImage.classList.add('popup_opened');
+    addCardDataListener(cloneElementImage.src, cloneElementImage.alt, textCloneElement.textContent)
+    openPopup(popupOpenCardImage);
   });
 
 
   elements.prepend(cloneElement);
 
-  popupClose();
+  closePopup(popupAddNewCard);
 
-  addNewCardLink.value = '';
-  addNewCardTitle.value = '';
+  formAddNewCard.reset();
 }
 
 
 
-// Кнопка "Редактировать профиль" в блоке "Profile"
+initialCards.forEach(function (element) {
+  const cloneElement = templateElement.querySelector('.element').cloneNode(true);
+  const cloneElementImage = cloneElement.querySelector('.element__image');
+  const buttonsLike = cloneElement.querySelector('.element__button-like');
+  const textCloneElement = cloneElement.querySelector('.element__title');
+  const buttonsDeleteCards = cloneElement.querySelector('.element__button-delete');
+
+
+  cloneElementImage.src = element.link;
+  cloneElementImage.alt = element.name;
+  textCloneElement.textContent = element.name;
+
+  buttonsDeleteCards.addEventListener('click', () => { cloneElement.remove(); });
+  buttonsLike.addEventListener('click', () => { buttonsLike.classList.toggle('element__button-like_active'); });
+
+  cloneElementImage.addEventListener('click', () => {
+    addCardDataListener(element.link, element.name, element.name);
+    openPopup(popupOpenCardImage);
+  });
+
+  elements.append(cloneElement);
+});
+
+
+
+//Функция добавления параметров в слушатель внутри создания карточки
+function addCardDataListener(src, alt, textContent) {
+  srcOpenCardImage.src = src;
+  altOpenCardImage.alt = alt;
+  textOpenCardImage.textContent = textContent;
+}
+
+
 // Popup открывается
-function popupOpen() {
-  nameInput.value = profileName.textContent;
-  statusInput.value = profileStatus.textContent;
+function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
 
 // Popup закрывается по клику на кнопку закрытия
-function popupClose() {
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  popupAddNewCard.classList.remove('popup_opened');
-  popupOpenCardImage.classList.remove('popup_opened');
 }
 
 
-// Popup сохраняет информацию из inputs
+// Popup-profile сохраняет информацию из inputs
 // Функция изменения значений элементов name и status на значение из inputs
 function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileStatus.textContent = statusInput.value;
-  popupClose();
+  closePopup(popupProfile);
 }
 
 
@@ -173,7 +154,11 @@ function formSubmitHandler(evt) {
 
 
 // Popup профайла => ОТКРЫВАЕТСЯ
-editButton.addEventListener('click', popupOpen);
+editButton.addEventListener('click', () => {
+  nameInput.value = profileName.textContent;
+  statusInput.value = profileStatus.textContent;
+  openPopup(popupProfile);
+});
 
 
 // Popup добавления новой карточки => ОТКРЫВАЕТСЯ
@@ -185,19 +170,19 @@ formAddNewCard.addEventListener('submit', submitAddNewCard);
 
 
 // Popup сохраняет информацию из inputs
-formElement.addEventListener('submit', formSubmitHandler);
+profileFormElement.addEventListener('submit', formSubmitHandler);
 
 
 // Popup профайла => ЗАКРЫВАЕТСЯ
-popupButtonClose.addEventListener('click', popupClose);
+popupsButtonsClose.addEventListener('click', () => { closePopup(popupProfile); });
 
 
 // Popup добавления новой карточки => ЗАКРЫВАЕТСЯ
-popupAddNewCardButtonClose.addEventListener('click', popupClose);
+popupAddNewCardButtonClose.addEventListener('click', () => { closePopup(popupAddNewCard) });
 
 
 // Popup масштабного открытия карточки => ЗАКРЫВАЕТСЯ
-buttonCloseCardImage.addEventListener('click', popupClose);
+buttonCloseCardImage.addEventListener('click', () => { closePopup(popupOpenCardImage) });
 
 
 

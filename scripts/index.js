@@ -54,7 +54,7 @@ const addNewCardLink = document.querySelector('#add-new-card-link');
 
 
 // POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
-function popupAddNewCardOpen() {
+function openPopupAddNewCard() {
   openPopup(popupAddNewCard);
 }
 
@@ -122,7 +122,7 @@ function closePopup(popup) {
 
 // POPUP-PROFILE СОХРАНЯЕТ ИНФОРМАЦИЮ ИЗ INPUTS
 // ФУНКЦИЯ ИЗМЕНЕНИЯ ЗНАЧНИЙ ЭЛЕМЕНТОВ NAME И STATUS НА ЗНАЧЕНИЕ ИЗ INPUTS
-function formSubmitHandler(event) {
+function submitFormHandler(event) {
   event.preventDefault();
   profileName.textContent = nameInput.value;
   profileStatus.textContent = statusInput.value;
@@ -148,7 +148,7 @@ popupsButtonsClose.addEventListener('click', () => { closePopup(popupProfile); }
 
 
 // POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
-addNewCardButton.addEventListener('click', popupAddNewCardOpen);
+addNewCardButton.addEventListener('click', openPopupAddNewCard);
 
 
 // ФОРМА ОТПРАВКИ ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ [ + ]
@@ -156,7 +156,7 @@ formAddNewCard.addEventListener('submit', submitAddNewCard);
 
 
 // POPUP СОХРАНЯЕТ ИНФОРМАЦИЮ ИЗ INPUTS
-profileFormElement.addEventListener('submit', formSubmitHandler);
+profileFormElement.addEventListener('submit', submitFormHandler);
 
 
 // POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ЗАКРЫВАЕТСЯ

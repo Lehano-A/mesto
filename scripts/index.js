@@ -7,7 +7,6 @@ const elements = document.querySelector('.elements');
 const templateElement = document.querySelector('.template-element').content;
 
 
-
 // POPUP ОТКРЫВАЕТСЯ
 const editButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup');

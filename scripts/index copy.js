@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////
-// БЛОК ПЕРЕМЕННЫХ
+//БЛОК ПЕРЕМЕННЫХ
 /////////////////////////////////////////////////
 
 // ПОИСК ШАБЛОНА
@@ -57,13 +57,13 @@ function openPopupAddNewCard() {
 
 // ПЕРВОНАЧАЛЬНЫЙ ЦИКЛ ДОБАВЛЕНИЯ НАЧАЛЬНЫХ КАРТОЧЕК
 initialCards.forEach(function (element) {
-  const cloneElementImageParameters = createNewCard(element);
+  const cloneElementImageParameters = createNewCard(element.link, element.name, element.name);
   elements.append(cloneElementImageParameters);
 });
 
 
-// ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
-function createNewCard(cardData) {
+//ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
+function createNewCard(src, alt, textContent) {
 
   const cloneElement = templateElement.querySelector('.element').cloneNode(true);
   const cloneElementImage = cloneElement.querySelector('.element__image');
@@ -71,9 +71,9 @@ function createNewCard(cardData) {
   const titleCloneElement = cloneElement.querySelector('.element__title');
   const buttonsDeleteCards = cloneElement.querySelector('.element__button-delete');
 
-  cloneElementImage.src = cardData.link;
-  cloneElementImage.alt = cardData.name;
-  titleCloneElement.textContent = cardData.name;
+  cloneElementImage.src = src;
+  cloneElementImage.alt = alt;
+  titleCloneElement.textContent = textContent;
 
   buttonsDeleteCards.addEventListener('click', () => { cloneElement.remove(); });
   buttonsLike.addEventListener('click', () => { buttonsLike.classList.toggle('element__button-like_active'); });
@@ -92,16 +92,10 @@ function createNewCard(cardData) {
 }
 
 
-// ФОРМА ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ [ + ]
+//ФОРМА ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ [ + ]
 function submitAddNewCard(event) {
   event.preventDefault();
-
-const cardData = {
-    link: addNewCardLink.value,
-    name: addNewCardTitle.value
-  }
-
-  const cloneElementImageParameters = createNewCard(cardData);
+  const cloneElementImageParameters = createNewCard(addNewCardLink.value, addNewCardTitle.value, addNewCardTitle.value);
   elements.prepend(cloneElementImageParameters);
   closePopup(popupAddNewCard);
   formAddNewCard.reset();

@@ -5,7 +5,6 @@
 // ПОИСК ШАБЛОНА
 const elements = document.querySelector('.elements');
 const templateElement = document.querySelector('.template-element').content;
-const cloneElement = templateElement.querySelector('.element').cloneNode(true);
 
 
 // POPUP ОТКРЫВАЕТСЯ

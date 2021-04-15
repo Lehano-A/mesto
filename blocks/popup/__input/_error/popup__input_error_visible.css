@@ -1,0 +1,5 @@
+/*НИЖНЯЯ ГРАНИЦА В ПОЛЯХ ФОРМ, ЕСЛИ ОШИБКА*/
+
+.popup__input_error_visible {
+  border-bottom: 1px red solid;
+}

@@ -16,7 +16,8 @@
 
 .popup__button-save:hover {
   cursor: pointer;
-  background-color: #313131;
+  background-color:rgba(0, 0, 0, 0.8);
+  color: #fff;
 }
 
 .popup__button-save:focus {

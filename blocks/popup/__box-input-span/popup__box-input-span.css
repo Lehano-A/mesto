@@ -1,0 +1,14 @@
+.popup__box-input-span {
+  position: relative;
+  margin-top: 29px;
+}
+
+@media screen and (max-width: 742px) {
+  .popup__box-input-span:first-child {
+    margin-top: 0;
+  }
+
+  .popup__box-input-span {
+    margin-top: 28px;
+  }
+}

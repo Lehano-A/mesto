@@ -82,9 +82,9 @@ function hideInputError(eachFormElement, eachInputElement) {
 // (ЕСЛИ ВСЁ ВАЛИДНО - КНОПКА АКТИВНА)
 function toggleButtonDesign(inputsFormElements, buttonFormSubmitElement) {
 
-  const aaa = hasInvalidInput(inputsFormElements);
+  const checkInvalidInput = hasInvalidInput(inputsFormElements);
 
-  if (aaa) { // ЕСЛИ ХОТЯ БЫ ОДНО ПОЛЕ НЕВАЛИДНО
+  if (checkInvalidInput) { // ЕСЛИ ХОТЯ БЫ ОДНО ПОЛЕ НЕВАЛИДНО
     buttonFormSubmitElement.setAttribute('disabled', true); // ДЕАКТИВИРУЕМ КНОПКУ "ОТПРАВКИ ДАННЫХ"
     buttonFormSubmitElement.classList.add(enableValidationConfig.inactiveButtonClass); // МЕНЯЕМ ДИЗАЙН КНОПКИ "ОТПРАВКИ ДАННЫХ"
   } else { // ЕСЛИ ВСЕ ПОЛЯ ВАЛИДНЫ

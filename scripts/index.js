@@ -17,8 +17,8 @@ const popupsButtonsClose = document.querySelector(".popup__button-close");
 
 // POPUP ПРОФАЙЛА СОХРАНЯЕТ ИНФОРМАЦИЮ ИЗ INPUTS
 const profileFormElement = document.querySelector(".popup__form");
-const nameInput = profileFormElement.querySelector("#popup_name");
-const statusInput = profileFormElement.querySelector("#popup_status");
+const nameInput = profileFormElement.querySelector("#popup-name");
+const statusInput = profileFormElement.querySelector("#popup-status");
 const profileName = document.querySelector(".profile__name"); // Жак-Ив Кусто
 const profileStatus = document.querySelector(".profile__status"); // Исследователь океана
 

@@ -1,0 +1,5 @@
+/*НИЖНЯЯ ГРАНИЦА В ПОЛЯХ ФОРМ, ЕСЛИ НЕТ ОШИБКИ*/
+
+.popup__input_error_novisible {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}

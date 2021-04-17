@@ -46,15 +46,15 @@ function setEventListeners(eachFormElement, inputSelector) {
 
 // ПРОВЕРКА ВАЛИДНОСТИ ПОЛЯ, В КОТОРОМ ВВОДЯТСЯ ДАННЫЕ +
 // ОТПРАВКА КОМАНДЫ НА ВКЛЮЧЕНИЕ/ОТКЛЮЧЕНИЕ ОШИБКИ ВВОДА ДАННЫХ
- function checkAtValid(eachFormElement, eachInputElement) {
+function checkAtValid(eachFormElement, eachInputElement) {
 
-   if (!eachInputElement.validity.valid) {
+  if (!eachInputElement.validity.valid) {
     showInputError(eachFormElement, eachInputElement); // FALSE - ПОКАЗЫВАЕМ ОШИБКУ
 
-   } else {
+  } else {
     hideInputError(eachFormElement, eachInputElement); // TRUE - СКРЫВАЕМ ОШИБКУ
-   }
- }
+  }
+}
 
 
 // FALSE - ПОКАЗЫВАЕМ ОШИБКУ ВВОДА ДАННЫХ В ПОЛЕ
@@ -97,6 +97,6 @@ function toggleButtonDesign(inputsFormElements, buttonFormSubmitElement) {
 function hasInvalidInput(inputsFormElements) {
 
   return inputsFormElements.some((eachInputElement) => { // ВОЗВРАЩАЕТ ПРОВЕРКУ ВАЛИДНОСТИ КАЖДОГО ПОЛЯ ИЗ МАССИВА ПОЛЕЙ
-  return !eachInputElement.validity.valid; // ВОЗВРАЩАЕТ НЕВАЛИДНОСТЬ
-});
+    return !eachInputElement.validity.valid; // ВОЗВРАЩАЕТ НЕВАЛИДНОСТЬ
+  });
 }

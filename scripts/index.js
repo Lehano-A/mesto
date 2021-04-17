@@ -21,6 +21,7 @@ const nameInput = profileFormElement.querySelector("#popup-name");
 const statusInput = profileFormElement.querySelector("#popup-status");
 const profileName = document.querySelector(".profile__name"); // Жак-Ив Кусто
 const profileStatus = document.querySelector(".profile__status"); // Исследователь океана
+const profileButtonSave = profileFormElement.querySelector('.popup__button-save');
 
 // POPUP МАСШТАБНОГО ОТКРЫТИЯ КАРТОЧКИ
 const popupZoomOpenCardImage = document.querySelector("#popup-open-card-image");
@@ -38,6 +39,7 @@ const formAddNewCard = windowAddNewCard.querySelector("#form-add-new-card");
 const popupAddNewCardButtonClose = windowAddNewCard.querySelector("#add-new-card-button-close");
 const addNewCardTitle = document.querySelector("#add-new-card-title");
 const addNewCardLink = document.querySelector("#add-new-card-link");
+const addNewCardButtonSave = formAddNewCard.querySelector('.popup__button-save');
 
 
 
@@ -48,7 +50,7 @@ const addNewCardLink = document.querySelector("#add-new-card-link");
 
 // POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
 function openPopupAddNewCard() {
-  enableValidation(enableValidationConfig.formSelector, enableValidationConfig.inputSelector)
+  formAddNewCard.reset();
   openPopup(popupAddNewCard);
 }
 
@@ -102,7 +104,8 @@ function submitAddNewCard() {
   elements.prepend(cloneElementImageParameters);
   closePopup(popupAddNewCard);
   formAddNewCard.reset();
-  enableValidation(enableValidationConfig.formSelector, enableValidationConfig.inputSelector);
+  inputsFormAddNewCard = [addNewCardTitle, addNewCardLink]; // ВСЕ ПОЛЯ ФОРМЫ ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ
+  toggleButtonDesign(inputsFormAddNewCard, addNewCardButtonSave); // ОТПРАВЛЯЕМ ВСЕ ПОЛЯ И КНОПКУ ОТПРАВКИ ДАННЫХ НА ВАЛИДАЦИЮ
 }
 
 // POPUP (ЛЮБОЙ) ОТКРЫВАЕТСЯ
@@ -119,7 +122,6 @@ function handlerProfileSubmit() {
 }
 
 
-
 /////////////////////////////////////////////////
 // БЛОК СЛУШАТЕЛЕЙ
 /////////////////////////////////////////////////
@@ -128,7 +130,10 @@ function handlerProfileSubmit() {
 editButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   statusInput.value = profileStatus.textContent;
-  enableValidation(enableValidationConfig.formSelector, enableValidationConfig.inputSelector);
+  inputsFormProfile = [nameInput, statusInput];
+  hideInputError(profileFormElement, nameInput);
+  hideInputError(profileFormElement, statusInput);
+  toggleButtonDesign(inputsFormProfile, profileButtonSave);
   openPopup(popupProfile);
 });
 
@@ -138,7 +143,11 @@ popupsButtonsClose.addEventListener("click", () => {
 });
 
 // СЛУШАТЕЛЬ - POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
-addNewCardButton.addEventListener("click", openPopupAddNewCard);
+addNewCardButton.addEventListener("click", () => {
+  hideInputError(formAddNewCard, addNewCardTitle);
+  hideInputError(formAddNewCard, addNewCardLink);
+  openPopupAddNewCard();
+});
 
 // СЛУШАТЕЛЬ - ФОРМА ОТПРАВКИ ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ [ + ]
 formAddNewCard.addEventListener("submit", submitAddNewCard);
@@ -158,5 +167,5 @@ buttonCloseCardImage.addEventListener("click", () => {
 
 // СЛУШАТЕЛЬ - ЗАКРЫТИЕ ПОПАПА ПО КНОПКЕ 'ESCAPE'
 document.addEventListener('keydown', (evt) => {
-  closePopupAtEsc(evt);
+  closePopupByEsc(evt);
 });

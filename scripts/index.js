@@ -165,14 +165,3 @@ popupAddNewCardButtonClose.addEventListener("click", () => {
 buttonCloseCardImage.addEventListener("click", () => {
   closePopup(popupZoomOpenCardImage);
 });
-
-// СЛУШАТЕЛЬ - ЗАКРЫТИЕ ПОПАПА ПО КНОПКЕ 'ESCAPE'
-/*
-document.addEventListener('keydown', (evt) => {
-  closePopupByEsc(evt);
-});
-*/
-
-
-
-

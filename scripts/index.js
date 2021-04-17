@@ -110,6 +110,7 @@ function submitAddNewCard() {
 
 // POPUP (ЛЮБОЙ) ОТКРЫВАЕТСЯ
 function openPopup(popup) {
+  document.addEventListener('keydown', closePopupByEsc);
   popup.classList.add('popup_opened');
 }
 
@@ -166,6 +167,12 @@ buttonCloseCardImage.addEventListener("click", () => {
 });
 
 // СЛУШАТЕЛЬ - ЗАКРЫТИЕ ПОПАПА ПО КНОПКЕ 'ESCAPE'
+/*
 document.addEventListener('keydown', (evt) => {
   closePopupByEsc(evt);
 });
+*/
+
+
+
+

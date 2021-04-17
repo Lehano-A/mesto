@@ -1,8 +1,8 @@
 // ЗАКРЫВАТЕЛЬ ПОПАПА ПО КНОПКЕ 'ESCAPE'
 function closePopupByEsc(evt) {
   if (evt.key == 'Escape') {
-    console.log(evt.key)
     const openPopup = document.querySelector('.popup_opened');
+    document.removeEventListener('keydown', closePopupByEsc);
     closePopup(openPopup);
   }
 }

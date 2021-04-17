@@ -3,3 +3,8 @@
   background-color: transparent;
   border: 1px #c5c5c5 solid;
 }
+
+.popup__button-save_disabled:hover {
+  background-color: transparent;
+  color: #c5c5c5
+}

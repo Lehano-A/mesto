@@ -56,16 +56,16 @@
         <button type="reset" id="popup-profile-button-close" class="popup__button-close"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" method="POST" name="formPopup" novalidate>
-          <section class="popup__box-input-span">
+          <label class="popup__box-input-span">
             <input id="popup-name" autocomplete="off" type="text" class="popup__input" placeholder="Ваше имя"
               name="name" minlength="2" maxlength="40" required>
             <span class="popup__input-error popup-name-error"></span>
-          </section>
-          <section class="popup__box-input-span">
+          </label>
+          <label class="popup__box-input-span">
             <input id="popup-status" autocomplete="off" type="text" class="popup__input" placeholder="О себе"
               name="status" minlength="2" maxlength="200" required>
             <span class="popup__input-error popup-status-error"></span>
-          </section>
+          </label>
           <button type="submit" class="popup__button-save">Сохранить</button>
         </form>
       </div>
@@ -92,16 +92,16 @@
       <button id="add-new-card-button-close" type="reset" class="popup__button-close"></button>
       <h3 class="popup__title">Новое место</h3>
       <form id="form-add-new-card" class="popup__form" method="POST" name="formPopupAddNewCard" novalidate>
-        <section class="popup__box-input-span">
+        <label class="popup__box-input-span">
           <input id="add-new-card-title" value="" autocomplete="off" type="text" class="popup__input"
             placeholder="Название" name="title" minlength="2" maxlength="30" required>
           <span class="popup__input-error add-new-card-title-error"></span>
-        </section>
-        <section class="popup__box-input-span">
+        </label>
+        <label class="popup__box-input-span">
           <input id="add-new-card-link" value="" type="url" autocomplete="off" class="popup__input"
             placeholder="Ссылка на картинку" name="link" required>
           <span class="popup__input-error add-new-card-link-error"></span>
-        </section>
+        </label>
         <button type="submit" class="popup__button-save">Создать</button>
       </form>
     </div>

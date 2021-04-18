@@ -2,7 +2,6 @@
 function closePopupByEsc(evt) {
   if (evt.key == 'Escape') {
     const openPopup = document.querySelector('.popup_opened');
-    document.removeEventListener('keydown', closePopupByEsc);
     closePopup(openPopup);
   }
 }
@@ -10,6 +9,7 @@ function closePopupByEsc(evt) {
 
 // ЗАКРЫВАТЕЛЬ ПОПАПА
 function closePopup(popup) { // ПРИНИМАЕТ В СЕБЯ НАЙДЕННЫЙ ОТКРЫТЫЙ ПОПАП
+  document.removeEventListener('keydown', closePopupByEsc);
   popup.classList.remove('popup_opened');
 }
 

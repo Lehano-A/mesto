@@ -33,9 +33,10 @@ function setEventListeners(eachFormElement, inputSelector) {
 
   const inputsFormElements = Array.from(eachFormElement.querySelectorAll(inputSelector)); // ДЕЛАЕМ МАССИВ ПОЛЕЙ ИЗ ОТДЕЛЬНОЙ ФОРМЫ
   const buttonFormSubmitElement = eachFormElement.querySelector(enableValidationConfig.submitButtonSelector); // НАХОДИМ КНОПКУ "ОТПРАВКИ ДАННЫХ" В ОТДЕЛЬНОЙ ФОРМЕ
-  toggleButtonDesign(inputsFormElements, buttonFormSubmitElement); // ОТПРАВЛЯЕМ СРАЗУ НА ВАЛИДАЦИЮ СРАЗУ ВСЕХ ПОЛЕЙ
+  toggleButtonDesign(inputsFormElements, buttonFormSubmitElement); // ОТПРАВЛЯЕМ НА ВАЛИДАЦИЮ СРАЗУ ВСЕ ПОЛЯ
 
   inputsFormElements.forEach((eachInputElement) => { // ПЕРЕСЧИТЫВАЕМ ВСЕ ПОЛЯ В ФОРМЕ
+
     eachInputElement.addEventListener('input', () => { // КАЖДОМУ ПОЛЮ ВЕШАЕМ 'INPUT'
       checkAtValid(eachFormElement, eachInputElement); // ПРИ ЛЮБОМ ВВОДЕ/УДАЛЕНИИ СИМВОЛОВ - ОТПРАВЛЯЕМ НА ВАЛИДАЦИЮ ФОРМУ И ПОЛЕ
       toggleButtonDesign(inputsFormElements, buttonFormSubmitElement); // ОТПРАВЛЯЕМ НА ВАЛИДАЦИЮ СРАЗУ ВСЕХ ПОЛЕЙ И КНОПКУ "ОТПРАВКИ ДАННЫХ"
@@ -47,12 +48,13 @@ function setEventListeners(eachFormElement, inputSelector) {
 // ПРОВЕРКА ВАЛИДНОСТИ ПОЛЯ, В КОТОРОМ ВВОДЯТСЯ ДАННЫЕ +
 // ОТПРАВКА КОМАНДЫ НА ВКЛЮЧЕНИЕ/ОТКЛЮЧЕНИЕ ОШИБКИ ВВОДА ДАННЫХ
 function checkAtValid(eachFormElement, eachInputElement) {
-
   if (!eachInputElement.validity.valid) {
     showInputError(eachFormElement, eachInputElement); // FALSE - ПОКАЗЫВАЕМ ОШИБКУ
 
   } else {
+
     hideInputError(eachFormElement, eachInputElement); // TRUE - СКРЫВАЕМ ОШИБКУ
+
   }
 }
 
@@ -69,11 +71,10 @@ function showInputError(eachFormElement, eachInputElement) {
 
 // TRUE - ПРЯЧЕМ ОШИБКУ ВВОДА ДАННЫХ В ПОЛЕ
 function hideInputError(eachFormElement, eachInputElement) {
-
-  const spanInputError = eachFormElement.querySelector(`.${eachInputElement.id}-error`);
-  eachInputElement.classList.remove(enableValidationConfig.inputErrorClass);
-  spanInputError.classList.remove(enableValidationConfig.spanErrorActive);
-  spanInputError.textContent = '';
+ const spanInputError = eachFormElement.querySelector(`.${eachInputElement.id}-error`);
+ eachInputElement.classList.remove(enableValidationConfig.inputErrorClass);
+ spanInputError.classList.remove(enableValidationConfig.spanErrorActive);
+ spanInputError.textContent = '';
 }
 
 
@@ -95,7 +96,6 @@ function toggleButtonDesign(inputsFormElements, buttonFormSubmitElement) {
 
 // ПРОВЕРКА ВАЛИДНОСТИ СРАЗУ ВСЕХ ПОЛЕЙ ОТДЕЛЬНОЙ ФОРМЫ
 function hasInvalidInput(inputsFormElements) {
-
   return inputsFormElements.some((eachInputElement) => { // ВОЗВРАЩАЕТ ПРОВЕРКУ ВАЛИДНОСТИ КАЖДОГО ПОЛЯ ИЗ МАССИВА ПОЛЕЙ
     return !eachInputElement.validity.valid; // ВОЗВРАЩАЕТ НЕВАЛИДНОСТЬ
   });

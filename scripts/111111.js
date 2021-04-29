@@ -1,4 +1,3 @@
-
 /////////////////////////////////////////////////
 // БЛОК ПЕРЕМЕННЫХ
 /////////////////////////////////////////////////
@@ -38,14 +37,17 @@ const popupAddNewCard = document.querySelector("#popup-add-new-card");
 const windowAddNewCard = document.querySelector("#window-add-new-card");
 const formAddNewCard = windowAddNewCard.querySelector("#form-add-new-card");
 const popupAddNewCardButtonClose = windowAddNewCard.querySelector("#add-new-card-button-close");
-const templateSelector = document.querySelector(".template-element");
+
+const addNewCardTitle = document.querySelector("#add-new-card-title");
+const addNewCardLink = document.querySelector("#add-new-card-link");
+
 const addNewCardButtonSave = formAddNewCard.querySelector('.popup__button-save');
-const addNewCardTitle = document.querySelector('#add-new-card-title');
-const addNewCardLink = document.querySelector('#add-new-card-link');
 
 
 
 
+
+export {templateElement, addNewCardTitle, addNewCardLink};
 
 /////////////////////////////////////////////////
 // БЛОК ФУНКЦИЙ
@@ -58,33 +60,82 @@ function openPopupAddNewCard() {
 }
 
 
-
 // ПЕРВОНАЧАЛЬНЫЙ ЦИКЛ ДОБАВЛЕНИЯ НАЧАЛЬНЫХ КАРТОЧЕК
-
 initialCards.forEach(function (element) {
-  const initialCard = new Card(templateSelector, element);
-  const generateInitialCard = initialCard.generateCard();
-  elements.append(generateInitialCard);
+  const cloneElementImageParameters = createNewCard(element);
+  elements.append(cloneElementImageParameters);
 });
+
+
+/*
+// ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
+function createNewCard(cardData) {
+  const cloneElement = templateElement
+    .querySelector(".element")
+    .cloneNode(true);
+
+  const cloneElementImage = cloneElement.querySelector(".element__image");
+  const buttonsLike = cloneElement.querySelector(".element__button-like");
+  const titleCloneElement = cloneElement.querySelector(".element__title");
+  const buttonsDeleteCards = cloneElement.querySelector(".element__button-delete");
+
+  cloneElementImage.src = cardData.link;
+  cloneElementImage.alt = cardData.name;
+  titleCloneElement.textContent = cardData.name;
+
+  buttonsDeleteCards.addEventListener("click", () => {
+    cloneElement.remove();
+  });
+  buttonsLike.addEventListener("click", () => {
+    buttonsLike.classList.toggle("element__button-like_active");
+  });
+
+  cloneElementImage.addEventListener("click", (event) => {
+    const target = event.target;
+    srcZoomOpenCardImage.src = target.src;
+    altZoomOpenCardImage.alt = target.alt;
+    titleZoomOpenCardImage.textContent = titleCloneElement.textContent;
+
+    openPopup(popupZoomOpenCardImage);
+  });
+
+  return cloneElement;
+}
+*/
+
 
 
 // ФОРМА ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ [ + ]
 function submitAddNewCard() {
   const cardData = {
-    name: addNewCardTitle.value,
     link: addNewCardLink.value,
-  }
+    name: addNewCardTitle.value
+  };
 
-  const addNewCard = new Card(templateSelector, cardData);
-  const generateNewCard = addNewCard.generateCard();
-  elements.prepend(generateNewCard);
-
-  formAddNewCard.reset();
-
+  const cloneElementImageParameters = createNewCard(cardData);
+  elements.prepend(cloneElementImageParameters);
   closePopup(popupAddNewCard);
-  const inputsFormAddNewCard = [addNewCardTitle, addNewCardLink]; // ВСЕ ПОЛЯ ФОРМЫ ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ
+  formAddNewCard.reset();
+  inputsFormAddNewCard = [addNewCardTitle, addNewCardLink]; // ВСЕ ПОЛЯ ФОРМЫ ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ
   toggleButtonDesign(inputsFormAddNewCard, addNewCardButtonSave); // ОТПРАВЛЯЕМ ВСЕ ПОЛЯ И КНОПКУ ОТПРАВКИ ДАННЫХ НА ВАЛИДАЦИЮ
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -102,6 +153,26 @@ function handlerProfileSubmit() {
   profileStatus.textContent = statusInput.value;
   closePopup(popupProfile);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /////////////////////////////////////////////////
@@ -130,14 +201,17 @@ popupsButtonsClose.addEventListener("click", () => {
 
 
 
-
-
 // СЛУШАТЕЛЬ - POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
 addNewCardButton.addEventListener("click", () => {
-  hideInputError(formAddNewCard, document.querySelector("#add-new-card-title"));
-  hideInputError(formAddNewCard, document.querySelector("#add-new-card-link"));
+  hideInputError(formAddNewCard, addNewCardTitle);
+  hideInputError(formAddNewCard, addNewCardLink);
   openPopupAddNewCard();
 });
+
+
+
+
+
 
 
 // СЛУШАТЕЛЬ - ФОРМА ОТПРАВКИ ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ [ + ]
@@ -158,6 +232,3 @@ popupAddNewCardButtonClose.addEventListener("click", () => {
 buttonCloseCardImage.addEventListener("click", () => {
   closePopup(popupZoomOpenCardImage);
 });
-
-
-

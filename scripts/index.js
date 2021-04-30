@@ -1,7 +1,8 @@
 import FormValidator from './FormValidator.js';
 import Card from './Card.js';
-import { closePopupByEsc, closePopup } from './close-popup.js';
+import { closePopup } from './close-popup.js';
 import { initialCards } from './initial-cards.js';
+import { openPopup } from './open-popup.js';
 
 /////////////////////////////////////////////////
 // БЛОК ПЕРЕМЕННЫХ
@@ -9,13 +10,12 @@ import { initialCards } from './initial-cards.js';
 
 // ПОИСК ШАБЛОНА
 const elements = document.querySelector(".elements");
-const templateElement = document.querySelector(".template-element").content;
+
 
 
 // POPUP ПРОФАЙЛА ОТКРЫВАЕТСЯ
 const editButton = document.querySelector(".profile__edit-button");
 const popupProfile = document.querySelector("#popup-open-profile");
-const windowPopupProfile = document.querySelector('#window-popup-profile');
 
 // POPUPS ЗАКРЫВАЮТСЯ ПО КЛИКУ НА КНОПКУ ЗАКРЫТИЯ
 const popupsButtonsClose = document.querySelector(".popup__button-close");
@@ -26,13 +26,10 @@ const nameInput = profileFormElement.querySelector("#popup-name");
 const statusInput = profileFormElement.querySelector("#popup-status");
 const profileName = document.querySelector(".profile__name"); // Жак-Ив Кусто
 const profileStatus = document.querySelector(".profile__status"); // Исследователь океана
-const profileButtonSave = profileFormElement.querySelector('.popup__button-save');
+
 
 // POPUP МАСШТАБНОГО ОТКРЫТИЯ КАРТОЧКИ
 const popupZoomOpenCardImage = document.querySelector("#popup-open-card-image");
-const srcZoomOpenCardImage = popupZoomOpenCardImage.querySelector("#popup-image");
-const altZoomOpenCardImage = popupZoomOpenCardImage.querySelector("#popup-image");
-const titleZoomOpenCardImage = popupZoomOpenCardImage.querySelector("#popup-title-card-image");
 const buttonCloseCardImage = popupZoomOpenCardImage.querySelector("#button-close-card-image");
 
 // ДОБАВЛЕНИЕ НОВОЙ КАРТОЧКИ [ + ]
@@ -43,7 +40,6 @@ const windowAddNewCard = document.querySelector("#window-add-new-card");
 const formAddNewCard = windowAddNewCard.querySelector("#form-add-new-card");
 const popupAddNewCardButtonClose = windowAddNewCard.querySelector("#add-new-card-button-close");
 const templateSelector = document.querySelector(".template-element");
-const addNewCardButtonSave = formAddNewCard.querySelector('.popup__button-save');
 const addNewCardTitle = document.querySelector('#add-new-card-title');
 const addNewCardLink = document.querySelector('#add-new-card-link');
 
@@ -70,7 +66,6 @@ function openPopupAddNewCard() {
 }
 
 
-
 // ПЕРВОНАЧАЛЬНЫЙ ЦИКЛ ДОБАВЛЕНИЯ НАЧАЛЬНЫХ КАРТОЧЕК
 
 initialCards.forEach(function (element) {
@@ -85,7 +80,7 @@ function submitAddNewCard() {
   const cardData = {
     name: addNewCardTitle.value,
     link: addNewCardLink.value,
-  }
+  };
 
   const addNewCard = new Card(templateSelector, cardData);
   const generateNewCard = addNewCard.generateCard();
@@ -94,13 +89,6 @@ function submitAddNewCard() {
   formAddNewCard.reset();
 
   closePopup(popupAddNewCard);
-}
-
-
-// POPUP (ЛЮБОЙ) ОТКРЫВАЕТСЯ
-function openPopup(popup) {
-  document.addEventListener('keydown', closePopupByEsc);
-  popup.classList.add('popup_opened');
 }
 
 
@@ -122,8 +110,8 @@ function handlerProfileSubmit() {
 editButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   statusInput.value = profileStatus.textContent;
-  const validityFormProfile = new FormValidator(enableValidationConfig, profileFormElement)
-  const enableValidation = validityFormProfile.enableValidation();
+  const validityFormProfile = new FormValidator(enableValidationConfig, profileFormElement);
+  validityFormProfile.enableValidation();
   openPopup(popupProfile);
 });
 
@@ -137,7 +125,7 @@ popupsButtonsClose.addEventListener("click", () => {
 // СЛУШАТЕЛЬ - POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
 addNewCardButton.addEventListener("click", () => {
   const validityFormAddNewCard = new FormValidator(enableValidationConfig, formAddNewCard);
-  const enableValidation = validityFormAddNewCard.enableValidation();
+  validityFormAddNewCard.enableValidation();
   openPopupAddNewCard();
 });
 

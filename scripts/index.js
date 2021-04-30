@@ -1,8 +1,9 @@
 import FormValidator from './FormValidator.js';
 import Card from './Card.js';
+import openPopup from './open-popup.js';
 import { closePopup } from './close-popup.js';
 import { initialCards } from './initial-cards.js';
-import { openPopup } from './open-popup.js';
+
 
 /////////////////////////////////////////////////
 // БЛОК ПЕРЕМЕННЫХ

@@ -1,5 +1,5 @@
 import { closePopupByEsc } from './close-popup.js';
-import { openPopup } from './open-popup.js';
+import openPopup from './open-popup.js';
 
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {

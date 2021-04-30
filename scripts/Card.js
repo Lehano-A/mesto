@@ -1,3 +1,6 @@
+import { closePopupByEsc } from './close-popup.js';
+import { openPopup } from './open-popup.js';
+
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {
 
@@ -27,7 +30,6 @@ export default class Card {
   }
 
 
-
   // ОБРАБОТЧИК УДАЛЕНИЯ КАРТОЧКИ
   _handleDeleteCards() {
     this._cardTemplate.remove();
@@ -39,13 +41,15 @@ export default class Card {
   }
 
   // ОБРАБОТЧИК МАСШТАБИРОВАНИЯ КАРТИНКИ
-  _handleZoomImage(event) {
-    const target = event.target;
-    srcZoomOpenCardImage.src = target.src;
-    altZoomOpenCardImage.alt = target.alt;
-    titleZoomOpenCardImage.textContent = this._element.querySelector('.element__title').textContent;
+  _handleZoomCardImage(event) {
+    this._target = event.target;
+    this._popupZoomOpenCardImage = document.querySelector("#popup-open-card-image");
 
-    openPopup(popupZoomOpenCardImage);
+    this._popupZoomOpenCardImage.querySelector("#popup-image").src = this._target.src;
+    this._popupZoomOpenCardImage.querySelector("#popup-image").alt = this._target.alt;
+    this._popupZoomOpenCardImage.querySelector("#popup-title-card-image").textContent = this._element.querySelector('.element__title').textContent;
+
+    openPopup(this._popupZoomOpenCardImage);
   }
 
 
@@ -65,8 +69,9 @@ export default class Card {
 
     // КЛИК НА ИЗОБРАЖЕНИЕ
     this._element.querySelector(".element__image").addEventListener("click", (event) => {
-      this._handleZoomImage(event);
-    })
+      document.addEventListener('keydown', closePopupByEsc);
+      this._handleZoomCardImage(event);
+    });
   }
 
 }

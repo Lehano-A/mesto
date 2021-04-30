@@ -18,7 +18,7 @@ export default class FormValidator {
     this._allFormsElements = Array.form(document.querySelectorAll(this._formSelector)); // МАССИВ ИЗ ФОРМ
     this._allFormsElements.forEach((form) => {
       this._setEventListeners(form); // ОТПРАВЛЯЕМ КАЖДУЮ НАЙДЕННУЮ ФОРМУ НА УСТАНОВКУ СЛУШАТЕЛЕЙ
-    })
+    });
   }
 
 
@@ -44,9 +44,9 @@ export default class FormValidator {
       this._arrayFormElement.forEach((item) => {
 
         if (item.classList.contains(this._inputErrorClass)) {
-          this._hideInputError(formElement, item)
+          this._hideInputError(formElement, item);
         }
-      })
+      });
     }
   }
 

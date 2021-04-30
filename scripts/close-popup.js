@@ -11,6 +11,7 @@ function closePopupByEsc(evt) {
 function closePopup(popup) { // ПРИНИМАЕТ В СЕБЯ НАЙДЕННЫЙ ОТКРЫТЫЙ ПОПАП
   document.removeEventListener('keydown', closePopupByEsc);
   popup.classList.remove('popup_opened');
+
 }
 
 
@@ -31,4 +32,4 @@ function closeOverlay() {
 
 closeOverlay();
 
-
+export { closePopupByEsc, closePopup };

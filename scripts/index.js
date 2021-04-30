@@ -1,3 +1,7 @@
+import FormValidator from './FormValidator.js';
+import Card from './Card.js';
+import { closePopupByEsc, closePopup } from './close-popup.js';
+import { initialCards } from './initial-cards.js';
 
 /////////////////////////////////////////////////
 // БЛОК ПЕРЕМЕННЫХ
@@ -43,8 +47,16 @@ const addNewCardButtonSave = formAddNewCard.querySelector('.popup__button-save')
 const addNewCardTitle = document.querySelector('#add-new-card-title');
 const addNewCardLink = document.querySelector('#add-new-card-link');
 
-
-
+// ОБЪЕКТ НЕОБХОДИМЫХ ДАННЫХ ДЛЯ ВАЛИДАЦИИ
+const enableValidationConfig = ({
+  formSelector: ".popup__form", // ФОРМА
+  inputSelector: ".popup__input", // ПОЛЕ
+  submitButtonSelector: ".popup__button-save", // КНОПКА "ОТПРАВКИ ДАННЫХ"
+  inactiveButtonClass: "popup__button-save_disabled", // КНОПКА "ОТПРАВКА ДАННЫХ" НЕАКТИВНА
+  inputErrorClass: "popup__input_error_visible", // СТИЛЬ ПОЛЯ ВО ВРЕМЯ НЕВАЛИДНОСТИ
+  errorClass: "popup__input_visible", // СПАН С ОШИБКОЙ В ПОЛЕ АКТИВЕН
+  spanErrorActive: "popup__input-error_active" // СПАН С ОШИБКОЙ АКТИВЕН
+});
 
 
 /////////////////////////////////////////////////
@@ -82,10 +94,7 @@ function submitAddNewCard() {
   formAddNewCard.reset();
 
   closePopup(popupAddNewCard);
-  const inputsFormAddNewCard = [addNewCardTitle, addNewCardLink]; // ВСЕ ПОЛЯ ФОРМЫ ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ
-  toggleButtonDesign(inputsFormAddNewCard, addNewCardButtonSave); // ОТПРАВЛЯЕМ ВСЕ ПОЛЯ И КНОПКУ ОТПРАВКИ ДАННЫХ НА ВАЛИДАЦИЮ
 }
-
 
 
 // POPUP (ЛЮБОЙ) ОТКРЫВАЕТСЯ
@@ -113,10 +122,8 @@ function handlerProfileSubmit() {
 editButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   statusInput.value = profileStatus.textContent;
-  inputsFormProfile = [nameInput, statusInput];
-  hideInputError(profileFormElement, nameInput);
-  hideInputError(profileFormElement, statusInput);
-  toggleButtonDesign(inputsFormProfile, profileButtonSave);
+  const validityFormProfile = new FormValidator(enableValidationConfig, profileFormElement)
+  const enableValidation = validityFormProfile.enableValidation();
   openPopup(popupProfile);
 });
 
@@ -127,15 +134,10 @@ popupsButtonsClose.addEventListener("click", () => {
 });
 
 
-
-
-
-
-
 // СЛУШАТЕЛЬ - POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
 addNewCardButton.addEventListener("click", () => {
-  hideInputError(formAddNewCard, document.querySelector("#add-new-card-title"));
-  hideInputError(formAddNewCard, document.querySelector("#add-new-card-link"));
+  const validityFormAddNewCard = new FormValidator(enableValidationConfig, formAddNewCard);
+  const enableValidation = validityFormAddNewCard.enableValidation();
   openPopupAddNewCard();
 });
 

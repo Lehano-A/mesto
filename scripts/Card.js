@@ -1,21 +1,18 @@
+// КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
+export default class Card {
 
+  constructor(templateSelector, cardData) { // ПРИНИМАЕТ ДАННЫЕ ИЗ index.js
 
-// класс, который создаёт карточку с ТЕКСТОМ и ССЫЛКОЙ на изображение
-class Card {
-
-
-  constructor(templateSelector, cardData) { // принимает данный из index.js
-
-    this._templateSelector = templateSelector; // селектор шаблона
-    this._name = cardData.name; // название картинки
-    this._link = cardData.link; // ссылка на картинку
+    this._templateSelector = templateSelector; // СЕЛЕКТОР ШАБЛОНА
+    this._name = cardData.name; // НАЗВАНИЕ КАРТИНКИ
+    this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
   }
 
 
   // МЕТОД ГЕНЕРАЦИИ ШАБЛОНА
   _createTemplateCard() {
-    this._cardTemplate = this._templateSelector.content.querySelector(".element").cloneNode(true); // ищем шаблон в разметке и клонируем с содержимым
-    return this._cardTemplate; // возвращаем склонированный шаблон карточки
+    this._cardTemplate = this._templateSelector.content.querySelector(".element").cloneNode(true); // ИЩЕМ ШАБЛОН В РАЗМЕТКЕ И КЛОНИРУЕМ С СОДЕРЖИМЫМ
+    return this._cardTemplate; // ВОЗВРАЩАЕМ СКЛОНИРОВАННЫЙ ШАБЛОН КАРТОЧКИ
   }
 
 
@@ -56,33 +53,20 @@ class Card {
 
   _setEventListeners() {
 
-    // клик на кнопку удаления карточки
+    // КЛИК НА КНОПКУ УДАЛЕНИЯ КАРТОЧКИ
     this._element.querySelector('.element__button-delete').addEventListener("click", () => {
       this._handleDeleteCards();
     });
 
-    // клик на кнопку лайка
+    // КЛИК НА КНОПКУ ЛАЙКА
     this._element.querySelector('.element__button-like').addEventListener("click", () => {
       this._handleLike();
     });
 
-    // клик на изображение
+    // КЛИК НА ИЗОБРАЖЕНИЕ
     this._element.querySelector(".element__image").addEventListener("click", (event) => {
       this._handleZoomImage(event);
     })
   }
 
-
-
 }
-
-
-
-//console.log(cardData)
-//const aaa = new Card(document.querySelector(".template-element"),'https://avatars.mds.yandex.net/get-zen_doc/1577695/pub_5cd8279f7a7fdb034966ffff_5cd827bd849658051f7690c9/scale_1200', 'dscdscds')
-//console.log(aaa)
-//console.log(addNewCardButton)
-
-
-//console.log(templateElement)
-//console.log(Card.selector.templateSelectorCard)

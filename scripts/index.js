@@ -3,76 +3,30 @@ import Card from './Card.js';
 import openPopup from './open-popup.js';
 import { closePopup } from './close-popup.js';
 import { initialCards } from './initial-cards.js';
-
-
-/////////////////////////////////////////////////
-// БЛОК ПЕРЕМЕННЫХ
-/////////////////////////////////////////////////
-
-// ПОИСК ШАБЛОНА
-const elements = document.querySelector(".elements");
-
-
-
-// POPUP ПРОФАЙЛА ОТКРЫВАЕТСЯ
-const editButton = document.querySelector(".profile__edit-button");
-const popupProfile = document.querySelector("#popup-open-profile");
-
-// POPUPS ЗАКРЫВАЮТСЯ ПО КЛИКУ НА КНОПКУ ЗАКРЫТИЯ
-const popupsButtonsClose = document.querySelector(".popup__button-close");
-
-// POPUP ПРОФАЙЛА СОХРАНЯЕТ ИНФОРМАЦИЮ ИЗ INPUTS
-const profileFormElement = document.querySelector(".popup__form");
-const nameInput = profileFormElement.querySelector("#popup-name");
-const statusInput = profileFormElement.querySelector("#popup-status");
-const profileName = document.querySelector(".profile__name"); // Жак-Ив Кусто
-const profileStatus = document.querySelector(".profile__status"); // Исследователь океана
-
-
-// POPUP МАСШТАБНОГО ОТКРЫТИЯ КАРТОЧКИ
-const popupZoomOpenCardImage = document.querySelector("#popup-open-card-image");
-const buttonCloseCardImage = popupZoomOpenCardImage.querySelector("#button-close-card-image");
-
-// ДОБАВЛЕНИЕ НОВОЙ КАРТОЧКИ [ + ]
-const profile = document.querySelector(".profile");
-const addNewCardButton = profile.querySelector(".profile__add-button");
-const popupAddNewCard = document.querySelector("#popup-add-new-card");
-const windowAddNewCard = document.querySelector("#window-add-new-card");
-const formAddNewCard = windowAddNewCard.querySelector("#form-add-new-card");
-const popupAddNewCardButtonClose = windowAddNewCard.querySelector("#add-new-card-button-close");
-const templateSelector = document.querySelector(".template-element");
-const addNewCardTitle = document.querySelector('#add-new-card-title');
-const addNewCardLink = document.querySelector('#add-new-card-link');
-
-// ОБЪЕКТ НЕОБХОДИМЫХ ДАННЫХ ДЛЯ ВАЛИДАЦИИ
-const enableValidationConfig = ({
-  formSelector: ".popup__form", // ФОРМА
-  inputSelector: ".popup__input", // ПОЛЕ
-  submitButtonSelector: ".popup__button-save", // КНОПКА "ОТПРАВКИ ДАННЫХ"
-  inactiveButtonClass: "popup__button-save_disabled", // КНОПКА "ОТПРАВКА ДАННЫХ" НЕАКТИВНА
-  inputErrorClass: "popup__input_error_visible", // СТИЛЬ ПОЛЯ ВО ВРЕМЯ НЕВАЛИДНОСТИ
-  errorClass: "popup__input_visible", // СПАН С ОШИБКОЙ В ПОЛЕ АКТИВЕН
-  spanErrorActive: "popup__input-error_active" // СПАН С ОШИБКОЙ АКТИВЕН
-});
+import {
+  popups, elements, editButton, popupProfile, profileFormElement, nameInput, statusInput, profileName, profileStatus,
+  popupZoomOpenCardImage, buttonCloseCardImage, addNewCardButton, popupAddNewCard, formAddNewCard, popupAddNewCardButtonClose, template, addNewCardTitle, addNewCardLink, enableValidationConfig
+} from './constants.js';
 
 
 /////////////////////////////////////////////////
 // БЛОК ФУНКЦИЙ
 /////////////////////////////////////////////////
 
-// POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
-function openPopupAddNewCard() {
-  formAddNewCard.reset();
-  openPopup(popupAddNewCard);
+
+// ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
+function createCard(template, element) {
+  const initialCard = new Card(template, element);
+  const generateCard = initialCard.generateCard();
+  return generateCard;
 }
 
 
 // ПЕРВОНАЧАЛЬНЫЙ ЦИКЛ ДОБАВЛЕНИЯ НАЧАЛЬНЫХ КАРТОЧЕК
+initialCards.forEach((element) => {
 
-initialCards.forEach(function (element) {
-  const initialCard = new Card(templateSelector, element);
-  const generateInitialCard = initialCard.generateCard();
-  elements.append(generateInitialCard);
+  const createdCard = createCard(template, element);
+  elements.append(createdCard);
 });
 
 
@@ -83,9 +37,8 @@ function submitAddNewCard() {
     link: addNewCardLink.value,
   };
 
-  const addNewCard = new Card(templateSelector, cardData);
-  const generateNewCard = addNewCard.generateCard();
-  elements.prepend(generateNewCard);
+  const addNewCard = createCard(template, cardData);
+  elements.prepend(addNewCard);
 
   formAddNewCard.reset();
 
@@ -101,6 +54,28 @@ function handlerProfileSubmit() {
   closePopup(popupProfile);
 }
 
+// ВКЛЮЧЕНИЕ ВАЛИДАЦИИ
+function enableValidationForm(formConfig, formElement) {
+  const createValidatorExemplar = new FormValidator(formConfig, formElement);
+  createValidatorExemplar.enableValidation();
+
+}
+
+// ОТПРАВКА ФОРМ НА ВКЛЮЧЕНИЕ ВАЛИДАЦИИ
+function transferFormInValidator() {
+  enableValidationForm(enableValidationConfig, profileFormElement);
+  enableValidationForm(enableValidationConfig, formAddNewCard);
+}
+transferFormInValidator();
+
+
+// POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
+function openPopupAddNewCard() {
+  formAddNewCard.reset();
+  const createValidatorExemplar = new FormValidator(enableValidationConfig, formAddNewCard);
+  createValidatorExemplar.resetValidation();
+  openPopup(popupAddNewCard);
+}
 
 /////////////////////////////////////////////////
 // БЛОК СЛУШАТЕЛЕЙ
@@ -111,22 +86,26 @@ function handlerProfileSubmit() {
 editButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   statusInput.value = profileStatus.textContent;
-  const validityFormProfile = new FormValidator(enableValidationConfig, profileFormElement);
-  validityFormProfile.enableValidation();
+  const createValidatorExemplar = new FormValidator(enableValidationConfig, profileFormElement);
+  createValidatorExemplar.resetValidation();
   openPopup(popupProfile);
+  ;
 });
 
 
-// СЛУШАТЕЛЬ - POPUP ПРОФАЙЛА => ЗАКРЫВАЕТСЯ НА КНОПКУ ЗАКРЫТИЯ
-popupsButtonsClose.addEventListener("click", () => {
-  closePopup(popupProfile);
-});
+// СЛУШАТЕЛЬ - ЗАКРЫТИE POPUP НА КНОПКУ ЗАКРЫТИЯ ИЛИ НА ОВЕРЛЕЙ
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__button-close')) {
+      closePopup(popup);
+    };
+  })
+})
+
 
 
 // СЛУШАТЕЛЬ - POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
 addNewCardButton.addEventListener("click", () => {
-  const validityFormAddNewCard = new FormValidator(enableValidationConfig, formAddNewCard);
-  validityFormAddNewCard.enableValidation();
   openPopupAddNewCard();
 });
 

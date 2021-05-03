@@ -1,12 +1,12 @@
-import { closePopupByEsc } from './close-popup.js';
 import openPopup from './open-popup.js';
+import { popupZoomOpenCardImage, cardImageZoom, titleCardZoom } from './constants.js';
+
 
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {
 
-  constructor(templateSelector, cardData) { // ПРИНИМАЕТ ДАННЫЕ ИЗ index.js
-
-    this._templateSelector = templateSelector; // СЕЛЕКТОР ШАБЛОНА
+  constructor(template, cardData) { // ПРИНИМАЕТ ДАННЫЕ ИЗ index.js
+    this._template = template; // СЕЛЕКТОР ШАБЛОНА
     this._name = cardData.name; // НАЗВАНИЕ КАРТИНКИ
     this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
   }
@@ -14,7 +14,7 @@ export default class Card {
 
   // МЕТОД ГЕНЕРАЦИИ ШАБЛОНА
   _createTemplateCard() {
-    this._cardTemplate = this._templateSelector.content.querySelector(".element").cloneNode(true); // ИЩЕМ ШАБЛОН В РАЗМЕТКЕ И КЛОНИРУЕМ С СОДЕРЖИМЫМ
+    this._cardTemplate = this._template.content.querySelector(".element").cloneNode(true); // ИЩЕМ ШАБЛОН В РАЗМЕТКЕ И КЛОНИРУЕМ С СОДЕРЖИМЫМ
     return this._cardTemplate; // ВОЗВРАЩАЕМ СКЛОНИРОВАННЫЙ ШАБЛОН КАРТОЧКИ
   }
 
@@ -22,9 +22,14 @@ export default class Card {
   // МЕТОД ГЕНЕРАЦИИ ЗАПОЛНЕННОЙ КАРТОЧКИ
   generateCard() {
     this._element = this._createTemplateCard();
-    this._element.querySelector(".element__image").src = this._link;
-    this._element.querySelector(".element__image").alt = this._link;
-    this._element.querySelector('.element__title').textContent = this._name;
+    this._cardImage = this._element.querySelector('.element__image');
+    this._cardTitle = this._element.querySelector('.element__title');
+    this._cardButtonLike = this._element.querySelector('.element__button-like');
+
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+    this._cardTitle.textContent = this._name;
+
     this._setEventListeners();
     return this._element;
   }
@@ -32,24 +37,22 @@ export default class Card {
 
   // ОБРАБОТЧИК УДАЛЕНИЯ КАРТОЧКИ
   _handleDeleteCards() {
-    this._cardTemplate.remove();
+    this._cardTemplate.remove(); // УДАЛЕНИЕ РАЗМЕТКИ КАРТОЧКИ
   }
 
   // ОБРАБОТЧИК ЛАЙКА
   _handleLike() {
-    this._element.querySelector('.element__button-like').classList.toggle("element__button-like_active");
+    this._cardButtonLike.classList.toggle("element__button-like_active");
   }
 
   // ОБРАБОТЧИК МАСШТАБИРОВАНИЯ КАРТИНКИ
-  _handleZoomCardImage(event) {
-    this._target = event.target;
-    this._popupZoomOpenCardImage = document.querySelector("#popup-open-card-image");
+  _handleZoomCardImage() {
 
-    this._popupZoomOpenCardImage.querySelector("#popup-image").src = this._target.src;
-    this._popupZoomOpenCardImage.querySelector("#popup-image").alt = this._target.alt;
-    this._popupZoomOpenCardImage.querySelector("#popup-title-card-image").textContent = this._element.querySelector('.element__title').textContent;
+    cardImageZoom.src = this._link; // ИЗ КОНСТРУКТОРА
+    cardImageZoom.alt = this._name; // ИЗ КОНСТРУКТОРА
+    titleCardZoom.textContent = this._element.textContent; // ИЗ generateCard() - шаблон с наполненной картинкой
 
-    openPopup(this._popupZoomOpenCardImage);
+    openPopup(popupZoomOpenCardImage);
   }
 
 
@@ -68,9 +71,8 @@ export default class Card {
     });
 
     // КЛИК НА ИЗОБРАЖЕНИЕ
-    this._element.querySelector(".element__image").addEventListener("click", (event) => {
-      document.addEventListener('keydown', closePopupByEsc);
-      this._handleZoomCardImage(event);
+    this._element.querySelector(".element__image").addEventListener("click", () => {
+      this._handleZoomCardImage();
     });
   }
 

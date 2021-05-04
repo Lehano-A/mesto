@@ -40,6 +40,7 @@ export default class FormValidator {
       // ПЕРЕСЧИТЫВАЕМ ВСЕ ПОЛЯ В ФОРМЕ
       eachInputElement.addEventListener('input', () => { // КАЖДОМУ ПОЛЮ ВЕШАЕМ 'INPUT'
         this._checkAtValid(eachInputElement);
+        this._toggleButtonDesign();
       });
     });
   }
@@ -64,7 +65,6 @@ export default class FormValidator {
     eachInputElement.classList.remove(this._inputErrorClass);
     this._spanInputError.classList.remove(this._spanErrorActive);
     this._spanInputError.textContent = '';
-    this._toggleButtonDesign();
   }
 
 
@@ -74,7 +74,6 @@ export default class FormValidator {
     eachInputElement.classList.add(this._inputErrorClass);
     this._spanInputError.classList.add(this._spanErrorActive);
     this._spanInputError.textContent = eachInputElement.validationMessage;
-    this._toggleButtonDesign();
   }
 
 

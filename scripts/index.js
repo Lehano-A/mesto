@@ -58,22 +58,18 @@ function handlerProfileSubmit() {
 function enableValidationForm(formConfig, formElement) {
   const createValidatorExemplar = new FormValidator(formConfig, formElement);
   createValidatorExemplar.enableValidation();
-
+  return createValidatorExemplar;
 }
 
 // ОТПРАВКА ФОРМ НА ВКЛЮЧЕНИЕ ВАЛИДАЦИИ
-function transferFormInValidator() {
-  enableValidationForm(enableValidationConfig, profileFormElement);
-  enableValidationForm(enableValidationConfig, formAddNewCard);
-}
-transferFormInValidator();
+const validityFormProfile = enableValidationForm(enableValidationConfig, profileFormElement);
+const validityFormAddNewCard = enableValidationForm(enableValidationConfig, formAddNewCard);
 
 
 // POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ОТКРЫВАЕТСЯ
 function openPopupAddNewCard() {
   formAddNewCard.reset();
-  const createValidatorExemplar = new FormValidator(enableValidationConfig, formAddNewCard);
-  createValidatorExemplar.resetValidation();
+  validityFormAddNewCard.resetValidation();
   openPopup(popupAddNewCard);
 }
 
@@ -86,8 +82,7 @@ function openPopupAddNewCard() {
 editButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   statusInput.value = profileStatus.textContent;
-  const createValidatorExemplar = new FormValidator(enableValidationConfig, profileFormElement);
-  createValidatorExemplar.resetValidation();
+  validityFormProfile.resetValidation();
   openPopup(popupProfile);
   ;
 });
@@ -116,18 +111,3 @@ formAddNewCard.addEventListener("submit", submitAddNewCard);
 
 // СЛУШАТЕЛЬ - POPUP СОХРАНЯЕТ ИНФОРМАЦИЮ ИЗ INPUTS
 profileFormElement.addEventListener("submit", handlerProfileSubmit);
-
-
-// СЛУШАТЕЛЬ - POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ => ЗАКРЫВАЕТСЯ НА КНОПКУ ЗАКРЫТИЯ
-popupAddNewCardButtonClose.addEventListener("click", () => {
-  closePopup(popupAddNewCard);
-});
-
-
-// СЛУШАТЕЛЬ - POPUP МАСШТАБНОГО ОТКРЫТИЯ КАРТОЧКИ => ЗАКРЫВАЕТСЯ НА КНОПКУ ЗАКРЫТИЯ
-buttonCloseCardImage.addEventListener("click", () => {
-  closePopup(popupZoomOpenCardImage);
-});
-
-
-

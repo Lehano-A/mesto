@@ -50,14 +50,13 @@ export default class Card {
 
     cardImageZoom.src = this._link; // ИЗ КОНСТРУКТОРА
     cardImageZoom.alt = this._name; // ИЗ КОНСТРУКТОРА
-    titleCardZoom.textContent = this._element.textContent; // ИЗ generateCard() - шаблон с наполненной картинкой
+    titleCardZoom.textContent = this._name; // ИЗ generateCard() - шаблон с наполненной картинкой
 
     openPopup(popupZoomOpenCardImage);
   }
 
 
   // МЕТОД УСТАНОВКИ СЛУШАТЕЛЕЙ
-
   _setEventListeners() {
 
     // КЛИК НА КНОПКУ УДАЛЕНИЯ КАРТОЧКИ
@@ -66,12 +65,12 @@ export default class Card {
     });
 
     // КЛИК НА КНОПКУ ЛАЙКА
-    this._element.querySelector('.element__button-like').addEventListener("click", () => {
+    this._cardButtonLike.addEventListener("click", () => {
       this._handleLike();
     });
 
     // КЛИК НА ИЗОБРАЖЕНИЕ
-    this._element.querySelector(".element__image").addEventListener("click", () => {
+    this._cardImage.addEventListener("click", () => {
       this._handleZoomCardImage();
     });
   }

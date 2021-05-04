@@ -36,25 +36,45 @@ export default class FormValidator {
     });
 
     // СЛУШАТЕЛЬ INPUT
-    this._inputList.forEach((eachInputElement) => { // ПЕРЕСЧИТЫВАЕМ ВСЕ ПОЛЯ В ФОРМЕ
+    this._inputList.forEach((eachInputElement) => {
+      // ПЕРЕСЧИТЫВАЕМ ВСЕ ПОЛЯ В ФОРМЕ
       eachInputElement.addEventListener('input', () => { // КАЖДОМУ ПОЛЮ ВЕШАЕМ 'INPUT'
-
-        if (!eachInputElement.validity.valid) {
-          this._spanInputError = this._formElement.querySelector(`.${eachInputElement.id}-error`);
-          eachInputElement.classList.add(this._inputErrorClass);
-          this._spanInputError.classList.add(this._spanErrorActive);
-          this._spanInputError.textContent = eachInputElement.validationMessage;
-          this._toggleButtonDesign();
-        } else {
-
-          this._spanInputError = this._formElement.querySelector(`.${eachInputElement.id}-error`);
-          eachInputElement.classList.remove(this._inputErrorClass);
-          this._spanInputError.classList.remove(this._spanErrorActive);
-          this._spanInputError.textContent = '';
-          this._toggleButtonDesign();
-        }
+        this._checkAtValid(eachInputElement);
       });
     });
+  }
+
+
+  // ПРОВЕРКА ВАЛИДНОСТИ ПОЛЯ, В КОТОРОМ ВВОДЯТСЯ ДАННЫЕ +
+  // ОТПРАВКА КОМАНДЫ НА ВКЛЮЧЕНИЕ/ОТКЛЮЧЕНИЕ ОШИБКИ ВВОДА ДАННЫХ
+
+  _checkAtValid(eachInputElement) {
+    if (!eachInputElement.validity.valid) {
+      this._showInputError(eachInputElement); // FALSE - ПОКАЗЫВАЕМ ОШИБКУ
+
+    } else {
+
+      this._hideInputError(eachInputElement); // TRUE - СКРЫВАЕМ ОШИБКУ
+    }
+  }
+
+  _hideInputError(eachInputElement) {
+
+    this._spanInputError = this._formElement.querySelector(`.${eachInputElement.id}-error`);
+    eachInputElement.classList.remove(this._inputErrorClass);
+    this._spanInputError.classList.remove(this._spanErrorActive);
+    this._spanInputError.textContent = '';
+    this._toggleButtonDesign();
+  }
+
+
+  _showInputError(eachInputElement) {
+
+    this._spanInputError = this._formElement.querySelector(`.${eachInputElement.id}-error`);
+    eachInputElement.classList.add(this._inputErrorClass);
+    this._spanInputError.classList.add(this._spanErrorActive);
+    this._spanInputError.textContent = eachInputElement.validationMessage;
+    this._toggleButtonDesign();
   }
 
 
@@ -81,13 +101,10 @@ export default class FormValidator {
     });
   }
 
-  // МЕТОД СБРАСЫВАНИЯ ОШИБОК ФОРМЫ ПЕРЕД ОТКРЫТИЕ ПОПАПА
+  // МЕТОД СБРАСЫВАНИЯ ОШИБОК ФОРМЫ ПЕРЕД ОТКРЫТИЕМ ПОПАПА
   resetValidation() {
     this._inputList.forEach((inputElement) => {
-      this._spanInputError = this._formElement.querySelector(`.${inputElement.id}-error`);
-      inputElement.classList.remove(this._inputErrorClass);
-      this._spanInputError.classList.remove(this._spanErrorActive);
-      this._spanInputError.textContent = '';
+      this._hideInputError(inputElement)
     });
 
     this._toggleButtonDesign();

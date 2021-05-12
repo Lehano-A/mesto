@@ -1,14 +1,11 @@
-import openPopup from './open-popup.js';
-import { popupZoomOpenCardImage, cardImageZoom, titleCardZoom } from './constants.js';
-
-
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {
 
-  constructor(template, cardData) { // ПРИНИМАЕТ ДАННЫЕ ИЗ index.js
+  constructor(template, cardData, { handleCardClick }) {
     this._template = template; // СЕЛЕКТОР ШАБЛОНА
-    this._name = cardData.name; // НАЗВАНИЕ КАРТИНКИ
+    this._title = cardData.title; // НАЗВАНИЕ КАРТИНКИ
     this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
+    this._handleCardClick = handleCardClick; // ОБРАБОТЧИК КЛИКА НА КАРТИНКУ КАРТОЧКИ
   }
 
 
@@ -21,16 +18,16 @@ export default class Card {
 
   // МЕТОД ГЕНЕРАЦИИ ЗАПОЛНЕННОЙ КАРТОЧКИ
   generateCard() {
-    this._element = this._createTemplateCard();
-    this._cardImage = this._element.querySelector('.element__image');
-    this._cardTitle = this._element.querySelector('.element__title');
-    this._cardButtonLike = this._element.querySelector('.element__button-like');
+    this._element = this._createTemplateCard(); // СКЛОНИРОВАННЫЙ ШАБЛОН КАРТОЧКИ
+    this._cardImage = this._element.querySelector('.element__image'); // МЕТО ДЛЯ КАРТИНКИ
+    this._cardTitle = this._element.querySelector('.element__title'); // МЕСТО ДЛЯ НАЗВАНИЯ КАРТИНКИ
+    this._cardButtonLike = this._element.querySelector('.element__button-like'); // КНОПКА ЛАЙКА
 
-    this._cardImage.src = this._link;
-    this._cardImage.alt = this._name;
-    this._cardTitle.textContent = this._name;
+    this._cardImage.src = this._link; // ПРИНЯТАЯ КАРТИНКА
+    this._cardImage.alt = this._title; // ПРИНЯТОЕ НАЗВАНИЕ КАРТИНКИ
+    this._cardTitle.textContent = this._title; // ПРИНЯТОЕ НАЗВАНИЕ КАРТИНКИ
 
-    this._setEventListeners();
+    this._setEventListeners(); // УСТАНОВКА СЛУШАТЕЛЕЙ
     return this._element;
   }
 
@@ -43,16 +40,6 @@ export default class Card {
   // ОБРАБОТЧИК ЛАЙКА
   _handleLike() {
     this._cardButtonLike.classList.toggle("element__button-like_active");
-  }
-
-  // ОБРАБОТЧИК МАСШТАБИРОВАНИЯ КАРТИНКИ
-  _handleZoomCardImage() {
-
-    cardImageZoom.src = this._link; // ИЗ КОНСТРУКТОРА
-    cardImageZoom.alt = this._name; // ИЗ КОНСТРУКТОРА
-    titleCardZoom.textContent = this._name; // ИЗ generateCard() - шаблон с наполненной картинкой
-
-    openPopup(popupZoomOpenCardImage);
   }
 
 
@@ -71,7 +58,9 @@ export default class Card {
 
     // КЛИК НА ИЗОБРАЖЕНИЕ
     this._cardImage.addEventListener("click", () => {
-      this._handleZoomCardImage();
+
+      this._handleCardClick(this._title, this._link)
+
     });
   }
 

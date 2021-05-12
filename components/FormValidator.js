@@ -59,6 +59,7 @@ export default class FormValidator {
     }
   }
 
+  // СПРЯТАТЬ ОШИБКУ
   _hideInputError(eachInputElement) {
 
     this._spanInputError = this._formElement.querySelector(`.${eachInputElement.id}-error`);
@@ -67,7 +68,7 @@ export default class FormValidator {
     this._spanInputError.textContent = '';
   }
 
-
+  // ПОКАЗАТЬ ОШИБКУ
   _showInputError(eachInputElement) {
 
     this._spanInputError = this._formElement.querySelector(`.${eachInputElement.id}-error`);
@@ -76,7 +77,7 @@ export default class FormValidator {
     this._spanInputError.textContent = eachInputElement.validationMessage;
   }
 
-
+  // ИЗМЕНИТЬ ДИЗАЙН КНОПКИ "ОТПРАВКИ ДАННЫХ"
   _toggleButtonDesign() {
 
     this._checkInvalidInput = this._hasInvalidInput(); // ОТПРАВИЛИ НА ПРОВЕРКУ ВАЛИДНОСТИ

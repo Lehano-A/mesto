@@ -7,7 +7,6 @@
   <meta name="author" content="Андрияшкин Алексей">
   <meta name="description" content="Mesto - мини-соцсеть для путешествинников">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 
 <body class="page">
@@ -24,7 +23,7 @@
       <!--НАЧАЛО PROFILE-->
       <section class="profile">
         <div class="profile__info-container">
-          <img src="./images/jik.jpg" class="profile__photo" alt="Ваше фото">
+          <img src="<%=require('../images/jik.jpg')%>" class="profile__photo" alt="Ваше фото">
           <div class="profile__info">
             <div class="profile__name-button-box">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -55,7 +54,7 @@
       <div id="window-popup-profile" class="popup__window">
         <button type="reset" id="popup-profile-button-close" class="popup__button-close"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form class="popup__form" method="POST" name="formPopup" novalidate>
+        <form id="form-profile" class="popup__form" method="POST" name="formPopup" novalidate>
           <label class="popup__box-input-span">
             <input id="popup-name" autocomplete="off" type="text" class="popup__input" placeholder="Ваше имя"
               name="name" minlength="2" maxlength="40" required>
@@ -120,13 +119,6 @@
     </article>
   </template>
   <!--КОНЕЦ TEMPLATE-ELEMENTS-->
-  <script type="module" src="./scripts/constants.js"></script>
-  <script type="module" src="./scripts/Card.js"></script>
-  <script type="module" src="./scripts/FormValidator.js"></script>
-  <script type="module" src="./scripts/initial-cards.js"></script>
-  <script type="module" src="./scripts/open-popup.js"></script>
-  <script type="module" src="./scripts/close-popup.js"></script>
-  <script type="module" src="./scripts/index.js"></script>
 
 </body>
 

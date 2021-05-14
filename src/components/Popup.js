@@ -1,7 +1,7 @@
 // КЛАСС ОТВЕЧАЮЩИЙ ЗА ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
 export default class Popup {
   constructor(popupSelector) {
-    this._popupElement= document.querySelector(popupSelector); // ИЩЕМ DOM-ЭЛЕМЕНТ ПОПАПА
+    this._popupElement = document.querySelector(popupSelector); // ИЩЕМ DOM-ЭЛЕМЕНТ ПОПАПА
   }
 
   // ПРОВЕРКА НАЖАТИЯ НА 'ESCAPE'

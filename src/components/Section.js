@@ -11,7 +11,7 @@ export default class Section {
 
   // ОТВЕЧАЕТ ЗА ОТРИСОВКУ ВСЕХ ЭЛЕМЕНТОВ
   renderer() {
-    
+
     this._dataCards.forEach((item) => { // ДЕЛАЕМ ПЕРЕСЧЁТ МАССИВА
       this._renderer(item) // ОТПРАВЛЯЕМ КАЖДЫЙ ЭЛЕМЕНТ МАССИВА НАРУЖУ В КОЛБЭК
     });

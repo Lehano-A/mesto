@@ -30,7 +30,7 @@ const exemplarUserInfo = new UserInfo(selectorsProfileElements);
 
 
 /* -------------------------------------------------------------------------- */
-/*                    ФУНКЦИЯ СОЗДАНИЯ ЭКЗЕМПЛЯРА КАРТОЧКИ                    */
+/*                 ФУНКЦИЯ СОЗДАНИЯ ГОТОВОГО ЭЛЕМЕНТА КАРТОЧКИ                */
 /* -------------------------------------------------------------------------- */
 
 function createCard(item) {
@@ -40,10 +40,8 @@ function createCard(item) {
       zoomCardPopup.open(title, link); // ПОДКЛЮЧЕНИЕ ЭКЗЕМПЛЯРА ПОПАПА КАРТОЧКИ В МАСШТАБЕ
     }
   })
-  card.generateCard();
-  return card;
+  return card.generateCard(); // ВОЗВРАЩАЕТ ЭЛЕМЕНТ ГОТОВОЙ НОВОЙ КАРТОЧКИ
 }
-
 
 
 
@@ -51,24 +49,16 @@ function createCard(item) {
 /*         ЭКЗЕМПЛЯР СЕКЦИИ КАРТОЧКИ + ГЕНЕРАЦИЯ КАРТОЧКИ С ЕЁ ДАННЫМИ        */
 /* -------------------------------------------------------------------------- */
 
-const newSectionCard = function (dataCards, where) {
-  // ОТОБРАЖЕНИЕ ПЕРВОНАЧАЛЬНЫХ КАРТОЧЕК
-  const sectionCard = new Section({ // СОЗДАНИЕ ЭКЗЕМПЛЯРА СЕКЦИИ
-    items: dataCards, renderer: (item) => {  // item - КАЖДЫЙ ЭЛЕМЕНТ МАССИВА ДАННЫХ КАРТОЧКИ
 
-      const newCard = createCard(item)
-      const generateCard = newCard.generateCard(); // НАПОЛНЕНИЕ ШАБЛОНА КАРТОЧКИ ДАННЫМИ
-      sectionCard.addItem(generateCard, where); // ВСТАВКА НАПОЛНЕННОГО ШАБЛОНА В РАЗМЕТКУ
-    }
-  }, elements)  // elements - DOM-ЭЛЕМЕНТ КУДА НУЖНО ВСТАВЛЯТЬ КАРТОЧКУ
+const sectionCard = new Section({ // СОЗДАНИЕ ЭКЗЕМПЛЯРА СЕКЦИИ
+  items: initialCards, renderer: (item) => { // initialCards - ПЕРВОНАЧАЛЬНЫЙ МАССИВ ОБЪЕКТОВ ДАННЫХ КАРТОЧЕК
+                                             // item - КАЖДЫЙ ЭЛЕМЕНТ МАССИВА ДАННЫХ КАРТОЧКИ
+    const newCard = createCard(item)
+    sectionCard.addItem(newCard, 'append'); // ВСТАВКА НАПОЛНЕННОГО ШАБЛОНА В РАЗМЕТКУ
+  }
+}, elements)  // elements - DOM-ЭЛЕМЕНТ КУДА НУЖНО ВСТАВЛЯТЬ КАРТОЧКУ
 
-  sectionCard.renderer(); // ЗАПУСК ПРОЦЕССА СОЗДАНИЯ И ДОБАВЛЕНИЯ В РАЗМЕТКУ ПЕРВОНАЧАЛЬНЫХ КАРТОЧЕК
-  return sectionCard;
-
-}
-// ЗАПУСК ОТОБРАЖЕНИЯ ПЕРВОНАЧАЛЬНОЙ БАЗЫ КАРТОЧЕК
-newSectionCard(initialCards, 'append')
-
+sectionCard.renderer(); // ЗАПУСК ПРОЦЕССА СОЗДАНИЯ И ДОБАВЛЕНИЯ В РАЗМЕТКУ ПЕРВОНАЧАЛЬНЫХ КАРТОЧЕК
 
 
 
@@ -79,8 +69,8 @@ newSectionCard(initialCards, 'append')
 const addCardPopup = new PopupWithForm(popupsSelectors.popupAddNewCard, {
   handlerSubmitForm: (inputsValues) => {
 
-  const arrayObjectInputsValues = [inputsValues]
-    newSectionCard(arrayObjectInputsValues, 'prepend'); // ДОБАВЛЯЕМ В РАЗМЕТКУ НОВУЮ КАРТОЧКУ
+    const arrayObjectInputsValues = createCard(inputsValues); // СОЗДАНИЕ ЭЛЕМЕНТА НОВОЙ КАРТОЧКИ С ПОЛУЧЕННЫМИ ДАННЫМИ ИЗ ФОРМЫ
+    sectionCard.addItem(arrayObjectInputsValues, 'prepend'); // ДОБАВЛЯЕМ В РАЗМЕТКУ НОВУЮ КАРТОЧКУ
   }
 
 });

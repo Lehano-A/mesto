@@ -14,6 +14,7 @@ export default class Popup {
 
   // ОТКРЫВАЕМ ПОПАП
   open() {
+
     this.bindHandleEscClose = this._handleEscClose.bind(this);
 
     document.addEventListener('keydown', this.bindHandleEscClose)  // УСТАНАВЛИВАЕМ СЛУШАТЕЛЬ НАЖАТИЯ 'ESCAPE' ПРИ ОТКРЫТИИ ПОПАПА
@@ -22,7 +23,7 @@ export default class Popup {
 
 
   // ЗАКРЫВАЕМ ПОПАП
-  close () {
+  close() {
 
     if (document.querySelector('.popup_opened')) {
       this._popupElement.classList.remove('popup_opened'); // ЗАКРЫВАЕМ ПОПАП

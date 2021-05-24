@@ -16,10 +16,11 @@ export default class Card {
   }
 
 
+
   // МЕТОД ГЕНЕРАЦИИ ЗАПОЛНЕННОЙ КАРТОЧКИ
   generateCard() {
     this._element = this._createTemplateCard(); // СКЛОНИРОВАННЫЙ ШАБЛОН КАРТОЧКИ
-    this._cardImage = this._element.querySelector('.element__image'); // МЕТО ДЛЯ КАРТИНКИ
+    this._cardImage = this._element.querySelector('.element__image'); // МЕCТО ДЛЯ КАРТИНКИ
     this._cardTitle = this._element.querySelector('.element__title'); // МЕСТО ДЛЯ НАЗВАНИЯ КАРТИНКИ
     this._cardButtonLike = this._element.querySelector('.element__button-like'); // КНОПКА ЛАЙКА
 
@@ -30,6 +31,7 @@ export default class Card {
     this._setEventListeners(); // УСТАНОВКА СЛУШАТЕЛЕЙ
     return this._element;
   }
+
 
 
   // ОБРАБОТЧИК УДАЛЕНИЯ КАРТОЧКИ

@@ -34,8 +34,8 @@ export default class PopupWithForm extends Popup {
   // СЛУШАТЕЛЬ САБМИТА
   setEventListeners() {
     super.setEventListeners();
-    this._popupElement.addEventListener('submit', () => {
-
+    this._popupElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
       this.handlerSubmitForm(this._getInputValues()); // ОТПРАВЛЯЕМ В КОЛБЭК ОБЪЕКТ С ДАННЫМИ ИЗ ПОЛЕЙ ФОРМЫ
       this.close(); // ЗАКРЫВАЕМ ФОРМУ
     })

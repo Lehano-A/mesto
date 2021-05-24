@@ -1,4 +1,5 @@
 export {
+  dataApi,
   popupsSelectors,
   elements,
   editButton,
@@ -17,11 +18,16 @@ export {
   template,
   enableValidationConfig,
   selectorsProfileElements,
+  profileElements,
 }
 
 
-// ШАБЛОН КАРТОЧКИ
+/* -------------------------------------------------------------------------- */
+/*                               ШАБЛОН КАРТОЧКИ                              */
+/* -------------------------------------------------------------------------- */
+
 const template = document.querySelector(".template-element");
+
 
 // СЕЛЕКТОР РАЗМЕТКИ ДЛЯ ВСТАВКИ КАРТОЧЕК
 const elements = '.elements';
@@ -42,14 +48,26 @@ const popupsSelectors = {
 }
 
 
+/* -------------------------------------------------------------------------- */
+/*                              ЭЛЕМЕНТЫ ПРОФАЙЛА                             */
+/* -------------------------------------------------------------------------- */
+
+const profileElements = {
+  name: document.querySelector('.profile__name'),
+  status: document.querySelector('.profile__status'),
+  avatar: document.querySelector('.profile__photo'),
+
+}
+
 
 /* -------------------------------------------------------------------------- */
-/*                     СЕЛЕКТОРА ИМЕНИ И СТАТУСА ПРОФАЙЛА                     */
+/*                     СЕЛЕКТОРА ИМЕНИ, СТАТУСА И АВАТАРА ПРОФАЙЛА                     */
 /* -------------------------------------------------------------------------- */
 
 const selectorsProfileElements = {
   name: '.profile__name',
   status: '.profile__status',
+  avatar: '.profile__photo',
 }
 
 
@@ -70,6 +88,28 @@ const enableValidationConfig = {
 
 
 
+
+/* -------------------------------------------------------------------------- */
+/*                                     API                                    */
+/* -------------------------------------------------------------------------- */
+
+const dataApi = {
+  profile: {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24/users/me',
+  },
+
+  cards: {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24/cards',
+  },
+
+  authorizationToken: 'a01ca780-a2b9-4eac-8ef8-6ccbfc06da5f',
+}
+
+
+
+
+
+
 /* -------------------------------------------------------------------------- */
 /*                                   ПРОФАЙЛ                                  */
 /* -------------------------------------------------------------------------- */
@@ -83,12 +123,11 @@ const editButton = document.querySelector(".profile__edit-button");
 // ФОРМА ПРОФАЙЛА
 const profileFormElement = document.querySelector(".popup__form");
 
-// ПОЛЯ ИМЕНИ ПРОФАЙЛА
+// ПОЛЕ ИМЕНИ ПРОФАЙЛА
 const nameInputProfile = profileFormElement.querySelector("#popup-name");
 
-// ПОЛЯ СТАТУСА ПРОФАЙЛА
+// ПОЛЕ СТАТУСА ПРОФАЙЛА
 const statusInputProfile = profileFormElement.querySelector("#popup-status");
-
 
 
 /* -------------------------------------------------------------------------- */

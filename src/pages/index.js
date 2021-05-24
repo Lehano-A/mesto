@@ -7,7 +7,10 @@ import PopupWithForm from '/src/components/PopupWithForm.js';
 import UserInfo from '/src/components/UserInfo.js';
 import FormValidator from '/src/components/FormValidator.js';
 import Card from '/src/components/Card.js';
+import Api from '/src/components/Api.js';
 import {
+  dataApi,
+  profileElements,
   popupsSelectors,
   elements,
   editButton,
@@ -18,14 +21,45 @@ import {
   formAddNewCard,
   template,
   enableValidationConfig,
-  selectorsProfileElements,
 } from '/src/utils/constants.js';
 
 
+/* -------------------------------------------------------------------------- */
+/*                   ЭКЗЕМПЛЯР API ПОЛУЧЕНИЯ ДАННЫХ ПРОФАЙЛА                  */
+/* -------------------------------------------------------------------------- */
+
+const api = new Api(dataApi);
+
+
+/* -------------------------------------------------------------------------- */
+/*             ПЕРВОНАЧАЛЬНАЯ ПОДГРУЗКА ДАННЫХ ПРОФАЙЛА С СЕРВЕРА             */
+/* -------------------------------------------------------------------------- */
+
+function setUserDataProfile() {
+  return api.getUserInfo()
+    .then((result) => {
+      profileElements.name.textContent = result.name;
+      profileElements.status.textContent = result.about;
+      profileElements.avatar.src = result.avatar;
+    })
+}
+setUserDataProfile()
 
 
 
-const exemplarUserInfo = new UserInfo(selectorsProfileElements);
+
+/* -------------------------------------------------------------------------- */
+/*         ЭКЗЕМПЛЯР СЕКЦИИ КАРТОЧКИ + ГЕНЕРАЦИЯ КАРТОЧКИ С ЕЁ ДАННЫМИ        */
+/* -------------------------------------------------------------------------- */
+
+
+const sectionCard = new Section({ // СОЗДАНИЕ ЭКЗЕМПЛЯРА СЕКЦИИ
+  renderer: (item) => { // initialCards - ПЕРВОНАЧАЛЬНЫЙ МАССИВ ОБЪЕКТОВ ДАННЫХ КАРТОЧЕК
+    // item - КАЖДЫЙ ЭЛЕМЕНТ МАССИВА ДАННЫХ КАРТОЧКИ
+    const newCard = createCard(item)
+    sectionCard.addItem(newCard, 'append'); // ВСТАВКА НАПОЛНЕННОГО ШАБЛОНА В РАЗМЕТКУ
+  }
+}, elements)  // elements - DOM-ЭЛЕМЕНТ КУДА НУЖНО ВСТАВЛЯТЬ КАРТОЧКУ
 
 
 
@@ -44,21 +78,41 @@ function createCard(item) {
 }
 
 
-
 /* -------------------------------------------------------------------------- */
-/*         ЭКЗЕМПЛЯР СЕКЦИИ КАРТОЧКИ + ГЕНЕРАЦИЯ КАРТОЧКИ С ЕЁ ДАННЫМИ        */
+/*            ПОЛУЧЕНИЕ ПЕРВОНАЧАЛЬНОГО МАССИВА КАРТОЧЕК С СЕРВЕРА            */
 /* -------------------------------------------------------------------------- */
 
+function getInitialCards() {
+  api.getDataInitialCards()
+    .then(arrCards => sectionCard.renderer(arrCards)) // ЗАПУПСК РЕНДЕРА КАРТОЧЕК ИЗ МАССИВА
+}
 
-const sectionCard = new Section({ // СОЗДАНИЕ ЭКЗЕМПЛЯРА СЕКЦИИ
-  items: initialCards, renderer: (item) => { // initialCards - ПЕРВОНАЧАЛЬНЫЙ МАССИВ ОБЪЕКТОВ ДАННЫХ КАРТОЧЕК
-                                             // item - КАЖДЫЙ ЭЛЕМЕНТ МАССИВА ДАННЫХ КАРТОЧКИ
-    const newCard = createCard(item)
-    sectionCard.addItem(newCard, 'append'); // ВСТАВКА НАПОЛНЕННОГО ШАБЛОНА В РАЗМЕТКУ
-  }
-}, elements)  // elements - DOM-ЭЛЕМЕНТ КУДА НУЖНО ВСТАВЛЯТЬ КАРТОЧКУ
+getInitialCards()
 
-sectionCard.renderer(); // ЗАПУСК ПРОЦЕССА СОЗДАНИЯ И ДОБАВЛЕНИЯ В РАЗМЕТКУ ПЕРВОНАЧАЛЬНЫХ КАРТОЧЕК
+
+
+
+
+
+
+
+
+
+
+/* const exemplarUserInfo = new UserInfo(selectorsProfileElements);
+const createUserInfoExemplar = exemplarUserInfo.setUserInfo(); // ПЕРВОНАЧАЛЬНАЯ ПОДГРУЗКА ДАННЫХ ПРОФАЙЛА С СЕРВЕРА */
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,9 +187,8 @@ const validityFormAddNewCard = enableValidationForm(enableValidationConfig, form
 /* -------------------------------------------------------------------------- */
 
 editButton.addEventListener("click", () => {
-  const getValuesProfile = exemplarUserInfo.getUserInfo();
-  nameInputProfile.value = getValuesProfile.name;
-  statusInputProfile.value = getValuesProfile.status;
+  nameInputProfile.value = profileElements.name.textContent;
+  statusInputProfile.value = profileElements.status.textContent;
   validityFormProfile.resetValidation();
   editProfilePopup.open();
 });

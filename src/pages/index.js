@@ -21,6 +21,7 @@ import {
   formAddNewCard,
   template,
   enableValidationConfig,
+  selectorsProfileElements
 } from '/src/utils/constants.js';
 
 
@@ -93,29 +94,6 @@ getInitialCards()
 
 
 
-
-
-
-
-
-
-/* const exemplarUserInfo = new UserInfo(selectorsProfileElements);
-const createUserInfoExemplar = exemplarUserInfo.setUserInfo(); // ПЕРВОНАЧАЛЬНАЯ ПОДГРУЗКА ДАННЫХ ПРОФАЙЛА С СЕРВЕРА */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* -------------------------------------------------------------------------- */
 /*                 ЭКЗЕМПЛЯР ПОПАПА ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ                 */
 /* -------------------------------------------------------------------------- */
@@ -140,9 +118,17 @@ addCardPopup.setEventListeners();
 
 const editProfilePopup = new PopupWithForm(popupsSelectors.popupProfile, {
   handlerSubmitForm: (inputsValues) => {
-    exemplarUserInfo.setUserInfo(inputsValues);
+
+    api.formEditDataProfile(inputsValues)
+      .then((dataProfile) => {
+        profileElements.name.textContent = dataProfile.name;
+        profileElements.status.textContent = dataProfile.about;
+        editProfilePopup.close()
+      })
+      .catch(err => console.log(err))
   }
-});
+})
+  ;
 
 editProfilePopup.setEventListeners();
 

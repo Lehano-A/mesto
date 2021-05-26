@@ -1,10 +1,12 @@
 // КЛАСС ДЛЯ ВЗАИМОДЕЙСТВИЕМ С СЕРВЕРОМ
 export default class Api {
   constructor(dataApi) {
-    this._profileBaseUrl = dataApi.profile.baseUrl; // URL ДАННЫХ ПРОФАЙЛА
-    this._cardsBaseUrl = dataApi.cards.baseUrl; // URL МАССИВА ОБЪЕКТОВ КАРТОЧЕК
+    this._profileBaseUrl = dataApi.profile.baseUrl; // URL ДАННЫХ ПРОФАЙЛА С СЕРВЕРА
+    this._cardsBaseUrl = dataApi.cards.baseUrl; // URL МАССИВА ОБЪЕКТОВ КАРТОЧЕК С СЕРВЕРА
     this._authorization = dataApi.authorizationToken; // ТОКЕН ДЛЯ АВТОРИЗАЦИИ
   }
+
+
 
   // ПОЛУЧЕНИЕ ДАННЫХ ПРОФАЙЛА С СЕРВЕРА
   getUserInfo() {
@@ -18,6 +20,7 @@ export default class Api {
   }
 
 
+
   // ПОЛУЧЕНИЕ МАССИВА ПЕРВОНАЧАЛЬНЫХ ДАННЫХ КАРТОЧЕК С СЕРВЕРА
   getDataInitialCards() {
     return fetch(this._cardsBaseUrl, {
@@ -28,6 +31,8 @@ export default class Api {
       .then(res => res.json())
       .catch(err => Promise.reject(console.log(`Ошибка при получении массива карточек с сервера: ${err.status}, ${err.statusText}`)))
   }
+
+
 
   // ПЕРЕДАЧА ИЗМЕНЁННЫХ ДАННЫХ ПРОФАЙЛА НА СЕРВЕР
   formEditDataProfile(data) {
@@ -76,4 +81,24 @@ export default class Api {
 
   }
 
+
+  deleteCardFromServer(idCard) {
+    return fetch(`${this._cardsBaseUrl}/${idCard}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        _id: idCard
+      })
+    })
+      .then((result) => {
+        if (result.ok) { return result.json() }
+        else {
+          return Promise.reject(`Ошибка во время передачи ID карточки для её удаления: ${result.status}, ${result.statusText}`)
+        }
+      })
+
+  }
 }

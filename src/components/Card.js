@@ -1,14 +1,16 @@
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {
 
-  constructor(template, cardData, dataApi, { handleCardClick }) {
+  constructor(template, cardData, dataApi, { handleCardClick }, { deleteCardFromServer }) {
     this._template = template; // СЕЛЕКТОР ШАБЛОНА
     this._title = cardData.name; // НАЗВАНИЕ КАРТИНКИ
     this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
-    this._owner = cardData.owner._id;
+    this._idCard = cardData._id; // ID КАРТОЧЕК ПОЛУЧЕННЫХ С СЕРВЕРА
+    this._owner = cardData.owner._id; // ID СОЗДАТЕЛЯ КАРТОЧКИ
     this._cardBaseUrl = dataApi.cards.baseUrl;
     this._authorizationToken = dataApi.authorizationToken;
     this._handleCardClick = handleCardClick; // ОБРАБОТЧИК КЛИКА НА КАРТИНКУ КАРТОЧКИ
+    this._deleteCardFromServer = deleteCardFromServer;
   }
 
 
@@ -30,7 +32,7 @@ export default class Card {
     this._cardButtonLike = this._element.querySelector('.element__button-like'); // КНОПКА ЛАЙКА
     this._cardButtonDelete = this._element.querySelector('.element__button-delete');
 
-    if (this._owner === '' || this._owner === '71c6bcf75b7f5095f6b3ea1f') {
+    if (this._owner === '71c6bcf75b7f5095f6b3ea1f') { // ПРОВЕРКА НА ВЛАДЕЛЬЦА КАРТОЧКИ
       this._cardButtonDelete.style.display = 'flex'
     } else {
       this._cardButtonDelete.style.display = 'none'
@@ -47,7 +49,7 @@ export default class Card {
 
   // ОБРАБОТЧИК УДАЛЕНИЯ КАРТОЧКИ
   _handleDeleteCards() {
-    this._cardTemplate.remove(); // УДАЛЕНИЕ РАЗМЕТКИ КАРТОЧКИ
+    this._deleteCardFromServer(this._cardTemplate, this._idCard) // УДАЛЕНИЕ РАЗМЕТКИ КАРТОЧКИ */
   }
 
   // ОБРАБОТЧИК ЛАЙКА

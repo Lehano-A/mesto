@@ -1,10 +1,12 @@
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {
 
-  constructor(template, cardData, { handleCardClick }) {
+  constructor(template, cardData, dataApi, { handleCardClick }) {
     this._template = template; // СЕЛЕКТОР ШАБЛОНА
     this._title = cardData.name; // НАЗВАНИЕ КАРТИНКИ
     this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
+    this._cardBaseUrl = dataApi.cards.baseUrl;
+    this._authorizationToken = dataApi.authorizationToken;
     this._handleCardClick = handleCardClick; // ОБРАБОТЧИК КЛИКА НА КАРТИНКУ КАРТОЧКИ
   }
 
@@ -17,9 +19,10 @@ export default class Card {
 
 
 
+
   // МЕТОД ГЕНЕРАЦИИ ЗАПОЛНЕННОЙ КАРТОЧКИ
   generateCard() {
-    console.log()
+
     this._element = this._createTemplateCard(); // СКЛОНИРОВАННЫЙ ШАБЛОН КАРТОЧКИ
     this._cardImage = this._element.querySelector('.element__image'); // МЕCТО ДЛЯ КАРТИНКИ
     this._cardTitle = this._element.querySelector('.element__title'); // МЕСТО ДЛЯ НАЗВАНИЯ КАРТИНКИ
@@ -28,7 +31,6 @@ export default class Card {
     this._cardImage.src = this._link; // ПРИНЯТАЯ КАРТИНКА
     this._cardImage.alt = this._title; // ПРИНЯТОЕ НАЗВАНИЕ КАРТИНКИ
     this._cardTitle.textContent = this._title; // ПРИНЯТОЕ НАЗВАНИЕ КАРТИНКИ
-
     this._setEventListeners(); // УСТАНОВКА СЛУШАТЕЛЕЙ
     return this._element;
   }

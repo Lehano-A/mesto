@@ -2,11 +2,10 @@
 // КЛАСС ОТВЕЧАЮЩИЙ ЗА ДОБАВЛЕНИЕ КАРТОЧКИ НА СТРАНИЦУ
 export default class Section {
 
-  constructor({renderer}, containerSelector) {
+  constructor({ renderer }, containerSelector) {
     this._renderer = renderer; // КОЛБЭК
     this._containerSelector = document.querySelector(containerSelector); // СЕЛЕКТОР РАЗМЕТКИ, КУДА НУЖНО ВСТАВЛЯТЬ КАРТОЧКИ
   }
-
 
 
   // ОТВЕЧАЕТ ЗА ОТРИСОВКУ ВСЕХ ЭЛЕМЕНТОВ

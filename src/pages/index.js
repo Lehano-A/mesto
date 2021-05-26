@@ -101,14 +101,15 @@ getInitialCards()
 
 const addCardPopup = new PopupWithForm(popupsSelectors.popupAddNewCard, {
   handlerSubmitForm: (inputsValues) => {
+    console.log(inputsValues)
     api.sendDataNewCardAtServer(inputsValues)
-      .then(() => addCardPopup.close())
+      .then(() => {
+        const arrayObjectInputsValues = createCard(inputsValues); // СОЗДАНИЕ ЭЛЕМЕНТА НОВОЙ КАРТОЧКИ С ПОЛУЧЕННЫМИ ДАННЫМИ ИЗ ФОРМЫ
+        sectionCard.addItem(arrayObjectInputsValues, 'prepend'); // ДОБАВЛЯЕМ В РАЗМЕТКУ НОВУЮ КАРТОЧКУ
+        addCardPopup.close();
+      })
       .catch(err => console.log(err))
-    const arrayObjectInputsValues = createCard(inputsValues); // СОЗДАНИЕ ЭЛЕМЕНТА НОВОЙ КАРТОЧКИ С ПОЛУЧЕННЫМИ ДАННЫМИ ИЗ ФОРМЫ
-    sectionCard.addItem(arrayObjectInputsValues, 'prepend'); // ДОБАВЛЯЕМ В РАЗМЕТКУ НОВУЮ КАРТОЧКУ
-
   }
-
 });
 
 addCardPopup.setEventListeners();

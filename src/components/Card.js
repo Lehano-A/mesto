@@ -3,7 +3,7 @@ export default class Card {
 
   constructor(template, cardData, { handleCardClick }) {
     this._template = template; // СЕЛЕКТОР ШАБЛОНА
-    this._title = cardData.title; // НАЗВАНИЕ КАРТИНКИ
+    this._title = cardData.name; // НАЗВАНИЕ КАРТИНКИ
     this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
     this._handleCardClick = handleCardClick; // ОБРАБОТЧИК КЛИКА НА КАРТИНКУ КАРТОЧКИ
   }
@@ -19,6 +19,7 @@ export default class Card {
 
   // МЕТОД ГЕНЕРАЦИИ ЗАПОЛНЕННОЙ КАРТОЧКИ
   generateCard() {
+    console.log()
     this._element = this._createTemplateCard(); // СКЛОНИРОВАННЫЙ ШАБЛОН КАРТОЧКИ
     this._cardImage = this._element.querySelector('.element__image'); // МЕCТО ДЛЯ КАРТИНКИ
     this._cardTitle = this._element.querySelector('.element__title'); // МЕСТО ДЛЯ НАЗВАНИЯ КАРТИНКИ

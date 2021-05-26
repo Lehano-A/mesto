@@ -15,6 +15,7 @@ export default class PopupWithForm extends Popup {
 
     this._formPopup.reset(); // СБРОС ФОРМЫ
     super.close(); // ЗАКРЫТИЕ ФОРМЫ
+    
   }
 
   open() {
@@ -36,8 +37,9 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._popupElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
+      this._buttonSubmit = evt.submitter;
+      this._buttonSubmit.textContent = 'Сохранение...'
       this.handlerSubmitForm(this._getInputValues()); // ОТПРАВЛЯЕМ В КОЛБЭК ОБЪЕКТ С ДАННЫМИ ИЗ ПОЛЕЙ ФОРМЫ
-      this.close(); // ЗАКРЫВАЕМ ФОРМУ
     })
   }
 }

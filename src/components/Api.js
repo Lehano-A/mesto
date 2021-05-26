@@ -17,7 +17,7 @@ export default class Api {
       .catch(err => Promise.reject(console.log(`Ошибка при получении данных профайла с сервера: ${err}`)))
   }
 
-  
+
   // ПОЛУЧЕНИЕ ДАННЫХ МАССИВА КАРТОЧЕК
   getDataInitialCards() {
     return fetch(this._cardsBaseUrl, {
@@ -25,8 +25,31 @@ export default class Api {
         authorization: this._authorization
       }
     })
-    .then(res => res.json())
-    .catch(err => Promise.reject(console.log(`Ошибка при получении массива карточек с сервера: ${err}`)))
+      .then(res => res.json())
+      .catch(err => Promise.reject(console.log(`Ошибка при получении массива карточек с сервера: ${err}`)))
+  }
+
+  // ИЗМЕНЕНИЕ ДАННЫХ ПРОФАЙЛА
+  formEditDataProfile(data) {
+    return fetch(this._profileBaseUrl, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: data.name,
+        about: data.status
+      })
+    })
+      .then((result) => {
+
+        if (result.ok) { return result.json() }
+        else {
+          return Promise.reject(`Ошибка во время изменения данных профайла: ${result.status}`)
+        }
+      })
+
   }
 
 

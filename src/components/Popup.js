@@ -27,6 +27,7 @@ export default class Popup {
 
     if (document.querySelector('.popup_opened')) {
       this._popupElement.classList.remove('popup_opened'); // ЗАКРЫВАЕМ ПОПАП
+      this._buttonSubmit.textContent = 'Сохранить'
       document.removeEventListener('keydown', this.bindHandleEscClose)
     }
   }

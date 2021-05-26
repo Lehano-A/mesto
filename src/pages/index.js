@@ -55,7 +55,7 @@ setUserDataProfile()
 
 
 const sectionCard = new Section({ // СОЗДАНИЕ ЭКЗЕМПЛЯРА СЕКЦИИ
-  renderer: (item) => { // initialCards - ПЕРВОНАЧАЛЬНЫЙ МАССИВ ОБЪЕКТОВ ДАННЫХ КАРТОЧЕК
+  renderer: (item) => { // ПЕРВОНАЧАЛЬНЫЙ МАССИВ ОБЪЕКТОВ ДАННЫХ КАРТОЧЕК
     // item - КАЖДЫЙ ЭЛЕМЕНТ МАССИВА ДАННЫХ КАРТОЧКИ
     const newCard = createCard(item)
     sectionCard.addItem(newCard, 'append'); // ВСТАВКА НАПОЛНЕННОГО ШАБЛОНА В РАЗМЕТКУ
@@ -69,10 +69,11 @@ const sectionCard = new Section({ // СОЗДАНИЕ ЭКЗЕМПЛЯРА СЕ�
 /* -------------------------------------------------------------------------- */
 
 function createCard(item) {
-  const card = new Card(template, item, { // СОЗДАЁМ ЭКЗЕМПЛЯР КАРТОЧКИ
 
-    handleCardClick: (title, link) => { // ПОЛУЧАЕМ ТИТУЛЬНИК И ССЫЛКУ НА КАРТИНКУ
-      zoomCardPopup.open(title, link); // ПОДКЛЮЧЕНИЕ ЭКЗЕМПЛЯРА ПОПАПА КАРТОЧКИ В МАСШТАБЕ
+  const card = new Card(template, item, dataApi, { // СОЗДАЁМ ЭКЗЕМПЛЯР КАРТОЧКИ
+
+    handleCardClick: (name, link) => { // ПОЛУЧАЕМ ТИТУЛЬНИК И ССЫЛКУ НА КАРТИНКУ
+      zoomCardPopup.open(name, link); // ПОДКЛЮЧЕНИЕ ЭКЗЕМПЛЯРА ПОПАПА КАРТОЧКИ В МАСШТАБЕ
     }
   })
   return card.generateCard(); // ВОЗВРАЩАЕТ ЭЛЕМЕНТ ГОТОВОЙ НОВОЙ КАРТОЧКИ
@@ -85,7 +86,7 @@ function createCard(item) {
 
 function getInitialCards() {
   api.getDataInitialCards()
-    .then(arrCards => sectionCard.renderer(arrCards)) // ЗАПУПСК РЕНДЕРА КАРТОЧЕК ИЗ МАССИВА
+    .then(arrCards => sectionCard.renderer(arrCards)) // ЗАПУСК РЕНДЕРА КАРТОЧЕК ИЗ МАССИВА
 }
 
 getInitialCards()
@@ -100,9 +101,12 @@ getInitialCards()
 
 const addCardPopup = new PopupWithForm(popupsSelectors.popupAddNewCard, {
   handlerSubmitForm: (inputsValues) => {
-
+    api.sendDataNewCardAtServer(inputsValues)
+      .then(() => addCardPopup.close())
+      .catch(err => console.log(err))
     const arrayObjectInputsValues = createCard(inputsValues); // СОЗДАНИЕ ЭЛЕМЕНТА НОВОЙ КАРТОЧКИ С ПОЛУЧЕННЫМИ ДАННЫМИ ИЗ ФОРМЫ
     sectionCard.addItem(arrayObjectInputsValues, 'prepend'); // ДОБАВЛЯЕМ В РАЗМЕТКУ НОВУЮ КАРТОЧКУ
+
   }
 
 });

@@ -1,9 +1,9 @@
 // КЛАСС ДЛЯ ВЗАИМОДЕЙСТВИЕМ С СЕРВЕРОМ
 export default class Api {
-  constructor(data) {
-    this._profileBaseUrl = data.profile.baseUrl; // URL ДАННЫХ ПРОФАЙЛА
-    this._cardsBaseUrl = data.cards.baseUrl; // URL МАССИВА ОБЪЕКТОВ КАРТОЧЕК
-    this._authorization = data.authorizationToken; // ТОКЕН ДЛЯ АВТОРИЗАЦИИ
+  constructor(dataApi) {
+    this._profileBaseUrl = dataApi.profile.baseUrl; // URL ДАННЫХ ПРОФАЙЛА
+    this._cardsBaseUrl = dataApi.cards.baseUrl; // URL МАССИВА ОБЪЕКТОВ КАРТОЧЕК
+    this._authorization = dataApi.authorizationToken; // ТОКЕН ДЛЯ АВТОРИЗАЦИИ
   }
 
   // ПОЛУЧЕНИЕ ДАННЫХ ПРОФАЙЛА С СЕРВЕРА
@@ -14,11 +14,11 @@ export default class Api {
       }
     })
       .then(res => res.json())
-      .catch(err => Promise.reject(console.log(`Ошибка при получении данных профайла с сервера: ${err}`)))
+      .catch(err => Promise.reject(console.log(`Ошибка при получении данных профайла с сервера: ${err}, ${err.statusText}`)))
   }
 
 
-  // ПОЛУЧЕНИЕ ДАННЫХ МАССИВА КАРТОЧЕК
+  // ПОЛУЧЕНИЕ МАССИВА ПЕРВОНАЧАЛЬНЫХ ДАННЫХ КАРТОЧЕК С СЕРВЕРА
   getDataInitialCards() {
     return fetch(this._cardsBaseUrl, {
       headers: {
@@ -26,10 +26,10 @@ export default class Api {
       }
     })
       .then(res => res.json())
-      .catch(err => Promise.reject(console.log(`Ошибка при получении массива карточек с сервера: ${err}`)))
+      .catch(err => Promise.reject(console.log(`Ошибка при получении массива карточек с сервера: ${err.status}, ${err.statusText}`)))
   }
 
-  // ИЗМЕНЕНИЕ ДАННЫХ ПРОФАЙЛА
+  // ПЕРЕДАЧА ИЗМЕНЁННЫХ ДАННЫХ ПРОФАЙЛА НА СЕРВЕР
   formEditDataProfile(data) {
     return fetch(this._profileBaseUrl, {
       method: 'PATCH',
@@ -46,7 +46,31 @@ export default class Api {
 
         if (result.ok) { return result.json() }
         else {
-          return Promise.reject(`Ошибка во время изменения данных профайла: ${result.status}`)
+          return Promise.reject(`Ошибка во время передачи данных профайла на сервер: ${result.status}, ${result.statusText}`)
+        }
+      })
+
+  }
+
+
+  // ПЕРЕДАЧА ДАННЫХ НОВОЙ КАРТОЧКИ НА СЕРВЕР
+  sendDataNewCardAtServer(inputsValues) {
+
+    return fetch(this._cardsBaseUrl, {
+      method: 'POST',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: inputsValues.name,
+        link: inputsValues.link
+      })
+    })
+      .then(result => {
+        if (result.ok) { return result.json() }
+        else {
+          return Promise.reject(`Ошибка при передачи данных новой карточки на сервер: ${result.status}, ${result.statusText}`)
         }
       })
 

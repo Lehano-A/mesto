@@ -27,7 +27,6 @@ export default class Popup {
 
     if (document.querySelector('.popup_opened')) {
       this._popupElement.classList.remove('popup_opened'); // ЗАКРЫВАЕМ ПОПАП
-      this._buttonSubmit.textContent = 'Сохранить'
       document.removeEventListener('keydown', this.bindHandleEscClose)
     }
   }
@@ -37,7 +36,7 @@ export default class Popup {
   setEventListeners() {
 
     this._popupElement.addEventListener('click', (evt) => {
-
+      
       if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__button-close')) {
         this.close()
       }

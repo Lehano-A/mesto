@@ -5,6 +5,7 @@ export default class Card {
     this._template = template; // СЕЛЕКТОР ШАБЛОНА
     this._title = cardData.name; // НАЗВАНИЕ КАРТИНКИ
     this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
+    this._owner = cardData.owner._id;
     this._cardBaseUrl = dataApi.cards.baseUrl;
     this._authorizationToken = dataApi.authorizationToken;
     this._handleCardClick = handleCardClick; // ОБРАБОТЧИК КЛИКА НА КАРТИНКУ КАРТОЧКИ
@@ -27,6 +28,13 @@ export default class Card {
     this._cardImage = this._element.querySelector('.element__image'); // МЕCТО ДЛЯ КАРТИНКИ
     this._cardTitle = this._element.querySelector('.element__title'); // МЕСТО ДЛЯ НАЗВАНИЯ КАРТИНКИ
     this._cardButtonLike = this._element.querySelector('.element__button-like'); // КНОПКА ЛАЙКА
+    this._cardButtonDelete = this._element.querySelector('.element__button-delete');
+
+    if (this._owner === '' || this._owner === '71c6bcf75b7f5095f6b3ea1f') {
+      this._cardButtonDelete.style.display = 'flex'
+    } else {
+      this._cardButtonDelete.style.display = 'none'
+    }
 
     this._cardImage.src = this._link; // ПРИНЯТАЯ КАРТИНКА
     this._cardImage.alt = this._title; // ПРИНЯТОЕ НАЗВАНИЕ КАРТИНКИ

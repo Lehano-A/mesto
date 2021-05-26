@@ -64,6 +64,7 @@ const sectionCard = new Section({ // СОЗДАНИЕ ЭКЗЕМПЛЯРА СЕ�
 
 
 
+
 /* -------------------------------------------------------------------------- */
 /*                 ФУНКЦИЯ СОЗДАНИЯ ГОТОВОГО ЭЛЕМЕНТА КАРТОЧКИ                */
 /* -------------------------------------------------------------------------- */
@@ -75,9 +76,29 @@ function createCard(item) {
     handleCardClick: (name, link) => { // ПОЛУЧАЕМ ТИТУЛЬНИК И ССЫЛКУ НА КАРТИНКУ
       zoomCardPopup.open(name, link); // ПОДКЛЮЧЕНИЕ ЭКЗЕМПЛЯРА ПОПАПА КАРТОЧКИ В МАСШТАБЕ
     }
-  })
+  },
+    {
+      deleteCardFromServer: ((cardTemplate, idCard) => {
+        cardTemplate.remove()
+        api.deleteCardFromServer(idCard) // ОТПРАВЛЯЕМ В API ID КАРТОЧКИ НА УДАЛЕНИЕ С СЕРВЕРА
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+      })
+    })
+
   return card.generateCard(); // ВОЗВРАЩАЕТ ЭЛЕМЕНТ ГОТОВОЙ НОВОЙ КАРТОЧКИ
 }
+
+
+///////////
+
+
+
+
+
+
+
+
 
 
 /* -------------------------------------------------------------------------- */
@@ -100,15 +121,15 @@ getInitialCards()
 /* -------------------------------------------------------------------------- */
 
 const addCardPopup = new PopupWithForm(popupsSelectors.popupAddNewCard, {
-  handlerSubmitForm: (inputsValues) => {
-    console.log(inputsValues)
-    api.sendDataNewCardAtServer(inputsValues)
-      .then(() => {
-        const arrayObjectInputsValues = createCard(inputsValues); // СОЗДАНИЕ ЭЛЕМЕНТА НОВОЙ КАРТОЧКИ С ПОЛУЧЕННЫМИ ДАННЫМИ ИЗ ФОРМЫ
+  handlerSubmitForm: (inputsValues) => { // ПОЛУЧАЕМ ОБЪЕКТ ДАННЫХ КАРТОЧКИ ИЗ ФОРМЫ
+
+    api.sendDataNewCardAtServer(inputsValues) // ОТПРАВЛЯЕМ В API ДАННЫЕ КАРТОЧКИ ИЗ ФОРМЫ
+      .then((dataCardFromServer) => {
+        const arrayObjectInputsValues = createCard(dataCardFromServer); // ОТПРАВЛЯЕМ ПОЛУЧЕННЫЙ ОБЪЕКТ ДАННЫХ КАРТОЧКИ НА ЕЁ СОЗДАНИЕ
         sectionCard.addItem(arrayObjectInputsValues, 'prepend'); // ДОБАВЛЯЕМ В РАЗМЕТКУ НОВУЮ КАРТОЧКУ
         addCardPopup.close();
       })
-      .catch(err => console.log(err))
+
   }
 });
 

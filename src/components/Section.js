@@ -10,7 +10,7 @@ export default class Section {
 
   // ОТВЕЧАЕТ ЗА ОТРИСОВКУ ВСЕХ ЭЛЕМЕНТОВ
   renderer(arrCards) {
-
+console.log(arrCards)
     arrCards.forEach((item) => { // ДЕЛАЕМ ПЕРЕСЧЁТ МАССИВА ОБЪЕКТОВ
       this._renderer(item) // ОТПРАВЛЯЕМ КАЖДЫЙ ЭЛЕМЕНТ МАССИВА НАРУЖУ В КОЛБЭК
     });

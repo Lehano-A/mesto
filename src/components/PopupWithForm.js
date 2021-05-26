@@ -28,11 +28,7 @@ export default class PopupWithForm extends Popup {
   // МЕТОД СОБИРАЕТ ДАННЫЕ ВСЕХ ПОЛЕЙ В ОБЪЕКТ
   _getInputValues() {
 
-    this._inputsValues = {
-      owner: {
-        _id: "",
-      }
-    }; // СОЗДАЁМ ПУСТОЙ ОБЪЕКТ
+    this._inputsValues = {}; // СОЗДАЁМ ПУСТОЙ ОБЪЕКТ
     // ПЕРЕСЧИТЫВАЕМ ПОЛЯ И ДОБАВЛЯЕМ ПО АТРИБУТУ ЗНАЧЕНИЮ АТРИБУТА NAME В СОЗДАННЫЙ ОБЪЕКТ
     this._inputsForm.forEach((item) => {this._inputsValues[item.name] = item.value }); // {title: "...", link: "..."}
 

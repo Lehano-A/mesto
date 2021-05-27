@@ -1,11 +1,12 @@
 // КЛАСС ДЛЯ ВЗАИМОДЕЙСТВИЕМ С СЕРВЕРОМ
 export default class Api {
+
   constructor(dataApi) {
-    this._profileBaseUrl = dataApi.profile.baseUrl; // URL ДАННЫХ ПРОФАЙЛА С СЕРВЕРА
-    this._cardsBaseUrl = dataApi.cards.baseUrl; // URL МАССИВА ОБЪЕКТОВ КАРТОЧЕК С СЕРВЕРА
+    this._profileBaseUrl = dataApi.profile.baseUrl; // URL ДАННЫХ ПРОФАЙЛА
+    this._cardsBaseUrl = dataApi.cards.baseUrl; // URL МАССИВА ОБЪЕКТОВ КАРТОЧЕК
+    this._likesBaseUrl = dataApi.likes.baseUrl; // URL МАССИВА ОБЪЕКТОВ ЛАЙКОВ КАРТОЧКИ
     this._authorization = dataApi.authorizationToken; // ТОКЕН ДЛЯ АВТОРИЗАЦИИ
   }
-
 
 
   // ПОЛУЧЕНИЕ ДАННЫХ ПРОФАЙЛА С СЕРВЕРА
@@ -20,7 +21,6 @@ export default class Api {
   }
 
 
-
   // ПОЛУЧЕНИЕ МАССИВА ПЕРВОНАЧАЛЬНЫХ ДАННЫХ КАРТОЧЕК С СЕРВЕРА
   getDataInitialCards() {
     return fetch(this._cardsBaseUrl, {
@@ -33,9 +33,9 @@ export default class Api {
   }
 
 
-
   // ПЕРЕДАЧА ИЗМЕНЁННЫХ ДАННЫХ ПРОФАЙЛА НА СЕРВЕР
   formEditDataProfile(data) {
+
     return fetch(this._profileBaseUrl, {
       method: 'PATCH',
       headers: {
@@ -82,7 +82,9 @@ export default class Api {
   }
 
 
+  // ЗАПРОС НА УДАЛЕНИЕ КАРТОЧКИ С СЕРВЕРА
   deleteCardFromServer(idCard) {
+
     return fetch(`${this._cardsBaseUrl}/${idCard}`, {
       method: 'DELETE',
       headers: {
@@ -96,9 +98,60 @@ export default class Api {
       .then((result) => {
         if (result.ok) { return result.json() }
         else {
-          return Promise.reject(`Ошибка во время передачи ID карточки для её удаления: ${result.status}, ${result.statusText}`)
+          return Promise.reject(`Ошибка при передачи на сервер ID карточки для её удаления: ${result.status}, ${result.statusText}`)
         }
       })
 
   }
+
+
+
+  // ЗАПРОС НА УВЕЛИЧЕНИЕ ЧИСЛА ЛАЙКОВ У КАРТОЧКИ
+  changeNumberLikes(idCard) {
+
+    return fetch(`${this._likesBaseUrl}/${idCard}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({
+        likes: +1
+      })
+    })
+      .then((result) => {
+        if (result.ok) { return result.json() }
+        else {
+          return Promise.reject(`Ошибка при передачи запроса на увеличение числа лайков: ${result.status}, ${result.statusText}`)
+        }
+      })
+  }
+
+
+
+  // ЗАПРОС НА УМЕНЬШЕНИЕ ЧИСЛА ЛАЙКОВ У КАРТОЧКИ
+  deleteLikes(idCard) {
+
+    return fetch(`${this._likesBaseUrl}/${idCard}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({
+        likes: -1
+      })
+    })
+      .then((result) => {
+        if (result.ok) { return result.json() }
+        else {
+          return Promise.reject(`Ошибка при передачи запроса на удаление лайка: ${result.status}, ${result.statusText}`)
+        }
+      })
+  }
+
+
+
+
+
 }

@@ -1,8 +1,9 @@
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {
 
-  constructor(template, cardData, dataApi, { handleCardClick }, { deleteCardFromServer }) {
+  constructor(template, cardData, dataApi, { handleCardClick }, { deleteCardFromServer }, { changeNumberLike }) {
     this._template = template; // СЕЛЕКТОР ШАБЛОНА
+    this._totalLikes = cardData.likes; // МАССИВ С ЛАЙКАМИ КАРТОЧКИ
     this._title = cardData.name; // НАЗВАНИЕ КАРТИНКИ
     this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
     this._idCard = cardData._id; // ID КАРТОЧЕК ПОЛУЧЕННЫХ С СЕРВЕРА
@@ -11,6 +12,8 @@ export default class Card {
     this._authorizationToken = dataApi.authorizationToken;
     this._handleCardClick = handleCardClick; // ОБРАБОТЧИК КЛИКА НА КАРТИНКУ КАРТОЧКИ
     this._deleteCardFromServer = deleteCardFromServer;
+    this._changeNumberLike = changeNumberLike;
+    this._myIdProfile = '71c6bcf75b7f5095f6b3ea1f';
   }
 
 
@@ -20,7 +23,25 @@ export default class Card {
     return this._cardTemplate; // ВОЗВРАЩАЕМ СКЛОНИРОВАННЫЙ ШАБЛОН КАРТОЧКИ
   }
 
+  
+  // ЕСТЬ ЛИ НА КАРТОЧКЕ МОЙ ЛАЙК?
+  _isMyLike() {
+    this._totalLikes.forEach((item) => {
+      if (item._id === this._myIdProfile) {
+        this._handleLike();
+      }
+    })
+  }
 
+
+  // ЯВЛЯЮСЬ ЛИ Я ВЛАДЕЛЬЦЕМ КАРТОЧКИ?
+  _amIOwner() {
+    if (this._owner === this._myIdProfile) {
+      this._cardButtonDelete.style.display = 'flex'
+    } else {
+      this._cardButtonDelete.style.display = 'none'
+    }
+  }
 
 
   // МЕТОД ГЕНЕРАЦИИ ЗАПОЛНЕННОЙ КАРТОЧКИ
@@ -31,16 +52,15 @@ export default class Card {
     this._cardTitle = this._element.querySelector('.element__title'); // МЕСТО ДЛЯ НАЗВАНИЯ КАРТИНКИ
     this._cardButtonLike = this._element.querySelector('.element__button-like'); // КНОПКА ЛАЙКА
     this._cardButtonDelete = this._element.querySelector('.element__button-delete');
+    this._numberLikes = this._element.querySelector('.element__total-likes');
 
-    if (this._owner === '71c6bcf75b7f5095f6b3ea1f') { // ПРОВЕРКА НА ВЛАДЕЛЬЦА КАРТОЧКИ
-      this._cardButtonDelete.style.display = 'flex'
-    } else {
-      this._cardButtonDelete.style.display = 'none'
-    }
+    this._isMyLike(); // ЕСТЬ ЛИ НА КАРТОЧКЕ МОЙ ЛАЙК?
+    this._amIOwner(); // ЯВЛЯЮСЬ ЛИ Я ВЛАДЕЛЬЦЕМ КАРТОЧКИ?
 
     this._cardImage.src = this._link; // ПРИНЯТАЯ КАРТИНКА
     this._cardImage.alt = this._title; // ПРИНЯТОЕ НАЗВАНИЕ КАРТИНКИ
     this._cardTitle.textContent = this._title; // ПРИНЯТОЕ НАЗВАНИЕ КАРТИНКИ
+    this._numberLikes.textContent = this._totalLikes.length;
     this._setEventListeners(); // УСТАНОВКА СЛУШАТЕЛЕЙ
     return this._element;
   }
@@ -49,7 +69,7 @@ export default class Card {
 
   // ОБРАБОТЧИК УДАЛЕНИЯ КАРТОЧКИ
   _handleDeleteCards() {
-    this._deleteCardFromServer(this._cardTemplate, this._idCard) // УДАЛЕНИЕ РАЗМЕТКИ КАРТОЧКИ */
+    this._deleteCardFromServer(this._cardTemplate, this._idCard) // КОЛБЭК, УДАЛЕНИЕ РАЗМЕТКИ КАРТОЧКИ
   }
 
   // ОБРАБОТЧИК ЛАЙКА
@@ -66,15 +86,18 @@ export default class Card {
       this._handleDeleteCards();
     });
 
+
     // КЛИК НА КНОПКУ ЛАЙКА
     this._cardButtonLike.addEventListener("click", () => {
-      this._handleLike();
+      this._handleLike()
+      this._changeNumberLike(this._cardButtonLike, this._idCard, this._numberLikes); // КОЛБЭК, ИЗМЕНЕНИЕ ЧИСЛА ЛАЙКОВ
     });
+
 
     // КЛИК НА ИЗОБРАЖЕНИЕ
     this._cardImage.addEventListener("click", () => {
 
-      this._handleCardClick(this._title, this._link)
+      this._handleCardClick(this._title, this._link) // КОЛБЭК
 
     });
   }

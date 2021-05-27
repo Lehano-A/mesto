@@ -43,6 +43,7 @@ function setUserDataProfile() {
       profileElements.status.textContent = result.about;
       profileElements.avatar.src = result.avatar;
     })
+    .catch(err => console.log(err))
 }
 setUserDataProfile()
 
@@ -73,18 +74,42 @@ function createCard(item) {
 
   const card = new Card(template, item, dataApi, { // СОЗДАЁМ ЭКЗЕМПЛЯР КАРТОЧКИ
 
+    // КОЛБЭК
     handleCardClick: (name, link) => { // ПОЛУЧАЕМ ТИТУЛЬНИК И ССЫЛКУ НА КАРТИНКУ
       zoomCardPopup.open(name, link); // ПОДКЛЮЧЕНИЕ ЭКЗЕМПЛЯРА ПОПАПА КАРТОЧКИ В МАСШТАБЕ
     }
   },
-    {
+
+    { // КОЛБЭК
       deleteCardFromServer: ((cardTemplate, idCard) => {
         cardTemplate.remove()
-        api.deleteCardFromServer(idCard) // ОТПРАВЛЯЕМ В API ID КАРТОЧКИ НА УДАЛЕНИЕ С СЕРВЕРА
-          .then(res => console.log(res))
+        api.deleteCardFromServer(idCard) // ОТПРАВЛЯЕМ ЗАПРОС НА УДАЛЕНИЕ КАРТОЧКИ С СЕРВЕРА
           .catch(err => console.log(err))
       })
-    })
+    },
+
+    { // КОЛБЭК
+      changeNumberLike: ((cardButtonLike, idCard, numberLikes) => {
+
+        if (cardButtonLike.classList.contains('element__button-like_active')) {
+
+          api.changeNumberLikes(idCard) // ОТПРАВЛЯЕМ ЗАПРОС НА ИЗМЕНЕНИЕ ЛАЙКА
+            .then(res => numberLikes.textContent = res.likes.length) // УСТАНАВЛИВАЕМ В КАЧЕСТВЕ ЧИСЛА ЛАЙКОВ - ДЛИНУ МАССИВА ИЗ ЛАЙКОВ
+            .catch(err => console.log(err))
+
+        } else {
+
+          api.deleteLikes(idCard) // ОТПРАВЛЯЕМ ЗАПРОС НА УДАЛЕНИЕ ЛАЙКА
+            .then((res) => {
+              if (res.likes.length == []) { // ЕСЛИ МАССИВ С ЛАЙКАМИ ПУСТОЙ
+                numberLikes.textContent = 0; // ТОГДА СТАВИМ 0 ЛАЙКОВ ПОД КАРТОЧКОЙ
+              }
+            })
+            .catch(err => console.log(err))
+        }
+      })
+    }
+  )
 
   return card.generateCard(); // ВОЗВРАЩАЕТ ЭЛЕМЕНТ ГОТОВОЙ НОВОЙ КАРТОЧКИ
 }
@@ -145,9 +170,9 @@ addCardPopup.setEventListeners();
 const editProfilePopup = new PopupWithForm(popupsSelectors.popupProfile, {
   handlerSubmitForm: (inputsValues) => {
 
-    api.formEditDataProfile(inputsValues)
+    api.formEditDataProfile(inputsValues) // ОТПРАВЛЯЕМ ЗАПРОС НА ИЗМЕНЕНИЕ ДАННЫХ ПРОФАЙЛА
       .then((dataProfile) => {
-        profileElements.name.textContent = dataProfile.name;
+        profileElements.name.textContent = dataProfile.name; 
         profileElements.status.textContent = dataProfile.about;
         editProfilePopup.close()
       })

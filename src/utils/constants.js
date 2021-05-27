@@ -102,6 +102,10 @@ const dataApi = {
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24/cards',
   },
 
+  likes: {
+    baseUrl:'https://mesto.nomoreparties.co/v1/cohort-24/cards/likes',
+  },
+
   authorizationToken: 'a01ca780-a2b9-4eac-8ef8-6ccbfc06da5f',
 }
 

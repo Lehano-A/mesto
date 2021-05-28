@@ -3,7 +3,8 @@
   height: 24px;
   background-color: transparent;
   border: 1px solid #fff;
-  background-image: url(./../../../images/edit-button.svg);
+  background-image: url(./../../../images/pencil.svg);
+  background-size: 10px 10px;
   background-repeat: no-repeat;
   background-position: center center;
   padding: 0;

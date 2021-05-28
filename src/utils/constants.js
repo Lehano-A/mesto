@@ -19,7 +19,31 @@ export {
   enableValidationConfig,
   selectorsProfileElements,
   profileElements,
+  avatarElement,
+  popupAreYouSureElements
 }
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                               ПОПАП-ЭЛЕМЕНТЫ                               */
+/* -------------------------------------------------------------------------- */
+
+// КРЕСТИК ЗАКРЫТИЯ ПОПАПОВ
+const popupButtonClose = document.querySelector(".popup__button-close");
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                       ЭЛЕМЕНТЫ ПОПАПА - ARE YOU SURE                       */
+/* -------------------------------------------------------------------------- */
+
+const popupAreYouSureElements = {
+  popup: document.querySelector('#popup-are-you-sure'),
+  buttonClose: document.querySelector('#are-you-sure-button-close'),
+  buttonAccept: document.querySelector('#are-you-sure-button-accept'),
+}
+
 
 
 /* -------------------------------------------------------------------------- */
@@ -32,9 +56,6 @@ const template = document.querySelector(".template-element");
 // СЕЛЕКТОР РАЗМЕТКИ ДЛЯ ВСТАВКИ КАРТОЧЕК
 const elements = '.elements';
 
-// КРЕСТИК ЗАКРЫТИЯ ПОПАПОВ
-const popupButtonClose = document.querySelector(".popup__button-close");
-
 
 
 /* -------------------------------------------------------------------------- */
@@ -45,6 +66,8 @@ const popupsSelectors = {
   popupProfile: '#popup-open-profile',
   popupZoomOpenCardImage: '#popup-open-card-image',
   popupAddNewCard: '#popup-add-new-card',
+  popupAvatarProfile: '#popup-edit-avatar-profile',
+  popupAreYouSure: '#popup-are-you-sure',
 }
 
 
@@ -56,6 +79,7 @@ const profileElements = {
   name: document.querySelector('.profile__name'),
   status: document.querySelector('.profile__status'),
   avatar: document.querySelector('.profile__photo'),
+  avatarBox: document.querySelector('.profile__photo-box'),
 
 }
 
@@ -102,14 +126,18 @@ const dataApi = {
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24/cards',
   },
 
-  likes: {
-    baseUrl:'https://mesto.nomoreparties.co/v1/cohort-24/cards/likes',
+  avatarProfile: {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24/users/me/avatar',
   },
+
+  likes: {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24/cards/likes',
+  },
+
+  myIdProfile: '71c6bcf75b7f5095f6b3ea1f',
 
   authorizationToken: 'a01ca780-a2b9-4eac-8ef8-6ccbfc06da5f',
 }
-
-
 
 
 
@@ -133,6 +161,11 @@ const nameInputProfile = profileFormElement.querySelector("#popup-name");
 // ПОЛЕ СТАТУСА ПРОФАЙЛА
 const statusInputProfile = profileFormElement.querySelector("#popup-status");
 
+// АВАТАР ПРОФАЙЛА
+const avatarElement = document.querySelector('#edit-avatar')
+
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                             КАРТОЧКА В МАСШТАБЕ                            */
@@ -152,6 +185,7 @@ const titleCardZoom = popupZoomOpenCardImage.querySelector("#popup-title-card-im
 
 
 
+
 /* -------------------------------------------------------------------------- */
 /*                          ДОБАВЛЕНИЕ НОВОЙ КАРТОЧКИ                         */
 /* -------------------------------------------------------------------------- */
@@ -167,9 +201,5 @@ const formAddNewCard = windowAddNewCard.querySelector("#form-add-new-card");
 
 // АЙДИ КРЕСТИКА ЗАКРЫТИЯ ПОПАПА ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ
 const popupAddNewCardButtonClose = windowAddNewCard.querySelector("#add-new-card-button-close");
-
-
-
-
 
 

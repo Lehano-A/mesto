@@ -1,4 +1,4 @@
-import Popup from '/src/components/Popup.js'
+import Popup from '/src/components/Popup.js';
 
 // КЛАСС ОТВЕЧАЮЩИЙ ЗА ПОПАПЫ С ФОРМАМИ
 export default class PopupWithForm extends Popup {

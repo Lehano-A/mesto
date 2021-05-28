@@ -1,4 +1,4 @@
-import Popup from '/src/components/Popup.js'
+import Popup from '/src/components/Popup.js';
 
 // КЛАСС ОТВЕЧАЮЩИЙ ЗА ПОПАП С КАРТИНКОЙ В МАСШТАБЕ
 export default class PopupWithImage extends Popup {

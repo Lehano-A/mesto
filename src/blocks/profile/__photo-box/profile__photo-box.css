@@ -1,0 +1,25 @@
+.profile__photo-box {
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  z-index: 0;
+}
+
+.profile__photo-box:hover {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.profile__photo-box:hover>.profile__photo {
+  -webkit-filter: brightness(20%);
+  filter: brightness(20%);
+}
+
+.profile__photo-box:hover>.profile__icon-edit {
+  transition: 0.3s;
+  opacity: 1;
+}

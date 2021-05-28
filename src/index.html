@@ -23,7 +23,12 @@
       <!--НАЧАЛО PROFILE-->
       <section class="profile">
         <div class="profile__info-container">
-          <img src="" class="profile__photo" alt="Ваше фото">
+
+          <div class="profile__photo-box">
+            <div class="profile__icon-edit"></div>
+            <img src="" class="profile__photo" alt="Ваше фото">
+          </div>
+
           <div class="profile__info">
             <div class="profile__name-button-box">
               <h1 class="profile__name"></h1>
@@ -106,6 +111,37 @@
     </div>
   </div>
   <!--КОНЕЦ POPUP ДОБАВЛЕНИЯ НОВОЙ КАРТОЧКИ-->
+
+
+
+  <!--НАЧАЛО POPUP ИЗМЕНЕНИЯ АВАТАРА-->
+  <div id="popup-edit-avatar-profile" class="popup">
+    <div id="window-edit-avatar" class="popup__window">
+      <button id="edit-avatar-button-close" type="reset" class="popup__button-close"></button>
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form id="form-edit-avatar" class="popup__form" method="POST" name="formPopupEditAvatar" novalidate>
+        <label class="popup__box-input-span">
+          <input id="edit-avatar" value="" type="url" autocomplete="off" class="popup__input"
+            placeholder="Ссылка на фото" name="link" required>
+          <span class="popup__input-error edit-avatar-error"></span>
+        </label>
+        <button type="submit" class="popup__button-save">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <!--КОНЕЦ POPUP ИЗМЕНЕНИЯ АВАТАРА-->
+
+
+  <!--НАЧАЛО POPUP - ARE YOU SURE?-->
+  <div id="popup-are-you-sure" class="popup">
+    <div id="window-add-new-card" class="popup__window">
+      <button id="are-you-sure-button-close" type="reset" class="popup__button-close"></button>
+      <h3 class="popup__title">Вы уверены?</h3>
+      <button id="are-you-sure-button-accept" class="popup__button-save">Да</button>
+    </div>
+  </div>
+  <!--КОНЕЦ POPUP - ARE YOU SURE?-->
+
 
   <!--НАЧАЛО TEMPLATE-ELEMENTS-->
   <template class="template-element">

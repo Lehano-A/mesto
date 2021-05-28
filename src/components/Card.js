@@ -1,3 +1,5 @@
+
+
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {
 
@@ -8,12 +10,12 @@ export default class Card {
     this._link = cardData.link; // ССЫЛКА НА КАРТИНКУ
     this._idCard = cardData._id; // ID КАРТОЧЕК ПОЛУЧЕННЫХ С СЕРВЕРА
     this._owner = cardData.owner._id; // ID СОЗДАТЕЛЯ КАРТОЧКИ
-    this._cardBaseUrl = dataApi.cards.baseUrl;
-    this._authorizationToken = dataApi.authorizationToken;
+    this._cardBaseUrl = dataApi.cards.baseUrl; // URL РАСПОЛОЖЕНИЯ КАРТОЧЕК НА СЕРВЕРЕ
+    this._authorizationToken = dataApi.authorizationToken; // МОЙ АВТОРИЗАЦИОННЫЙ ТОКЕН
     this._handleCardClick = handleCardClick; // ОБРАБОТЧИК КЛИКА НА КАРТИНКУ КАРТОЧКИ
-    this._deleteCardFromServer = deleteCardFromServer;
-    this._changeNumberLike = changeNumberLike;
-    this._myIdProfile = '71c6bcf75b7f5095f6b3ea1f';
+    this._deleteCardFromServer = deleteCardFromServer; // КОЛБЭК УДАЛЕНИЯ КАРТОЧКИ С СЕРВЕРА
+    this._changeNumberLike = changeNumberLike; // КОЛБЭК ИЗМЕНЕНИЯ ЧИСЛА ЛАЙКОВ НА СЕРВЕРЕ
+    this._myIdProfile = dataApi.myIdProfile; // МОЙ ID ПРОФАЙЛА НА СЕРВЕРЕ
   }
 
 
@@ -23,7 +25,7 @@ export default class Card {
     return this._cardTemplate; // ВОЗВРАЩАЕМ СКЛОНИРОВАННЫЙ ШАБЛОН КАРТОЧКИ
   }
 
-  
+
   // ЕСТЬ ЛИ НА КАРТОЧКЕ МОЙ ЛАЙК?
   _isMyLike() {
     this._totalLikes.forEach((item) => {
@@ -68,7 +70,8 @@ export default class Card {
 
 
   // ОБРАБОТЧИК УДАЛЕНИЯ КАРТОЧКИ
-  _handleDeleteCards() {
+  handleDeleteCards() {
+
     this._deleteCardFromServer(this._cardTemplate, this._idCard) // КОЛБЭК, УДАЛЕНИЕ РАЗМЕТКИ КАРТОЧКИ
   }
 
@@ -83,7 +86,7 @@ export default class Card {
 
     // КЛИК НА КНОПКУ УДАЛЕНИЯ КАРТОЧКИ
     this._element.querySelector('.element__button-delete').addEventListener("click", () => {
-      this._handleDeleteCards();
+      this.handleDeleteCards();
     });
 
 

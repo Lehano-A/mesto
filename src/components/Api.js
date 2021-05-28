@@ -1,10 +1,11 @@
-// КЛАСС ДЛЯ ВЗАИМОДЕЙСТВИЕМ С СЕРВЕРОМ
+// КЛАСС ДЛЯ ВЗАИМОДЕЙСТВИЯ С СЕРВЕРОМ
 export default class Api {
 
   constructor(dataApi) {
     this._profileBaseUrl = dataApi.profile.baseUrl; // URL ДАННЫХ ПРОФАЙЛА
     this._cardsBaseUrl = dataApi.cards.baseUrl; // URL МАССИВА ОБЪЕКТОВ КАРТОЧЕК
     this._likesBaseUrl = dataApi.likes.baseUrl; // URL МАССИВА ОБЪЕКТОВ ЛАЙКОВ КАРТОЧКИ
+    this._avatarBaseUrl = dataApi.avatarProfile.baseUrl; // URL АВАТАРА ПРОФАЙЛА
     this._authorization = dataApi.authorizationToken; // ТОКЕН ДЛЯ АВТОРИЗАЦИИ
   }
 
@@ -17,7 +18,7 @@ export default class Api {
       }
     })
       .then(res => res.json())
-      .catch(err => Promise.reject(console.log(`Ошибка при получении данных профайла с сервера: ${err}, ${err.statusText}`)))
+      .catch(err => Promise.reject(`Ошибка при получении данных профайла с сервера: ${err}, ${err.statusText}`))
   }
 
 
@@ -29,7 +30,7 @@ export default class Api {
       }
     })
       .then(res => res.json())
-      .catch(err => Promise.reject(console.log(`Ошибка при получении массива карточек с сервера: ${err.status}, ${err.statusText}`)))
+      .catch(err => Promise.reject(`Ошибка при получении массива карточек с сервера: ${err.status}, ${err.statusText}`))
   }
 
 
@@ -107,7 +108,7 @@ export default class Api {
 
 
   // ЗАПРОС НА УВЕЛИЧЕНИЕ ЧИСЛА ЛАЙКОВ У КАРТОЧКИ
-  changeNumberLikes(idCard) {
+  plusNumberLikes(idCard) {
 
     return fetch(`${this._likesBaseUrl}/${idCard}`, {
       method: 'PUT',
@@ -151,7 +152,28 @@ export default class Api {
   }
 
 
+  changeAvatarProfile(url) {
 
+    return fetch(this._avatarBaseUrl, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        avatar: url.link,
+      })
+    })
+      .then((result) => {
+
+        if (result.ok) { return result.json() }
+        else {
+          return Promise.reject(`Ошибка при передачи данных профайла на сервер: ${result.status}, ${result.statusText}`)
+        }
+      })
+
+
+  }
 
 
 }

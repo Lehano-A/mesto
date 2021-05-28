@@ -1,8 +1,5 @@
-
-
 // КЛАСС СОЗДАЮЩИЙ КАРТОЧКУ С ТЕКСТОМ И ССЫЛКОЙ НА ИЗОБРАЖЕНИЕ
 export default class Card {
-
   constructor(template, cardData, dataApi, { handleCardClick }, { deleteCardFromServer }, { changeNumberLike }) {
     this._template = template; // СЕЛЕКТОР ШАБЛОНА
     this._totalLikes = cardData.likes; // МАССИВ С ЛАЙКАМИ КАРТОЧКИ
@@ -104,5 +101,4 @@ export default class Card {
 
     });
   }
-
 }

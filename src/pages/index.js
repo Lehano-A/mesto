@@ -6,6 +6,7 @@ import FormValidator from '/src/components/FormValidator.js';
 import Card from '/src/components/Card.js';
 import Api from '/src/components/Api.js';
 import PopupAreYouSure from '/src/components/PopupAreYouSure.js';
+import UserInfo from '/src/components/UserInfo.js';
 import {
   dataApi,
   profileElements,
@@ -19,7 +20,7 @@ import {
   formAddNewCard,
   template,
   enableValidationConfig,
-  avatarElement,
+  selectorsProfileElements,
 } from '/src/utils/constants.js';
 
 
@@ -40,10 +41,15 @@ const areYouSure = new PopupAreYouSure(popupsSelectors.popupAreYouSure, {
   handlerDeleteCardFromServer: (cardTemplate, idCard) => {
 
     api.deleteCardFromServer(idCard) // ОТПРАВЛЯЕМ ЗАПРОС НА УДАЛЕНИЕ КАРТОЧКИ С СЕРВЕРА
-      .then(() => cardTemplate.remove())
+      .then(() => {
+        areYouSure.close()
+        cardTemplate.remove()
+      })
       .catch(err => console.log(err))
   }
 });
+
+areYouSure.setEventListeners(); 
 
 
 
@@ -51,14 +57,18 @@ const areYouSure = new PopupAreYouSure(popupsSelectors.popupAreYouSure, {
 /*             ПЕРВОНАЧАЛЬНАЯ ПОДГРУЗКА ДАННЫХ ПРОФАЙЛА С СЕРВЕРА             */
 /* -------------------------------------------------------------------------- */
 
+
+const userInfo = new UserInfo(selectorsProfileElements)
+
+
+
 function setUserDataProfile() {
   return api.getUserInfo()
-    .then((result) => {
-      profileElements.name.textContent = result.name;
-      profileElements.status.textContent = result.about;
-      profileElements.avatar.src = result.avatar;
+    .then((dataProfile) => {
+      userInfo.setUserInfo(dataProfile); // УСТАНАВЛИВАЕМ ДАННЫЕ ПРОФАЙЛА
+      userInfo.setNewAvatar(dataProfile); // УСТАНАВЛИВАЕМ АВАТАР
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(`${err} dcdscsdcds`))
 };
 
 setUserDataProfile();
@@ -99,29 +109,25 @@ function createCard(item) {
 
     { // КОЛБЭК УДАЛЕНИЯ КАРТОЧКИ
       deleteCardFromServer: ((cardTemplate, idCard) => {
-        areYouSure.setEventListeners(cardTemplate, idCard); // ПОКАЗЫВАЕМ ПОПАП С ВОПРОСОМ ПОДТВЕРЖДЕНИЯ УДАЛЕНИЯ
+        areYouSure.open(cardTemplate, idCard) // СПРАШИВАЕМ ПОДТВЕРЖДЕНИЕ УДАЛЕНИЯ
       })
     },
 
 
     { // КОЛБЭК ИЗМЕНЕНИЯ ЧИСЛА ЛАЙКОВ
-      changeNumberLike: ((cardButtonLike, idCard, numberLikes) => {
+      changeNumberLike: ((cardButtonLike, idCard) => {
 
         if (cardButtonLike.classList.contains('element__button-like_active')) { // ЕСЛИ ИКОНКА ЛАЙКА АКТИВНА
 
           api.plusNumberLikes(idCard) // ОТПРАВЛЯЕМ ЗАПРОС НА УВЕЛИЧЕНИЕ ЧИСЛА ЛАЙКОВ
-            .then(res => numberLikes.textContent = res.likes.length) // УСТАНАВЛИВАЕМ В КАЧЕСТВЕ ЧИСЛА ЛАЙКОВ - ДЛИНУ МАССИВА ИЗ ЛАЙКОВ
+            .then(res => card.changeNumberLike('plus', res)) // УСТАНАВЛИВАЕМ В КАЧЕСТВЕ ЧИСЛА ЛАЙКОВ - ДЛИНУ МАССИВА ИЗ ЛАЙКОВ
             .catch(err => console.log(err))
 
         } else {
 
           api.deleteLikes(idCard) // ОТПРАВЛЯЕМ ЗАПРОС НА УДАЛЕНИЕ ЛАЙКА
             .then((res) => {
-              if (res.likes.length === 0) { // ЕСЛИ МАССИВ С ЛАЙКАМИ ПУСТОЙ
-                numberLikes.textContent = 0; // ТОГДА СТАВИМ 0 ЛАЙКОВ ПОД КАРТОЧКОЙ
-              } else { // ЕСЛИ > 0 =>
-                numberLikes.textContent = res.likes.length; // ТОГДА УСТАНАВЛИВАЕМ ЧИСЛО ДЛИНЫ МАССИВА ЛАЙКОВ
-              }
+              card.changeNumberLike('minus', res) // -1 ЛАЙК
             })
             .catch(err => console.log(err))
         }
@@ -141,7 +147,11 @@ function createCard(item) {
 
 function getInitialCards() {
   api.getDataInitialCards()
-    .then(arrCards => sectionCard.renderer(arrCards)) // ЗАПУСК РЕНДЕРА КАРТОЧЕК ИЗ МАССИВА
+  Promise.all([api.getUserInfo(), api.getDataInitialCards()])
+    .then(([, arrCards]) => {
+      sectionCard.renderer(arrCards)}) // ЗАПУСК РЕНДЕРА КАРТОЧЕК ИЗ МАССИВА
+
+    .catch(err => console.log(err))
 };
 
 getInitialCards();
@@ -154,7 +164,7 @@ getInitialCards();
 /* -------------------------------------------------------------------------- */
 
 const addCardPopup = new PopupWithForm(popupsSelectors.popupAddNewCard, {
-  handlerSubmitForm: (inputsValues) => { // ПОЛУЧАЕМ ОБЪЕКТ ДАННЫХ КАРТОЧКИ ИЗ ФОРМЫ
+  handlerSubmitForm: (inputsValues, buttonSave) => { // ПОЛУЧАЕМ ОБЪЕКТ ДАННЫХ КАРТОЧКИ ИЗ ФОРМЫ
 
     api.sendDataNewCardAtServer(inputsValues) // ОТПРАВЛЯЕМ В API ДАННЫЕ КАРТОЧКИ ИЗ ФОРМЫ
       .then((dataCardFromServer) => {
@@ -162,7 +172,8 @@ const addCardPopup = new PopupWithForm(popupsSelectors.popupAddNewCard, {
         sectionCard.addItem(arrayObjectInputsValues, 'prepend'); // ДОБАВЛЯЕМ В РАЗМЕТКУ НОВУЮ КАРТОЧКУ
         addCardPopup.close();
       })
-
+      .catch(err => console.log(err))
+      .finally(() => { buttonSave.textContent = 'Сохранить'; })
   }
 });
 
@@ -176,15 +187,15 @@ addCardPopup.setEventListeners();
 /* -------------------------------------------------------------------------- */
 
 const editProfilePopup = new PopupWithForm(popupsSelectors.popupProfile, {
-  handlerSubmitForm: (inputsValues) => {
+  handlerSubmitForm: (inputsValues, buttonSave) => {
 
     api.formEditDataProfile(inputsValues) // ОТПРАВЛЯЕМ ЗАПРОС НА ИЗМЕНЕНИЕ ДАННЫХ ПРОФАЙЛА
       .then((dataProfile) => {
-        profileElements.name.textContent = dataProfile.name;
-        profileElements.status.textContent = dataProfile.about;
+        userInfo.setUserInfo(dataProfile) // УСТАНАВЛИВАЕМ ДАННЫЕ ПРОФАЙЛА
         editProfilePopup.close()
       })
       .catch(err => console.log(err))
+      .finally(() => { buttonSave.textContent = 'Сохранить'; })
   }
 });
 
@@ -197,21 +208,19 @@ editProfilePopup.setEventListeners();
 /*                      ЭКЗЕМПЛЯР ПОПАПА АВАТАРА ПРОФАЙЛА                     */
 /* -------------------------------------------------------------------------- */
 const editAvatarProfile = new PopupWithForm(popupsSelectors.popupAvatarProfile, {
-  handlerSubmitForm: (inputValue) => {
+  handlerSubmitForm: (inputValue, buttonSave) => {
 
     api.changeAvatarProfile(inputValue)
-      .then((res) => {
-        profileElements.avatar.src = res.avatar;
-        avatarElement.value = res.avatar;
+      .then((dataProfile) => {
+        userInfo.setNewAvatar(dataProfile); // УСТАНАВЛИВАЕМ АВАТАР
         editAvatarProfile.close();
-
       })
       .catch(err => console.log(err))
+      .finally(() => { buttonSave.textContent = 'Сохранить'; })
   }
 });
 
 editAvatarProfile.setEventListeners();
-
 
 
 
@@ -224,7 +233,6 @@ zoomCardPopup.setEventListeners();
 
 
 
-
 /* -------------------------------------------------------------------------- */
 /*                             ВКЛЮЧЕНИЕ ВАЛИДАЦИИ                            */
 /* -------------------------------------------------------------------------- */
@@ -234,7 +242,6 @@ function enableValidationForm(formConfig, formElement) {
   createValidatorExemplar.enableValidation();
   return createValidatorExemplar;
 }
-
 
 
 
@@ -268,7 +275,6 @@ editButton.addEventListener("click", () => {
 /* -------------------------------------------------------------------------- */
 
 addNewCardButton.addEventListener("click", () => {
-  formAddNewCard.reset();
   validityFormAddNewCard.resetValidation();
   addCardPopup.open();
 });
@@ -281,8 +287,6 @@ addNewCardButton.addEventListener("click", () => {
 /* -------------------------------------------------------------------------- */
 
 profileElements.avatarBox.addEventListener('click', () => {
-  formPopupEditAvatar.classList.add('popup_opened')
-  avatarElement.value = profileElements.avatar.src;
   validityFormAvatar.resetValidation();
   editAvatarProfile.open();
 })

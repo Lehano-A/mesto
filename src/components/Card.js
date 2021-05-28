@@ -43,6 +43,8 @@ export default class Card {
   }
 
 
+
+
   // МЕТОД ГЕНЕРАЦИИ ЗАПОЛНЕННОЙ КАРТОЧКИ
   generateCard() {
 
@@ -62,6 +64,24 @@ export default class Card {
     this._numberLikes.textContent = this._totalLikes.length;
     this._setEventListeners(); // УСТАНОВКА СЛУШАТЕЛЕЙ
     return this._element;
+  }
+
+
+
+  // МЕТОД ИЗМЕНЕНИЯ ЧИСЛА ЛАЙКОВ ПОД КАРТОЧКОЙ
+  changeNumberLike(plusLike, resultFromServer) {
+
+    if (plusLike === 'plus') {
+      this._numberLikes.textContent = resultFromServer.likes.length; // УСТАНАВЛИВАЕМ В КАЧЕСТВЕ ЧИСЛА ЛАЙКОВ - ДЛИНУ МАССИВА ИЗ ЛАЙКОВ
+
+    } else {
+
+      if (resultFromServer.length === 0) { // ЕСЛИ МАССИВ С ЛАЙКАМИ ПУСТОЙ
+        this._numberLikes.textContent = 0; // ТОГДА СТАВИМ 0 ЛАЙКОВ ПОД КАРТОЧКОЙ
+      } else { // ЕСЛИ > 0 =>
+        this._numberLikes.textContent = resultFromServer.likes.length; // ТОГДА УСТАНАВЛИВАЕМ ЧИСЛО ДЛИНЫ МАССИВА ЛАЙКОВ
+      }
+    }
   }
 
 
@@ -101,4 +121,9 @@ export default class Card {
 
     });
   }
+
+
+
+
 }
+

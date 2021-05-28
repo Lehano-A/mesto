@@ -5,36 +5,29 @@ export default class PopupAreYouSure extends Popup {
 
   constructor(popupElement, { handlerDeleteCardFromServer }) {
     super(popupElement);
-    this._buttonAccept = this._popupElement.querySelector('#are-you-sure-button-accept') // КНОПКА СОГЛАСИЯ НА УДАЛЕНИЕ В ПОПАПЕ - ARE YOU SURE
+    this._formAccept = this._popupElement.querySelector('#form-are-you-sure') // КНОПКА СОГЛАСИЯ НА УДАЛЕНИЕ В ПОПАПЕ - ARE YOU SURE
     this._handlerDeleteCardFromServer = handlerDeleteCardFromServer;  // КОЛБЭК ОБРАБОТКИ УДАЛЕНИЯ КАРТОЧКИ С СЕРВЕРА
   }
 
-
-  _open() {
+  open(cardTemplate, idCard) {
     super.open();
+
+    this._cardTemplate = cardTemplate
+    this._idCard = idCard
   }
-
-
-  _close() {
-    super.close()
-  }
-
 
   // КОЛБЭК ОБРАБОТКИ УДАЛЕНИЯ КАРТОЧКИ С СЕРВЕРА
-  handlerDeleteCardFromServer(cardTemplate, idCard) {
-    this._handlerDeleteCardFromServer(cardTemplate, idCard)
+  handlerDeleteCardFromServer() {
+    this._handlerDeleteCardFromServer(this._cardTemplate, this._idCard)
   }
 
 
-  setEventListeners(cardTemplate, idCard) { // ПРИНИМАЕТ ШАБЛОН КАРТОЧКИ, КОТОРЫЙ НУЖНО УДАЛИТЬ
+  setEventListeners() { // ПРИНИМАЕТ ШАБЛОН КАРТОЧКИ, КОТОРЫЙ НУЖНО УДАЛИТЬ
     super.setEventListeners();
-
-    this._buttonAccept.addEventListener('click', () => {
-      this.handlerDeleteCardFromServer(cardTemplate, idCard)
-      this._close()
+    this._formAccept.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this.handlerDeleteCardFromServer()
     })
-
-    this._open();
   }
 
 }

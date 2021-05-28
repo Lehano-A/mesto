@@ -19,8 +19,7 @@ export {
   enableValidationConfig,
   selectorsProfileElements,
   profileElements,
-  avatarElement,
-  popupAreYouSureElements
+  popupAreYouSureElements,
 }
 
 
@@ -160,10 +159,6 @@ const nameInputProfile = profileFormElement.querySelector("#popup-name");
 
 // ПОЛЕ СТАТУСА ПРОФАЙЛА
 const statusInputProfile = profileFormElement.querySelector("#popup-status");
-
-// АВАТАР ПРОФАЙЛА
-const avatarElement = document.querySelector('#edit-avatar')
-
 
 
 

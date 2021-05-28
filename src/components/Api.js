@@ -17,8 +17,7 @@ export default class Api {
         authorization: this._authorization
       }
     })
-      .then(res => res.json())
-      .catch(err => Promise.reject(`Ошибка при получении данных профайла с сервера: ${err}, ${err.statusText}`))
+      .then((result) => { return this._getResponse(result); })
   }
 
 
@@ -29,8 +28,7 @@ export default class Api {
         authorization: this._authorization
       }
     })
-      .then(res => res.json())
-      .catch(err => Promise.reject(`Ошибка при получении массива карточек с сервера: ${err.status}, ${err.statusText}`))
+      .then((result) => { return this._getResponse(result); })
   }
 
 
@@ -49,13 +47,8 @@ export default class Api {
       })
     })
       .then((result) => {
-
-        if (result.ok) { return result.json() }
-        else {
-          return Promise.reject(`Ошибка во время передачи данных профайла на сервер: ${result.status}, ${result.statusText}`)
-        }
+        return this._getResponse(result);
       })
-
   }
 
 
@@ -73,13 +66,9 @@ export default class Api {
         link: inputsValues.link
       })
     })
-      .then(result => {
-        if (result.ok) { return result.json() }
-        else {
-          return Promise.reject(`Ошибка при передачи данных новой карточки на сервер: ${result.status}, ${result.statusText}`)
-        }
+      .then((result) => {
+        return this._getResponse(result);
       })
-
   }
 
 
@@ -97,12 +86,8 @@ export default class Api {
       })
     })
       .then((result) => {
-        if (result.ok) { return result.json() }
-        else {
-          return Promise.reject(`Ошибка при передачи на сервер ID карточки для её удаления: ${result.status}, ${result.statusText}`)
-        }
+        return this._getResponse(result);
       })
-
   }
 
 
@@ -121,10 +106,7 @@ export default class Api {
       })
     })
       .then((result) => {
-        if (result.ok) { return result.json() }
-        else {
-          return Promise.reject(`Ошибка при передачи запроса на увеличение числа лайков: ${result.status}, ${result.statusText}`)
-        }
+        return this._getResponse(result);
       })
   }
 
@@ -144,14 +126,12 @@ export default class Api {
       })
     })
       .then((result) => {
-        if (result.ok) { return result.json() }
-        else {
-          return Promise.reject(`Ошибка при передачи запроса на удаление лайка: ${result.status}, ${result.statusText}`)
-        }
+        return this._getResponse(result);
       })
   }
 
 
+  // ЗАПРОС НА ИЗМЕНЕНИЕ АВАТАРА
   changeAvatarProfile(url) {
 
     return fetch(this._avatarBaseUrl, {
@@ -165,15 +145,21 @@ export default class Api {
       })
     })
       .then((result) => {
-
-        if (result.ok) { return result.json() }
-        else {
-          return Promise.reject(`Ошибка при передачи данных профайла на сервер: ${result.status}, ${result.statusText}`)
-        }
+        return this._getResponse(result);
       })
-
-
   }
+
+
+  // МЕТОД ПОЛУЧЕНИЯ ОТВЕТА ОТ СЕРВЕРА
+  _getResponse(result) {
+
+    if (!result.ok) {
+      return Promise.reject(`Ошибка: ${result.status}`);
+    } else {
+      return result.json();
+    }
+  }
+
 
 
 }

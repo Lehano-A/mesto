@@ -17,9 +17,6 @@ export default class PopupWithImage extends Popup {
     super.open(); // ОТКРЫВАЕМ КАРТИНКУ В МАСШТАБЕ
   }
 
-  setEventListeners() {
-    super.setEventListeners(); // ПОДКЛЮЧАЕМ СЛУШАТЕЛЯ
-  }
 }
 
 

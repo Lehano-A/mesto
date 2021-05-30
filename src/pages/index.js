@@ -49,7 +49,7 @@ const areYouSure = new PopupAreYouSure(popupsSelectors.popupAreYouSure, {
   }
 });
 
-areYouSure.setEventListeners(); 
+areYouSure.setEventListeners();
 
 
 
@@ -58,23 +58,7 @@ areYouSure.setEventListeners();
 /* -------------------------------------------------------------------------- */
 
 
-const userInfo = new UserInfo(selectorsProfileElements)
-
-
-
-function setUserDataProfile() {
-  return api.getUserInfo()
-    .then((dataProfile) => {
-      userInfo.setUserInfo(dataProfile); // УСТАНАВЛИВАЕМ ДАННЫЕ ПРОФАЙЛА
-      userInfo.setNewAvatar(dataProfile); // УСТАНАВЛИВАЕМ АВАТАР
-    })
-    .catch(err => console.log(`${err} dcdscsdcds`))
-};
-
-setUserDataProfile();
-
-
-
+const userInfo = new UserInfo(selectorsProfileElements, nameInputProfile, statusInputProfile)
 
 /* -------------------------------------------------------------------------- */
 /*         ЭКЗЕМПЛЯР СЕКЦИИ КАРТОЧКИ + ГЕНЕРАЦИЯ КАРТОЧКИ С ЕЁ ДАННЫМИ        */
@@ -148,7 +132,9 @@ function createCard(item) {
 function getInitialCards() {
   api.getDataInitialCards()
   Promise.all([api.getUserInfo(), api.getDataInitialCards()])
-    .then(([, arrCards]) => {
+    .then(([objdataProfile, arrCards]) => {
+      userInfo.setUserInfo(objdataProfile); // УСТАНАВЛИВАЕМ ДАННЫЕ ПРОФАЙЛА
+      userInfo.setNewAvatar(objdataProfile); // УСТАНАВЛИВАЕМ АВАТАР
       sectionCard.renderer(arrCards)}) // ЗАПУСК РЕНДЕРА КАРТОЧЕК ИЗ МАССИВА
 
     .catch(err => console.log(err))
@@ -261,8 +247,7 @@ const validityFormAvatar = enableValidationForm(enableValidationConfig, formPopu
 /* -------------------------------------------------------------------------- */
 
 editButton.addEventListener("click", () => {
-  nameInputProfile.value = profileElements.name.textContent;
-  statusInputProfile.value = profileElements.status.textContent;
+  userInfo.getUserInfo();
   validityFormProfile.resetValidation();
   editProfilePopup.open();
 });

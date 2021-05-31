@@ -58,7 +58,7 @@ areYouSure.setEventListeners();
 /* -------------------------------------------------------------------------- */
 
 
-const userInfo = new UserInfo(selectorsProfileElements, nameInputProfile, statusInputProfile)
+const userInfo = new UserInfo(selectorsProfileElements)
 
 /* -------------------------------------------------------------------------- */
 /*         ЭКЗЕМПЛЯР СЕКЦИИ КАРТОЧКИ + ГЕНЕРАЦИЯ КАРТОЧКИ С ЕЁ ДАННЫМИ        */
@@ -135,7 +135,8 @@ function getInitialCards() {
     .then(([objdataProfile, arrCards]) => {
       userInfo.setUserInfo(objdataProfile); // УСТАНАВЛИВАЕМ ДАННЫЕ ПРОФАЙЛА
       userInfo.setNewAvatar(objdataProfile); // УСТАНАВЛИВАЕМ АВАТАР
-      sectionCard.renderer(arrCards)}) // ЗАПУСК РЕНДЕРА КАРТОЧЕК ИЗ МАССИВА
+      sectionCard.renderer(arrCards)
+    }) // ЗАПУСК РЕНДЕРА КАРТОЧЕК ИЗ МАССИВА
 
     .catch(err => console.log(err))
 };
@@ -247,7 +248,10 @@ const validityFormAvatar = enableValidationForm(enableValidationConfig, formPopu
 /* -------------------------------------------------------------------------- */
 
 editButton.addEventListener("click", () => {
-  userInfo.getUserInfo();
+  const dataUserInfo = userInfo.getUserInfo()
+  nameInputProfile.value = dataUserInfo.name;
+  statusInputProfile.value = dataUserInfo.status;
+
   validityFormProfile.resetValidation();
   editProfilePopup.open();
 });
